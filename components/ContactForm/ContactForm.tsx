@@ -37,7 +37,7 @@ const ContactForm = () => {
       setTimeout(() => {
         setSubmitStatus("idle");
       }, 3000);
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
 
       // Reset error status after 3 seconds
@@ -134,7 +134,7 @@ const ContactForm = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-green-900/50 border border-green-700 rounded-lg text-green-300 text-center"
               >
-                Thank you for subscribing! We'll keep you updated.
+                Thank you for subscribing! We&apos;ll keep you updated.
               </motion.div>
             )}
 

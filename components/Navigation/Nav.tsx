@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import NavDraw from "./NavDraw";
 import NavItem from "./NavItem";
-import { Box, Button, Flex } from "@mantine/core";
 import Login from "../modal/Login";
 
 const Nav = () => {

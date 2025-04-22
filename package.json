@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:prod": "npm run build && pm2 start npm --name 'afro-miami-frontend' -- start -- -p 3004"
   },
   "dependencies": {
     "@mantine/carousel": "^7.17.3",
