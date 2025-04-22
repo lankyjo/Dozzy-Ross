@@ -10,12 +10,12 @@ const images = [
     alt: "Event 1",
   },
   {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260519/Afrobeat%20miami/IMG_6027_lqqvth.jpg",
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745260519/Afrobeat%20miami/IMG_6027_lqqvth.jpg", 
     alt: "Event 2",
   },
   {
     url: "https://res.cloudinary.com/isreal/image/upload/v1745260522/Afrobeat%20miami/IMG_6031_jddomi.jpg",
-    alt: "Event 3",
+    alt: "Event 3", 
   },
   {
     url: "https://res.cloudinary.com/isreal/image/upload/v1745260524/Afrobeat%20miami/IMG_6028_ox2lf8.jpg",
@@ -25,6 +25,30 @@ const images = [
     url: "https://res.cloudinary.com/isreal/image/upload/v1745260521/Afrobeat%20miami/IMG_6030_pbu6q9.jpg",
     alt: "Event 5",
   },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306521/Afrobeat%20miami/90007CDB-B801-4876-ABB0-0EB53AAE8969_bqnpyk.jpg",
+    alt: "Event 6",
+  },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306087/Afrobeat%20miami/FC248BB3-1F8A-4776-8CFF-E29479473296_cqthwz.jpg",
+    alt: "Event 7",
+  },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306085/Afrobeat%20miami/727A708E-5EC6-446C-914F-51973CBD3434_suhsxq.jpg",
+    alt: "Event 8",
+  },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306082/Afrobeat%20miami/25A9A0EF-B5E4-4228-8C0D-8BDFBF0029B2_v8lbat.jpg",
+    alt: "Event 9",
+  },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306079/Afrobeat%20miami/91E511EE-C15D-4FD9-AD1F-FBD52C6C6595_kg0vvt.jpg",
+    alt: "Event 10",
+  },
+  {
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745306078/Afrobeat%20miami/3DA383CC-1D40-45C8-9551-5AD33748FE8A_oeartz.jpg",
+    alt: "Event 11",
+  }
 ];
 
 const ImageCarousel = () => {
