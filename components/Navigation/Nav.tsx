@@ -57,7 +57,7 @@ const Nav = () => {
             />
           )}
 
-          <Box className=" gap-4 hidden md:flex">
+          {/* <Box className=" gap-4 hidden md:flex">
             <Button
               variant="white"
               bg="dark.7"
@@ -78,7 +78,7 @@ const Nav = () => {
             >
               Create Event
             </Button>
-          </Box>
+          </Box> */}
         </nav>
       </header>
       <NavDraw opened={opened} close={close} openLogin={oLogin} />

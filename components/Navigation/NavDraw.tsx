@@ -43,7 +43,7 @@ export default function NavDraw({
         <div>
           {/* Drawer content */}
           <NavItem />
-          <Stack gap={5} mt={16}>
+          {/* <Stack gap={5} mt={16}>
             <Button
               variant="white"
               bg="dark.7"
@@ -65,7 +65,7 @@ export default function NavDraw({
             >
               Create Event
             </Button>
-          </Stack>
+          </Stack> */}
         </div>
       </Drawer>
     </>
