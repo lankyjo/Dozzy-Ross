@@ -12,27 +12,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "WATAWI",
-  description: "WATAWI",
+  title: "AFRO EVENTS MIAMI",
+  description: "AFRO EVENTS MIAMI",
   icons: "/next.svg",
   openGraph: {
-    title: "WATAWI",
-    description: "WATAWI",
+    title: "AFRO EVENTS MIAMI",
+    description: "AFRO EVENTS MIAMI",
     images: [
       {
-        url: "https://static.ogaticket.com/user/b1ba61e9-8148-41b0-bcdf-ec651da9588d.jpg", // Update with your actual image URL
+        url: "https://res.cloudinary.com/isreal/image/upload/v1745299617/Afrobeat%20miami/afro_events_miami_g56phy.jpg", // Update with your actual image URL
         width: 1200,
         height: 630,
-        alt: "WATAWI",
+        alt: "AFRO EVENTS MIAMI",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "WATAWI",
-    description: "WATAWI",
+    title: "AFRO EVENTS MIAMI",
+    description: "AFRO EVENTS MIAMI",
     images: [
-      "https://static.ogaticket.com/user/b1ba61e9-8148-41b0-bcdf-ec651da9588d.jpg",
+      "https://res.cloudinary.com/isreal/image/upload/v1745299617/Afrobeat%20miami/afro_events_miami_g56phy.jpg",
     ], // Same as Open Graph image
   },
 };
