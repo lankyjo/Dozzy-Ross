@@ -27,12 +27,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   }, [isPlaying]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.addEventListener("ended", onPause);
+    const audio = audioRef.current;
+    if (audio) {
+      audio.addEventListener("ended", onPause);
       return () => {
-        if (audioRef.current) {
-          audioRef.current.removeEventListener("ended", onPause);
-        }
+        audio.removeEventListener("ended", onPause);
       };
     }
   }, [onPause]);

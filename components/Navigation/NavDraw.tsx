@@ -1,11 +1,9 @@
-import { Button, Drawer, Stack } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 import NavItem from "./NavItem";
-import Link from "next/link";
 
 export default function NavDraw({
   opened,
   close,
-  openLogin,
 }: {
   opened: boolean;
   close: () => void;
