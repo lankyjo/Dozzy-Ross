@@ -95,6 +95,7 @@ const Artist = () => {
             fill
             src={upcoming?.banner?.url || "/wizkid.webp"}
             className="absolute object-cover inset-0 rounded-xl"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
           <div className="bg-white/50 absolute text-black md:-left-20 -left-5 md:bottom-10 bottom-0 flex gap-2 items-center md:py-6 py-3 md:px-8 px-5 rounded-lg z-40">

@@ -57,7 +57,8 @@ const VideoCard: React.FC<VideoProps> = ({
           <Image
             src={video.img} // Replace with appropriate image for each event
             alt="Video thumbnail"
-            layout="fill"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="w-full h-full absolute object-cover"
           />
         </>

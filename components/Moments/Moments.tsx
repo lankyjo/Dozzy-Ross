@@ -151,8 +151,9 @@ const VideoCard: React.FC<VideoProps> = ({
           <Image
             src={video.img}
             alt="Video thumbnail"
-            layout="fill"
             className="w-full h-full absolute object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </>
       ) : (
