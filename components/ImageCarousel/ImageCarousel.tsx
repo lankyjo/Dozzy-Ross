@@ -10,12 +10,12 @@ const images = [
     alt: "Event 1",
   },
   {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260519/Afrobeat%20miami/IMG_6027_lqqvth.jpg", 
+    url: "https://res.cloudinary.com/isreal/image/upload/v1745260519/Afrobeat%20miami/IMG_6027_lqqvth.jpg",
     alt: "Event 2",
   },
   {
     url: "https://res.cloudinary.com/isreal/image/upload/v1745260522/Afrobeat%20miami/IMG_6031_jddomi.jpg",
-    alt: "Event 3", 
+    alt: "Event 3",
   },
   {
     url: "https://res.cloudinary.com/isreal/image/upload/v1745260524/Afrobeat%20miami/IMG_6028_ox2lf8.jpg",
@@ -48,7 +48,7 @@ const images = [
   {
     url: "https://res.cloudinary.com/isreal/image/upload/v1745306078/Afrobeat%20miami/3DA383CC-1D40-45C8-9551-5AD33748FE8A_oeartz.jpg",
     alt: "Event 11",
-  }
+  },
 ];
 
 const ImageCarousel = () => {
@@ -102,9 +102,9 @@ const ImageCarousel = () => {
               <Image
                 src={images[currentIndex].url}
                 alt={images[currentIndex].alt}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-2xl"
+                fill
+                className="rounded-2xl object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-black/30 rounded-2xl" />
             </motion.div>
@@ -202,9 +202,9 @@ const ImageCarousel = () => {
                 <Image
                   src={images[currentIndex].url}
                   alt={images[currentIndex].alt}
-                  layout="fill"
-                  objectFit="contain"
-                  className="rounded-lg"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="rounded-lg object-contain"
                 />
               </div>
 

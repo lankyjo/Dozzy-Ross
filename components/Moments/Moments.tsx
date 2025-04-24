@@ -1,16 +1,16 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import PlayBtn from "../PlayBtn";
-import useAppContext from "../utils/hooks/useAppContext";
+// import useAppContext from "../utils/hooks/useAppContext";
 
 const Moments = () => {
-  const { classifyEvents } = useAppContext();
+  // const { classifyEvents } = useAppContext();
 
   // Define the event data array with video URLs
-  const events =
-    classifyEvents?.past?.length > 3
-      ? classifyEvents?.past?.slice(0, 3)
-      : classifyEvents?.past;
+  // const events =
+  //   classifyEvents?.past?.length > 3
+  //     ? classifyEvents?.past?.slice(0, 3)
+  //     : classifyEvents?.past;
 
   // const eventVideos = events?.map((event, i) => ({
   //   id: event.event_title || `event-${i + 1}`,
@@ -151,8 +151,9 @@ const VideoCard: React.FC<VideoProps> = ({
           <Image
             src={video.img}
             alt="Video thumbnail"
-            layout="fill"
             className="w-full h-full absolute object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </>
       ) : (
