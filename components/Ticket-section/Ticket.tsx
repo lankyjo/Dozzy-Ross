@@ -41,8 +41,7 @@ const Ticket = ({
       variants={itemVariants}
       initial="hidden"
       whileInView="show"
-      className="w-full bg-gray-500/50 py-8 px-6 flex max-sm:flex-col border-1 border-white rounded-2xl gap-10 max-w-[900px] mx-auto"
-    >
+      className="w-full bg-gray-500/50 py-8 px-6 flex max-sm:flex-col border-1 border-white rounded-2xl gap-10 max-w-[900px] mx-auto">
       {/* Image Section */}
       <div className="relative w-full mx-auto flex-1 aspect-video overflow-hidden rounded-2xl max-w-[350px]">
         <Image
