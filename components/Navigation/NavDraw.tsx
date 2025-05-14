@@ -1,9 +1,11 @@
-import { Drawer } from "@mantine/core";
+import { Button, Drawer, Stack } from "@mantine/core";
 import NavItem from "./NavItem";
+import Link from "next/link";
 
 export default function NavDraw({
   opened,
   close,
+  openLogin,
 }: {
   opened: boolean;
   close: () => void;
@@ -33,15 +35,15 @@ export default function NavDraw({
           header: {
             backgroundColor: "transparent", // Slight transparency
           },
-          // close: {
-          //   backgroundColor: "black",
-          // },
+          close: {
+            backgroundColor: "black",
+          },
         }}
       >
         <div>
           {/* Drawer content */}
           <NavItem />
-          {/* <Stack gap={5} mt={16}>
+          <Stack gap={5} mt={16}>
             <Button
               variant="white"
               bg="dark.7"
@@ -63,7 +65,7 @@ export default function NavDraw({
             >
               Create Event
             </Button>
-          </Stack> */}
+          </Stack>
         </div>
       </Drawer>
     </>

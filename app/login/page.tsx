@@ -2,14 +2,16 @@
 
 import useAppContext from "@/components/utils/hooks/useAppContext";
 import useGetter from "@/components/utils/hooks/useGetter";
-// import { postFunc } from "@/components/utils/request";
+import { Box } from "@mantine/core";
+import Link from "next/link";
+import { postFunc } from "@/components/utils/request";
 import { useEffect, useState } from "react";
 
-// import { Box } from "@mantine/core";
-// import { ActionIcon, Box, Group } from "@mantine/core";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { FcGoogle } from "react-icons/fc";
+import { Box } from "@mantine/core";
+import { ActionIcon, Box, Group } from "@mantine/core";
+import Image from "next/image";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 const fields = [
   { type: "email", placeholder: "Enter your email", label: "Email Address" },
@@ -40,14 +42,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // try {
-    //   const data = await postFunc({
-    //     url: "",
-    //     values: {
-    //       ...loginData,
-    //     },
-    //   });
-    // } catch (error) {}
+    try {
+      const data = await postFunc({
+        url: "",
+        values: {
+          ...loginData,
+        },
+      });
+    } catch (error) {}
     // Handle login logic here
   };
 
@@ -78,23 +80,23 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-        {/* <Box className=" flex  justify-end  w-full max-w-[500px] ">
+        <Box className=" flex  justify-end  w-full max-w-[500px] ">
           <Link
             href="/verify-email?password=true"
             className="no-underline text-primary  justify-self-end "
           >
             forgot password?
           </Link>
-        </Box> */}
-        {/* <div>
+        </Box>
+        <div>
           <p>
             Don&apos;t have an account?{" "}
             <span className="text-primary">
               <Link href="/register">Register</Link>
             </span>
           </p>
-        </div> */}
-        {/* <div className="max-w-[500px] text-center my-4 flex items-center w-full justify-center">
+        </div>
+        <div className="max-w-[500px] text-center my-4 flex items-center w-full justify-center">
           <hr className="w-full border-gray-300 lg:border-gray-400" />
           <span className="mx-2 text-gray-200 lg:text-gray-800">or</span>
           <hr className="w-full border-gray-300 lg:border-gray-400" />
@@ -107,7 +109,7 @@ export default function LoginPage() {
             </span>
             <span>Sign in with Google</span>
           </button>
-        </div> */}
+        </div>
       </div>
 
       <div
@@ -122,11 +124,11 @@ export default function LoginPage() {
         <video className="w-full h-full object-cover" muted autoPlay loop>
           <source src="/placeholder1.mp4" />
         </video>
-        {/* <div className="absolute flex p-4 flex-col justify-start items-end inset-0 bg-black/50 text-center">
+        <div className="absolute flex p-4 flex-col justify-start items-end inset-0 bg-black/50 text-center">
           <Link href="/" className="flex items-center gap-2">
             <Image src={"/logo.crop.png"} width={100} height={100} alt="logo" />
           </Link>
-        </div> */}
+        </div>
       </div>
     </section>
   );

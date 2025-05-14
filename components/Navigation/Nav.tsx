@@ -7,6 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 import NavDraw from "./NavDraw";
 import NavItem from "./NavItem";
 import Login from "../modal/Login";
+import { Box, Button } from "@mantine/core";
 
 const Nav = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -56,7 +57,7 @@ const Nav = () => {
             />
           )}
 
-          {/* <Box className=" gap-4 hidden md:flex">
+          <Box className=" gap-4 hidden md:flex">
             <Button
               variant="white"
               bg="dark.7"
@@ -77,7 +78,7 @@ const Nav = () => {
             >
               Create Event
             </Button>
-          </Box> */}
+          </Box>
         </nav>
       </header>
       <NavDraw opened={opened} close={close} openLogin={oLogin} />
