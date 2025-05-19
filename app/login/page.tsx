@@ -2,13 +2,10 @@
 
 import useAppContext from "@/components/utils/hooks/useAppContext";
 import useGetter from "@/components/utils/hooks/useGetter";
-import { Box } from "@mantine/core";
-import Link from "next/link";
 import { postFunc } from "@/components/utils/request";
 import { useEffect, useState } from "react";
 
 import { Box } from "@mantine/core";
-import { ActionIcon, Box, Group } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
@@ -43,13 +40,15 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data = await postFunc({
+      await postFunc({
         url: "",
         values: {
-          ...loginData,
+          // ...loginData,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     // Handle login logic here
   };
 
@@ -58,8 +57,7 @@ export default function LoginPage() {
       <div className="bg-white/30 backdrop-blur-xl w-full rounded-lg p-10 lg:p-0 lg:px-10 lg:py-6 lg:overflow-y-auto flex-1/2 space-y-2 flex justify-center items-center flex-col lg:space-y-3 lg:h-full lg:rounded-none lg:bg-gray-100">
         <form
           onSubmit={handleSubmit}
-          className="space-y-3 w-full max-w-[500px] mx-auto"
-        >
+          className="space-y-3 w-full max-w-[500px] mx-auto">
           <h1 className="text-3xl uppercase font-anton">Login</h1>
           {fields.map((field) => (
             <InputField
@@ -74,8 +72,7 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className="w-full cursor-pointer text-white bg-primary py-3 rounded-lg"
-            >
+              className="w-full cursor-pointer text-white bg-primary py-3 rounded-lg">
               Login
             </button>
           </div>
@@ -83,8 +80,7 @@ export default function LoginPage() {
         <Box className=" flex  justify-end  w-full max-w-[500px] ">
           <Link
             href="/verify-email?password=true"
-            className="no-underline text-primary  justify-self-end "
-          >
+            className="no-underline text-primary  justify-self-end ">
             forgot password?
           </Link>
         </Box>
@@ -119,8 +115,7 @@ export default function LoginPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-        }}
-      >
+        }}>
         <video className="w-full h-full object-cover" muted autoPlay loop>
           <source src="/placeholder1.mp4" />
         </video>
@@ -147,8 +142,7 @@ const InputField = ({ type, placeholder, label, handleChange }: InputProps) => {
     <div>
       <label
         className="block text-sm text-white lg:text-gray-600"
-        htmlFor={label}
-      >
+        htmlFor={label}>
         {label}
       </label>
       <input

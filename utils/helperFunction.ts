@@ -34,19 +34,6 @@ export function capitalizeFirstLetter(string?: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function customErrorFunc(error: any) {
-  console.error("Error:", error);
-}
-
-export function customNotification(
-  title: string,
-  message: string,
-  color: string,
-  icon?: React.ReactNode
-) {
-  console.log(`${title}: ${message}`);
-}
-
 export function transaformIncomingTourLocation(locations: any[]) {
   return locations.map((location) => ({
     ...location,
@@ -55,11 +42,7 @@ export function transaformIncomingTourLocation(locations: any[]) {
   }));
 }
 
-export function formatTourEventLocations(
-  locations: any[],
-  eventId: string,
-  isEdit: boolean
-) {
+export function formatTourEventLocations(locations: any[], eventId: string) {
   return locations.map((location) => ({
     eventId,
     startDate: location.startDate,

@@ -4,6 +4,8 @@ import "./globals.css";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import TempValueProvider from "@/components/utils/contextAPI/TempValueContext";
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,6 +49,7 @@ export default function RootLayout({
       <body className={inter.variable}>
         <TempValueProvider>
           <MantineProvider defaultColorScheme="auto">
+            <Notifications position="top-right" />
             {children}
           </MantineProvider>
         </TempValueProvider>

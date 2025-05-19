@@ -8,11 +8,18 @@ import NavDraw from "./NavDraw";
 import NavItem from "./NavItem";
 import Login from "../modal/Login";
 import { Box, Button } from "@mantine/core";
+import ProfileMenu from "../Menu/ProfileMenu";
+import useGetter from "../utils/hooks/useGetter";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const Nav = () => {
   const [scrollY, setScrollY] = useState(0);
   const [opened, { open, close }] = useDisclosure(false);
   const [show, { open: oLogin, close: cLogin }] = useDisclosure(false);
+  const token = Cookies.get("access_token");
+  const router = useRouter();
+  const { data: user } = useGetter(token ? "user" : null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +42,7 @@ const Nav = () => {
             buttonOpacity >= 1
               ? `rgba(75, 85, 99, ${opacity})`
               : `rgba(0, 0, 0, 0.9)`,
-        }}
-      >
+        }}>
         <nav className="flex justify-between">
           <div id="logo" className="flex items-center gap-10">
             <Link href={"/"}>
@@ -57,25 +63,34 @@ const Nav = () => {
             />
           )}
 
-          <Box className=" gap-4 hidden md:flex">
-            <Button
-              variant="white"
-              bg="dark.7"
-              radius={100}
-              c="white"
-              size="md"
-              onClick={oLogin}
-            >
-              Login
-            </Button>
+          <Box className=" gap-4 hidden md:flex  md:items-center">
+            {token ? (
+              <ProfileMenu image={user?.data?.imageUrl} />
+            ) : (
+              <Button
+                variant="white"
+                bg="dark.7"
+                radius={100}
+                c="white"
+                size="md"
+                onClick={oLogin}>
+                Login
+              </Button>
+            )}
+
             <Button
               variant="white"
               bg="rgb(239 121 13)"
               radius={100}
               c="white"
-              component={Link}
-              href="/create"
-            >
+              onClick={() => {
+                if (!token) {
+                  localStorage.setItem("link", "/create");
+                  oLogin();
+                } else {
+                  router.push("/create");
+                }
+              }}>
               Create Event
             </Button>
           </Box>

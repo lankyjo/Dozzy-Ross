@@ -1,5 +1,8 @@
-import { ReactNode } from "react";
-import { notifications } from "@mantine/notifications";
+import { Dispatch, ReactNode, SetStateAction } from "react";
+import { showNotification } from "@mantine/notifications";
+import { mutate } from "swr";
+import { logoutUser } from "../request";
+import Cookies from "js-cookie";
 
 export function checkEventType(
   eventType: string,
@@ -128,23 +131,30 @@ export const localTimeISO = getCurrentLocalTimeISO(timeZone);
 export function customNotification(
   title: string,
   message: string,
-  color: string,
+  color: string = "green",
   icon?: ReactNode
   // naviagate?: () => void
 ) {
-  return notifications.show({
-    title,
+  // return notifications.show({
+  //   title,
+  //   message,
+  //   color,
+  //   icon: icon,
+  //   autoClose: 3000,
+  //   styles: () => ({
+  //     title: {
+  //       fontSize: 20,
+  //       textTransform: "capitalize",
+  //       fontFamily: "poppins-bold",
+  //     },
+  //   }),
+  // });
+
+  return showNotification({
     message,
+    title,
     color,
-    icon: icon,
-    autoClose: 3000,
-    styles: () => ({
-      title: {
-        fontSize: 20,
-        textTransform: "capitalize",
-        fontFamily: "poppins-bold",
-      },
-    }),
+    icon,
   });
 }
 
@@ -186,3 +196,122 @@ export const getFilteredEvents = ({
 
   return filterEvents(allEvents, 0, 4); // If no upcoming events, take first 4 from 'events'
 };
+
+type LogoutProps = {
+  close: () => void;
+  setLoader: Dispatch<SetStateAction<boolean>>;
+};
+
+export async function logUserOut({ close, setLoader }: LogoutProps) {
+  setLoader(true);
+
+  try {
+    const res = await logoutUser();
+    if (res?.data?.success) {
+      Cookies.remove("access_token");
+      localStorage.clear();
+      sessionStorage.clear();
+      mutate(() => true, undefined, { revalidate: false }); // clear all SWR cache
+
+      // Clear cookies (if using cookies for session)
+      document.cookie.split(";").forEach((cookie) => {
+        document.cookie = cookie
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+
+      close();
+      //  window.location.reload();
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoader(false);
+  }
+}
+
+export function toLower(str: string) {
+  return str.toLowerCase();
+}
+export function startCase(str: string) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export const defaultCurrency = "$";
+export const defaultNumber = 0;
+export const defaultAcceptedCurr = "USD";
+
+export const formatStartDate = (isoDate: any) => {
+  const date = new Date(isoDate);
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
+    date.getUTCDay()
+  ];
+
+  const month = months[date.getUTCMonth()];
+
+  const day = date.getUTCDate();
+  let hour = date.getUTCHours();
+  const minute = (date.getUTCMinutes() < 10 ? "0" : "") + date.getUTCMinutes();
+  const period = hour < 12 ? "am" : "pm";
+
+  hour = hour % 12 || 12;
+
+  const year = date.getUTCFullYear().toString().slice(-2);
+
+  const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}: ${hour}:${minute} ${period}`;
+
+  return formattedDate;
+};
+
+export function isEmpty(value: unknown): boolean {
+  if (value == null) return true; // null or undefined
+
+  if (typeof value === "string") return value.trim().length === 0;
+
+  if (Array.isArray(value)) return value.length === 0;
+
+  if (typeof value === "object") return Object.keys(value).length === 0;
+
+  return false; // numbers, booleans, functions, etc.
+}
+
+export function generateUniqueRandomString(): string {
+  const generatedStrings = new Set();
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+  let randomString;
+
+  do {
+    randomString = Array.from({ length: 3 }, () =>
+      chars.charAt(Math.floor(Math.random() * chars.length))
+    ).join("");
+  } while (generatedStrings.has(randomString));
+
+  generatedStrings.add(randomString);
+  return randomString;
+}
+
+export function isValidDate(dateString: string): boolean {
+  dateString = String(dateString).trim();
+  const date = new Date(dateString);
+
+  return date instanceof Date && !isNaN(date.getTime());
+}

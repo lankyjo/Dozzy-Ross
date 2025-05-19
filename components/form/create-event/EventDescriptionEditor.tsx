@@ -1,15 +1,16 @@
+import { EventFormValues } from "@/components/global/GeneralCreateEventForm";
 import { Box, Text, Textarea } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 
-interface EventDescriptionEditorProps<T> {
-  form: UseFormReturnType<T>;
+interface EventDescriptionEditorProps {
+  form: UseFormReturnType<EventFormValues>;
   label: string;
 }
 
-export default function EventDescriptionEditor<T>({
+export default function EventDescriptionEditor({
   form,
   label,
-}: EventDescriptionEditorProps<T>) {
+}: EventDescriptionEditorProps) {
   return (
     <Box className="w-full">
       <Text className="text-gray-800 font-medium mb-2">{label}</Text>
@@ -20,7 +21,7 @@ export default function EventDescriptionEditor<T>({
         {...form.getInputProps("description")}
       />
       <Text size="xs" color="dimmed" mt={5}>
-        {form.values.description?.length || 0}/1000 characters
+        {form?.values?.description?.length || 0}/1000 characters
       </Text>
     </Box>
   );

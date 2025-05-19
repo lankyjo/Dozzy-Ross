@@ -1,6 +1,9 @@
 import { Button, Drawer, Stack } from "@mantine/core";
 import NavItem from "./NavItem";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import ConfirmLogout from "../modal/ConfirmLogout";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function NavDraw({
   opened,
@@ -11,6 +14,10 @@ export default function NavDraw({
   close: () => void;
   openLogin: () => void;
 }) {
+  const token = Cookies.get("access_token");
+  const [openedLogout, { open: openLogout, close: closed }] =
+    useDisclosure(false);
+
   return (
     <>
       <Drawer
@@ -38,22 +45,40 @@ export default function NavDraw({
           close: {
             backgroundColor: "black",
           },
-        }}
-      >
+        }}>
         <div>
           {/* Drawer content */}
           <NavItem />
+
+          {token && (
+            <ul className="gap-4 mt-3 flex flex-col md:flex-row md:gap-10">
+              <li className="font-semibold uppercase">
+                <Link href={"/profile"}>profile</Link>
+              </li>
+            </ul>
+          )}
           <Stack gap={5} mt={16}>
-            <Button
-              variant="white"
-              bg="dark.7"
-              radius={100}
-              c="white"
-              size="md"
-              onClick={openLogin}
-            >
-              Login
-            </Button>
+            {token ? (
+              <Button
+                variant="white"
+                bg="dark.7"
+                radius={100}
+                c="white"
+                size="md"
+                onClick={openLogout}>
+                Logout
+              </Button>
+            ) : (
+              <Button
+                variant="white"
+                bg="dark.7"
+                radius={100}
+                c="white"
+                size="md"
+                onClick={openLogin}>
+                Login
+              </Button>
+            )}
             <Button
               variant="white"
               bg="rgb(239 121 13)"
@@ -61,13 +86,13 @@ export default function NavDraw({
               c="white"
               component={Link}
               href="/create"
-              size="md"
-            >
+              size="md">
               Create Event
             </Button>
           </Stack>
         </div>
       </Drawer>
+      <ConfirmLogout close={closed} opened={openedLogout} />
     </>
   );
 }

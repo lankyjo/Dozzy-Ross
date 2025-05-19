@@ -25,8 +25,6 @@ export default function Home() {
     `user/public?usernameSlug=${process.env.NEXT_PUBLIC_USER_NAME}`
   );
 
-  console.log(process.env.NEXT_PUBLIC_USER_ID);
-
   useEffect(() => {
     if (events?.length) {
       setEvents(events);

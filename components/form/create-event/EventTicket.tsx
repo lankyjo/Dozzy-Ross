@@ -11,12 +11,13 @@ import {
   Text,
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import { IconPencil, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import QuestionRadiobox from "./QuestionRadiobox";
+import useSelectData from "@/components/utils/hooks/useSelectData";
 
 // Create simplified TextInput components for the demo
-function LocalTextinput({ label, placeholder, form, formKey }: any) {
+function LocalTextInput({ label, placeholder, form, formKey }: any) {
   return (
     <Box className="w-full">
       <Text className="text-gray-800 font-medium mb-2">{label}</Text>
@@ -30,7 +31,7 @@ function LocalTextinput({ label, placeholder, form, formKey }: any) {
   );
 }
 
-function LocalNumberinput({
+function LocalNumberInput({
   label,
   placeholder,
   form,
@@ -80,8 +81,7 @@ function LocalSelect({ label, data, form, formKey, description }: any) {
       )}
       <select
         className="w-full p-2 border border-gray-300 rounded"
-        {...form.getInputProps(formKey)}
-      >
+        {...form.getInputProps(formKey)}>
         <option value="">Select an option</option>
         {data?.map((item: any) => (
           <option key={item.value} value={item.value}>
@@ -100,16 +100,17 @@ export default function EventTicket({
   form: UseFormReturnType<any>;
   isTour?: boolean;
 }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
   const ticketsType = form.getInputProps("isFree").value;
   const tickets = form.getInputProps("tickets").value;
+  const { data: currencyData } = useSelectData(`currency`);
 
   // Mock currency data
-  const currencyData = [
-    { value: "USD", label: "$" },
-    { value: "EUR", label: "€" },
-    { value: "GBP", label: "£" },
-  ];
+  // const currencyData = [
+  //   { value: "USD", label: "$" },
+  //   { value: "EUR", label: "€" },
+  //   { value: "GBP", label: "£" },
+  // ];
 
   // Add a ticket to the form
   const handleAddTicketCat = () => {
@@ -192,8 +193,7 @@ export default function EventTicket({
               radius={6}
               p={10}
               mb={10}
-              className="bg-gray-50"
-            >
+              className="bg-gray-50">
               <Flex wrap="wrap" gap={10}>
                 {tickets?.map((ticket: any, idx: number) => (
                   <Badge
@@ -208,12 +208,10 @@ export default function EventTicket({
                         onClick={() => handleRemove(idx)}
                         size="xs"
                         variant="transparent"
-                        color="red"
-                      >
+                        color="red">
                         <IconX size={16} />
                       </ActionIcon>
-                    }
-                  >
+                    }>
                     {`${ticket?.ticketCat} (${
                       currencyData.find((c) => c.value === ticket?.acceptedCurr)
                         ?.label || ""
@@ -225,15 +223,15 @@ export default function EventTicket({
           )}
 
           <SimpleGrid cols={1}>
-            <Stack spacing={20}>
+            <Stack gap={20}>
               <Group grow>
-                <LocalTextinput
+                <LocalTextInput
                   label="Ticket Category"
                   placeholder="Enter name of this ticket category"
                   formKey="ticketCat"
                   form={form}
                 />
-                <LocalNumberinput
+                <LocalNumberInput
                   label="Ticket Quantity"
                   placeholder="How many tickets for this category"
                   formKey="ticketQty"
@@ -242,7 +240,7 @@ export default function EventTicket({
               </Group>
 
               <Group grow>
-                <LocalNumberinput
+                <LocalNumberInput
                   label="Ticket Price"
                   placeholder="Enter amount"
                   formKey="ticketPrice"
@@ -258,7 +256,7 @@ export default function EventTicket({
                 />
               </Group>
 
-              <LocalNumberinput
+              <LocalNumberInput
                 label="Tickets Per Purchase"
                 placeholder="Eg:. 4 tickets for a table of 4"
                 formKey="ticketsPerPurchase"
@@ -283,8 +281,7 @@ export default function EventTicket({
               variant="filled"
               color="orange"
               fullWidth
-              className="mt-6 capitalize font-medium"
-            >
+              className="mt-6 capitalize font-medium">
               Add Ticket
             </Button>
           )}

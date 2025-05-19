@@ -9,14 +9,15 @@ import {
   Text,
   Checkbox,
   Paper,
-  Textarea,
+  //Textarea,
   TextInput,
   FileInput,
   Radio,
   Select,
+  Loader,
 } from "@mantine/core";
 import { FormEvent, useState, useEffect } from "react";
-import { useForm } from "@mantine/form";
+import { useForm, UseFormReturnType } from "@mantine/form";
 import Link from "next/link";
 import EventDateTime from "@/components/form/create-event/eventDateTime";
 import EventTicket from "@/components/form/create-event/EventTicket";
@@ -30,21 +31,27 @@ import {
   calculateDuration,
   capitalizeFirstLetter,
 } from "@/utils/helperFunction";
-import { postFunc, patchFunc } from "@/utils/requests";
 import { mutate } from "swr";
+import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
+import { customErrorFunc } from "../utils/contextAPI/helperFunctions";
+
+import useSelectData from "@/components/utils/hooks/useSelectData";
+import { postFunc } from "../utils/request";
+import { useRouter } from "next/navigation";
 
 // Mock data for selects
-const categoryOptions = [
-  { value: "music", label: "Music" },
-  { value: "sports", label: "Sports" },
-  { value: "art", label: "Art & Culture" },
-  { value: "food", label: "Food & Drinks" },
-  { value: "business", label: "Business" },
-  { value: "education", label: "Education" },
-  { value: "health", label: "Health & Wellness" },
-  { value: "love", label: "Love & Romance" },
-  { value: "party", label: "Party & Hangouts" },
-];
+// const categoryOptions = [
+//   { value: "music", label: "Music" },
+//   { value: "sports", label: "Sports" },
+//   { value: "art", label: "Art & Culture" },
+//   { value: "food", label: "Food & Drinks" },
+//   { value: "business", label: "Business" },
+//   { value: "education", label: "Education" },
+//   { value: "health", label: "Health & Wellness" },
+//   { value: "love", label: "Love & Romance" },
+//   { value: "party", label: "Party & Hangouts" },
+// ];
 
 // Initial form values
 const createEventInitialValues = {
@@ -91,60 +98,60 @@ const createEventInitialValues = {
   ticketsPerPurchase: 1,
 };
 
-interface SubcategoryMapping {
-  [key: string]: { value: string; label: string }[];
-}
+// interface SubcategoryMapping {
+//   [key: string]: { value: string; label: string }[];
+// }
 
-const subcategoryOptions: SubcategoryMapping = {
-  music: [
-    { value: "concert", label: "Concert" },
-    { value: "festival", label: "Festival" },
-    { value: "live_performance", label: "Live Performance" },
-  ],
-  sports: [
-    { value: "football", label: "Football" },
-    { value: "basketball", label: "Basketball" },
-    { value: "tennis", label: "Tennis" },
-  ],
-  art: [
-    { value: "exhibition", label: "Exhibition" },
-    { value: "theater", label: "Theater" },
-    { value: "museum", label: "Museum" },
-  ],
-  food: [
-    { value: "food_festival", label: "Food Festival" },
-    { value: "wine_tasting", label: "Wine Tasting" },
-    { value: "cooking_class", label: "Cooking Class" },
-  ],
-  business: [
-    { value: "conference", label: "Conference" },
-    { value: "networking", label: "Networking" },
-    { value: "workshop", label: "Workshop" },
-  ],
-  education: [
-    { value: "seminar", label: "Seminar" },
-    { value: "webinar", label: "Webinar" },
-    { value: "training", label: "Training" },
-  ],
-  health: [
-    { value: "yoga", label: "Yoga" },
-    { value: "fitness", label: "Fitness" },
-    { value: "meditation", label: "Meditation" },
-  ],
-  love: [
-    { value: "wedding", label: "Wedding" },
-    { value: "engagement", label: "Engagement" },
-    { value: "anniversary", label: "Anniversary" },
-  ],
-  party: [
-    { value: "birthday", label: "Birthday" },
-    { value: "night_out", label: "Night Out" },
-    { value: "social", label: "Social Gathering" },
-  ],
-};
+// const subcategoryOptions: SubcategoryMapping = {
+//   music: [
+//     { value: "concert", label: "Concert" },
+//     { value: "festival", label: "Festival" },
+//     { value: "live_performance", label: "Live Performance" },
+//   ],
+//   sports: [
+//     { value: "football", label: "Football" },
+//     { value: "basketball", label: "Basketball" },
+//     { value: "tennis", label: "Tennis" },
+//   ],
+//   art: [
+//     { value: "exhibition", label: "Exhibition" },
+//     { value: "theater", label: "Theater" },
+//     { value: "museum", label: "Museum" },
+//   ],
+//   food: [
+//     { value: "food_festival", label: "Food Festival" },
+//     { value: "wine_tasting", label: "Wine Tasting" },
+//     { value: "cooking_class", label: "Cooking Class" },
+//   ],
+//   business: [
+//     { value: "conference", label: "Conference" },
+//     { value: "networking", label: "Networking" },
+//     { value: "workshop", label: "Workshop" },
+//   ],
+//   education: [
+//     { value: "seminar", label: "Seminar" },
+//     { value: "webinar", label: "Webinar" },
+//     { value: "training", label: "Training" },
+//   ],
+//   health: [
+//     { value: "yoga", label: "Yoga" },
+//     { value: "fitness", label: "Fitness" },
+//     { value: "meditation", label: "Meditation" },
+//   ],
+//   love: [
+//     { value: "wedding", label: "Wedding" },
+//     { value: "engagement", label: "Engagement" },
+//     { value: "anniversary", label: "Anniversary" },
+//   ],
+//   party: [
+//     { value: "birthday", label: "Birthday" },
+//     { value: "night_out", label: "Night Out" },
+//     { value: "social", label: "Social Gathering" },
+//   ],
+// };
 
 // Define types for form values and handler functions
-interface EventFormValues {
+export interface EventFormValues {
   banner: { url: string };
   editBanner: any;
   eventTitle: string;
@@ -349,6 +356,60 @@ async function handleCreateEvent({
   }
 }
 
+const handleImageConvertUpload = async ({
+  file,
+  form,
+  setIsUpload,
+}: {
+  file: File[];
+  form: UseFormReturnType<EventFormValues>;
+  setIsUpload: (val: boolean) => void;
+}) => {
+  if (!file.length) throw new Error("No file selected");
+
+  const reader = new FileReader();
+  reader.onloadend = async () => {
+    const base64Image = reader.result;
+
+    setIsUpload(true);
+
+    try {
+      // You can now use the base64Image for your API call or other logic
+      const response = await fetch("/api/convert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64Image }),
+      });
+
+      // image returned is in Buffer(binary) format (Node.js)
+      await response.json();
+      // request for pre-signed url
+      const url =
+        process.env.NEXT_PUBLIC_BASE_API_URL + "media-upload/pre-signed-url";
+      const reqRes = await axiosInstance.post(url, {
+        folder: "event",
+        mimeType: "image/jpeg",
+      });
+
+      if (reqRes?.data?.success) {
+        await axios.put(reqRes.data.data.uploadUrl, file[0], {
+          headers: {
+            "Content-Type": file[0].type,
+          },
+        });
+        form.setFieldValue("banner.url", reqRes.data.data.fileUrl);
+        form.setFieldValue("bannerFile", file);
+      }
+    } catch (error) {
+      console.log("this is the error  ==== ", error);
+      customErrorFunc(error);
+    } finally {
+      setIsUpload(false);
+    }
+  };
+  reader.readAsDataURL(file[0]);
+};
+
 export default function GeneralCreateEventForm() {
   const [loader, setLoader] = useState<boolean>(false);
   const [showDialogue, setShowDialog] = useState(false);
@@ -362,11 +423,16 @@ export default function GeneralCreateEventForm() {
     id: string;
     name: string;
   }>({ id: "", name: "" });
-  const [subcategories, setSubcategories] = useState<
-    { value: string; label: string }[]
-  >([]);
+  const router = useRouter();
+  // const [subcategories, setSubcategories] = useState<
+  //   { value: string; label: string }[]
+  // >([]);
+  const [isUpload, setIsUpload] = useState(false);
 
-  const form = useForm({
+  const { data: categoryOptions, isLoading: categoryLoading } =
+    useSelectData("category");
+
+  const form = useForm<EventFormValues>({
     initialValues: createEventInitialValues,
     validate: {
       eventTitle: (value: string) => {
@@ -421,6 +487,12 @@ export default function GeneralCreateEventForm() {
     validateInputOnChange: true,
     validateInputOnBlur: true,
   });
+
+  const { data: subcategories, isLoading: subCategoryLoading } = useSelectData(
+    form?.values?.category
+      ? `category/sub-categories?categoryId=${form?.values?.category}`
+      : null
+  );
 
   useEffect(() => {
     if (form.values.ageRestriction?.toLowerCase() === "no") {
@@ -505,7 +577,7 @@ export default function GeneralCreateEventForm() {
     if (value) {
       form.setFieldValue("category", value);
       form.setFieldValue("subcategory", "");
-      setSubcategories(subcategoryOptions[value] || []);
+      // setSubcategories(subcategoryOptions[value] || []);
 
       // Set the selected type for more complex form logic
       const category = categoryOptions.find((cat) => cat.value === value);
@@ -551,8 +623,7 @@ export default function GeneralCreateEventForm() {
         <form
           onSubmit={form.onSubmit((values: any, event: any) => {
             handleSubmitEvent({ values, event });
-          })}
-        >
+          })}>
           <Stepper
             color="yellow"
             active={active}
@@ -568,25 +639,21 @@ export default function GeneralCreateEventForm() {
                 fontSize: 12,
                 fontFamily: "poppins-regular",
               },
-            }}
-          >
+            }}>
             <Stepper.Step
               label="Event Details"
-              description="Tell us about your event"
-            >
+              description="Tell us about your event">
               <Paper
                 withBorder
                 p="md"
                 radius="md"
-                className="mt-6 mb-6 bg-gray-50"
-              >
+                className="mt-6 mb-6 bg-gray-50">
                 <Stack gap="xl">
                   <Box>
                     <Text
                       size="lg"
                       fw={600}
-                      className="pb-2 border-b border-gray-200"
-                    >
+                      className="pb-2 border-b border-gray-200">
                       Event Banner
                     </Text>
                     <FileInput
@@ -595,8 +662,16 @@ export default function GeneralCreateEventForm() {
                       placeholder="Click to upload"
                       accept="image/png,image/jpeg,image/webp"
                       leftSection={<IconUpload size={14} />}
+                      rightSection={isUpload ? <Loader size={20} /> : null}
                       withAsterisk
                       {...form.getInputProps("bannerFile")}
+                      onChange={(e) => {
+                        handleImageConvertUpload({
+                          file: e ? [e] : [],
+                          setIsUpload,
+                          form,
+                        });
+                      }}
                     />
                   </Box>
 
@@ -604,12 +679,14 @@ export default function GeneralCreateEventForm() {
                     <Text
                       size="lg"
                       fw={600}
-                      className="pb-2 border-b border-gray-200"
-                    >
+                      className="pb-2 border-b border-gray-200">
                       Event Category
                     </Text>
                     <Select
                       label="Event Category"
+                      rightSection={
+                        categoryLoading ? <Loader type="dots" /> : null
+                      }
                       placeholder="Select a category"
                       data={categoryOptions}
                       withAsterisk
@@ -621,6 +698,9 @@ export default function GeneralCreateEventForm() {
                       <Select
                         label="Event Subcategory"
                         placeholder="Select a subcategory"
+                        rightSection={
+                          subCategoryLoading ? <Loader type="dots" /> : null
+                        }
                         data={subcategories}
                         withAsterisk
                         disabled={!form.values.category}
@@ -633,8 +713,7 @@ export default function GeneralCreateEventForm() {
                     <Text
                       size="lg"
                       fw={600}
-                      className="pb-2 border-b border-gray-200"
-                    >
+                      className="pb-2 border-b border-gray-200">
                       Event Details
                     </Text>
 
@@ -657,8 +736,7 @@ export default function GeneralCreateEventForm() {
                     <Text
                       size="lg"
                       fw={600}
-                      className="pb-2 border-b border-gray-200"
-                    >
+                      className="pb-2 border-b border-gray-200">
                       Event Schedule
                     </Text>
                     <EventDateTime form={form} isEdit={false} />
@@ -668,8 +746,7 @@ export default function GeneralCreateEventForm() {
                     <Text
                       size="lg"
                       fw={600}
-                      className="pb-2 border-b border-gray-200"
-                    >
+                      className="pb-2 border-b border-gray-200">
                       Event Location
                     </Text>
                     <Radio.Group
@@ -677,8 +754,7 @@ export default function GeneralCreateEventForm() {
                       label="Where will this event be held?"
                       description="Select the type of venue"
                       withAsterisk
-                      {...form.getInputProps("eventLocationType")}
-                    >
+                      {...form.getInputProps("eventLocationType")}>
                       <Group mt="xs">
                         <Radio value="physical" label="Physical Venue" />
                         <Radio value="online" label="Online" />
@@ -736,8 +812,7 @@ export default function GeneralCreateEventForm() {
                       <Text
                         size="lg"
                         fw={600}
-                        className="pb-2 border-b border-gray-200"
-                      >
+                        className="pb-2 border-b border-gray-200">
                         Couple Information
                       </Text>
                       <Group grow mt="md">
@@ -760,8 +835,7 @@ export default function GeneralCreateEventForm() {
                       <Text
                         size="lg"
                         fw={600}
-                        className="pb-2 border-b border-gray-200"
-                      >
+                        className="pb-2 border-b border-gray-200">
                         Teams Information
                       </Text>
                       <Group grow mt="md">
@@ -790,13 +864,11 @@ export default function GeneralCreateEventForm() {
                   withBorder
                   p="md"
                   radius="md"
-                  className="mt-6 mb-6 bg-gray-50"
-                >
+                  className="mt-6 mb-6 bg-gray-50">
                   <Text
                     size="lg"
                     fw={600}
-                    className="pb-2 border-b border-gray-200"
-                  >
+                    className="pb-2 border-b border-gray-200">
                     Ticket Information
                   </Text>
 
@@ -814,13 +886,11 @@ export default function GeneralCreateEventForm() {
                   withBorder
                   p="md"
                   radius="md"
-                  className="mb-6 bg-gray-50"
-                >
+                  className="mb-6 bg-gray-50">
                   <Text
                     size="lg"
                     fw={600}
-                    className="pb-2 border-b border-gray-200"
-                  >
+                    className="pb-2 border-b border-gray-200">
                     Event Restrictions
                   </Text>
 
@@ -843,13 +913,11 @@ export default function GeneralCreateEventForm() {
                   withBorder
                   p="md"
                   radius="md"
-                  className="mb-6 bg-gray-50"
-                >
+                  className="mb-6 bg-gray-50">
                   <Text
                     size="lg"
                     fw={600}
-                    className="pb-2 border-b border-gray-200"
-                  >
+                    className="pb-2 border-b border-gray-200">
                     Event Privacy
                   </Text>
 
@@ -886,8 +954,7 @@ export default function GeneralCreateEventForm() {
                   withBorder
                   p="md"
                   radius="md"
-                  className="mt-6 mb-6 bg-gray-50"
-                >
+                  className="mt-6 mb-6 bg-gray-50">
                   <Text size="xl" fw={500}>
                     You are about to submit your event!
                   </Text>
@@ -912,8 +979,7 @@ export default function GeneralCreateEventForm() {
                         I agree to{" "}
                         <Link
                           href={"/policies"}
-                          className="text-secondary_color"
-                        >
+                          className="text-secondary_color">
                           Ogaticket terms & policy{" "}
                         </Link>
                       </Text>
@@ -929,8 +995,7 @@ export default function GeneralCreateEventForm() {
                     variant="filled"
                     className={`font-medium capitalize w-full bg-secondary_color text-white mx-auto mt-6 ${
                       loader ? "pointer-events-none" : ""
-                    }`}
-                  >
+                    }`}>
                     Submit
                   </Button>
                 </Paper>
@@ -950,8 +1015,7 @@ export default function GeneralCreateEventForm() {
                 variant="filled"
                 color="orange"
                 className="font-medium capitalize bg-secondary_color text-white"
-                onClick={nextStep}
-              >
+                onClick={nextStep}>
                 Next step
               </Button>
             )}
@@ -967,11 +1031,15 @@ export default function GeneralCreateEventForm() {
             </h3>
             <p>{showEventDialogue.message}</p>
             <Button
-              onClick={() => setShowDialog(false)}
+              onClick={() => {
+                if (showEventDialogue.success) {
+                  router.push("/profile");
+                }
+                setShowDialog(false);
+              }}
               className="mt-4 bg-secondary_color text-white"
               variant="filled"
-              color="orange"
-            >
+              color="orange">
               Close
             </Button>
           </div>
