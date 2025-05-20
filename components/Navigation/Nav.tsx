@@ -12,6 +12,7 @@ import ProfileMenu from "../Menu/ProfileMenu";
 import useGetter from "../utils/hooks/useGetter";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import Logo from "../utils/Logo";
 
 const Nav = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -45,11 +46,7 @@ const Nav = () => {
         }}>
         <nav className="flex justify-between">
           <div id="logo" className="flex items-center gap-10">
-            <Link href={"/"}>
-              <h1 className="text-3xl font-anton uppercase font-bold">
-                <span className="text-primary">AFRO</span> EVENTS MIAMI
-              </h1>
-            </Link>
+            <Logo/>
             <div className="hidden md:block">
               <NavItem />
             </div>

@@ -1,25 +1,39 @@
-import Image from 'next/image';
-import React from 'react';
+'use client'
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Sponsors = () => {
+  const [sponsors, setSponsors] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchSponsors = async () => {
+      const res = await fetch("/api/details");
+      const data = await res.json();
+      setSponsors(data?.sponsors || []);
+    };
+
+    fetchSponsors();
+  }, []);
+
   return (
-    <section className='bg-[#1ac1f6c] padding'>
-      <div className='contain flex flex-col md:flex-row gap-10 justify-center items-center'>
-        {/* Using a responsive grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-10">
-          {
-            [1, 2, 3, 4, 5, 2].map((item, index) => (
-              <Image
-                src={`/logo${item}.png`}
-                key={index}
-                width={150}
-                height={150}
-                alt={`Sponsor ${item}`}
-                className="mx-auto" // Center images within their grid cell
-              />
-            ))
-          }
-        </div>
+    <section className="py-16 bg-black text-white">
+      <div className="contain grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center">
+        {sponsors.map((sponsor: any) => {
+          const img = sponsor?.sponsorsImage;
+          return (
+            <div key={sponsor.id} className="flex items-center justify-center">
+              {img?.url && (
+                <Image
+                  src={img.url}
+                  alt={img.alt || "sponsor logo"}
+                  width={150}
+                  height={img.height ?? 150}
+                  className="filter grayscale"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
