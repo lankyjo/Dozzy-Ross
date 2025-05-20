@@ -1,86 +1,65 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { IoClose } from "react-icons/io5";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+'use client';
 
-const images = [
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260526/Afrobeat%20miami/IMG_6025_wkbeak.jpg",
-    alt: "Event 1",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260519/Afrobeat%20miami/IMG_6027_lqqvth.jpg",
-    alt: "Event 2",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260522/Afrobeat%20miami/IMG_6031_jddomi.jpg",
-    alt: "Event 3",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260524/Afrobeat%20miami/IMG_6028_ox2lf8.jpg",
-    alt: "Event 4",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745260521/Afrobeat%20miami/IMG_6030_pbu6q9.jpg",
-    alt: "Event 5",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306521/Afrobeat%20miami/90007CDB-B801-4876-ABB0-0EB53AAE8969_bqnpyk.jpg",
-    alt: "Event 6",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306087/Afrobeat%20miami/FC248BB3-1F8A-4776-8CFF-E29479473296_cqthwz.jpg",
-    alt: "Event 7",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306085/Afrobeat%20miami/727A708E-5EC6-446C-914F-51973CBD3434_suhsxq.jpg",
-    alt: "Event 8",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306082/Afrobeat%20miami/25A9A0EF-B5E4-4228-8C0D-8BDFBF0029B2_v8lbat.jpg",
-    alt: "Event 9",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306079/Afrobeat%20miami/91E511EE-C15D-4FD9-AD1F-FBD52C6C6595_kg0vvt.jpg",
-    alt: "Event 10",
-  },
-  {
-    url: "https://res.cloudinary.com/isreal/image/upload/v1745306078/Afrobeat%20miami/3DA383CC-1D40-45C8-9551-5AD33748FE8A_oeartz.jpg",
-    alt: "Event 11",
-  },
-];
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoClose } from 'react-icons/io5';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-const ImageCarousel = () => {
+type CMSImage = {
+  image: {
+    url: string;
+    alt?: string;
+  };
+};
+
+const ImageCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [images, setImages] = useState<CMSImage[]>([]);
+  const [imageLoading, setImageLoading] = useState(true); 
 
   useEffect(() => {
-    if (!isModalOpen) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000);
-      return () => clearInterval(timer);
-    }
-  }, [isModalOpen]);
+    (async () => {
+      const res = await fetch('/api/details');
+      const landingDetails = await res.json();
+      setImages(landingDetails.imageCarousel ?? []);
+    })();
+  }, []);
 
-  const handleImageClick = () => {
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    if (isModalOpen || images.length === 0) return;
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+    const timer = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % images.length);
+    }, 3_000);
+
+    return () => clearInterval(timer);
+  }, [isModalOpen, images.length]);
 
   const goToPrevious = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
+    setImageLoading(true);
+    setCurrentIndex((i) => (i - 1 + images.length) % images.length);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setImageLoading(true);
+    setCurrentIndex((i) => (i + 1) % images.length);
   };
+
+  if (images.length === 0) {
+    return (
+      <section className="w-full py-20 bg-black">
+        <div className="contain text-white text-center">
+          <p>Loading carousel…</p>
+        </div>
+      </section>
+    );
+  }
+
+  const active = images[currentIndex];
+  const activeSrc = active?.image?.url;
+  const activeAlt = active?.image?.alt ?? 'Event image';
 
   return (
     <section className="w-full py-20 bg-black">
@@ -88,6 +67,8 @@ const ImageCarousel = () => {
         <h2 className="text-3xl font-anton font-bold text-white mb-10 text-center">
           Event Highlights
         </h2>
+
+        {/* ─────────── Carousel (main view) ─────────── */}
         <div className="relative w-full h-[400px] overflow-hidden rounded-2xl cursor-pointer">
           <AnimatePresence mode="wait">
             <motion.div
@@ -97,26 +78,41 @@ const ImageCarousel = () => {
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.5 }}
               className="absolute inset-0"
-              onClick={handleImageClick}
+              onClick={() => setIsModalOpen(true)}
             >
-              <Image
-                src={images[currentIndex].url}
-                alt={images[currentIndex].alt}
-                fill
-                className="rounded-2xl object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+              {activeSrc && (
+                <Image
+                  src={activeSrc}
+                  alt={activeAlt}
+                  fill
+                  onLoad={() => setImageLoading(false)} 
+                  className={`rounded-2xl object-cover transition-opacity duration-300 ${
+                    imageLoading ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  sizes="(max-width: 768px) 100vw,
+                         (max-width: 1200px) 50vw,
+                         33vw"
+                />
+              )}
+
+              {/* Loader overlay */}
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20 rounded-2xl">
+                  <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+
               <div className="absolute inset-0 bg-black/30 rounded-2xl" />
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation arrows */}
+          {/* arrows */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               goToPrevious();
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-2 rounded-full transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-2 rounded-full"
             aria-label="Previous image"
           >
             <IoIosArrowBack size={24} />
@@ -127,23 +123,24 @@ const ImageCarousel = () => {
               e.stopPropagation();
               goToNext();
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-2 rounded-full transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-2 rounded-full"
             aria-label="Next image"
           >
             <IoIosArrowForward size={24} />
           </button>
 
-          {/* Navigation dots */}
+          {/* dots */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
+            {images.map((_, i) => (
               <button
-                key={index}
+                key={i}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setCurrentIndex(index);
+                  setImageLoading(true); 
+                  setCurrentIndex(i);
                 }}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  currentIndex === index ? "bg-primary w-6" : "bg-white/50"
+                  currentIndex === i ? 'bg-primary w-6' : 'bg-white/50'
                 }`}
               />
             ))}
@@ -151,7 +148,7 @@ const ImageCarousel = () => {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* ─────────── Modal ─────────── */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -159,7 +156,7 @@ const ImageCarousel = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-            onClick={handleCloseModal}
+            onClick={() => setIsModalOpen(false)}
           >
             <motion.div
               initial={{ scale: 0.5 }}
@@ -168,20 +165,21 @@ const ImageCarousel = () => {
               className="relative max-w-4xl w-full mx-4"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* close */}
               <button
-                onClick={handleCloseModal}
-                className="absolute -top-12 right-0 text-white hover:text-primary transition-colors"
+                onClick={() => setIsModalOpen(false)}
+                className="absolute -top-12 right-0 text-white hover:text-primary"
               >
                 <IoClose size={32} />
               </button>
 
-              {/* Modal navigation arrows */}
+              {/* arrows */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   goToPrevious();
                 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-3 rounded-full transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-3 rounded-full"
                 aria-label="Previous image"
               >
                 <IoIosArrowBack size={28} />
@@ -192,33 +190,48 @@ const ImageCarousel = () => {
                   e.stopPropagation();
                   goToNext();
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-3 rounded-full transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-primary text-white p-3 rounded-full"
                 aria-label="Next image"
               >
                 <IoIosArrowForward size={28} />
               </button>
 
               <div className="relative aspect-video">
-                <Image
-                  src={images[currentIndex].url}
-                  alt={images[currentIndex].alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-lg object-contain"
-                />
+                {activeSrc && (
+                  <Image
+                    src={activeSrc}
+                    alt={activeAlt}
+                    fill
+                    onLoad={() => setImageLoading(false)} 
+                    className={`rounded-lg object-contain transition-opacity duration-300 ${
+                      imageLoading ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    sizes="(max-width: 768px) 100vw,
+                           (max-width: 1200px) 50vw,
+                           33vw"
+                  />
+                )}
+
+                {/* Loader overlay */}
+                {imageLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/20 rounded-lg">
+                    <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
               </div>
 
-              {/* Modal navigation dots */}
+              {/* dots */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {images.map((_, index) => (
+                {images.map((_, i) => (
                   <button
-                    key={index}
+                    key={i}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setCurrentIndex(index);
+                      setImageLoading(true); 
+                      setCurrentIndex(i);
                     }}
                     className={`w-3 h-3 rounded-full transition-all ${
-                      currentIndex === index ? "bg-primary w-6" : "bg-white/50"
+                      currentIndex === i ? 'bg-primary w-6' : 'bg-white/50'
                     }`}
                   />
                 ))}
