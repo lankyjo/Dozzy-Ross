@@ -3,6 +3,13 @@ import { showNotification } from "@mantine/notifications";
 import { mutate } from "swr";
 import { logoutUser } from "../request";
 import Cookies from "js-cookie";
+import dayjs from "dayjs";
+
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export function checkEventType(
   eventType: string,
@@ -315,3 +322,42 @@ export function isValidDate(dateString: string): boolean {
 
   return date instanceof Date && !isNaN(date.getTime());
 }
+
+export function newDateFormatter(date: string): string {
+  const ty = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const formattedDate = dayjs(date).tz(ty).format("ddd, MMM D, YYYY : hh:mm A");
+  return formattedDate;
+}
+
+export function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export const formatTimeDuration = (
+  startDate: any | number | Date,
+  endDate: any | number | Date
+) => {
+  // Convert the start and end dates to Date objects
+  const start = new Date(startDate).getTime();
+  const end = new Date(endDate).getTime();
+
+  // Calculate the difference in milliseconds
+  //  " @ts-ignore "
+  const durationMs = end - start;
+
+  // Calculate days, hours, and minutes
+  const days = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (durationMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Construct formatted output based on conditions
+  if (days > 0) {
+    return `${days} days, ${hours} hrs, ${minutes} mins`;
+  } else if (hours > 0) {
+    return `${hours} hrs, ${minutes} mins`;
+  } else {
+    return `${minutes} mins`;
+  }
+};

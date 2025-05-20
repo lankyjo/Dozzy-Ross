@@ -22,7 +22,7 @@ import Link from "next/link";
 import EventDateTime from "@/components/form/create-event/eventDateTime";
 import EventTicket from "@/components/form/create-event/EventTicket";
 import QuestionRadiobox from "@/components/form/create-event/QuestionRadiobox";
-import ServiceFee from "@/components/form/create-event/ServiceFee";
+//import ServiceFee from "@/components/form/create-event/ServiceFee";
 import AgeLimit from "../form/create-event/AgeLimit";
 import EventDescriptionEditor from "../form/create-event/EventDescriptionEditor";
 import { IconUpload } from "@tabler/icons-react";
@@ -39,6 +39,9 @@ import { customErrorFunc } from "../utils/contextAPI/helperFunctions";
 import useSelectData from "@/components/utils/hooks/useSelectData";
 import { postFunc } from "../utils/request";
 import { useRouter } from "next/navigation";
+import usePost from "../utils/hooks/usePost";
+import { useDebounce } from "../utils/hooks/useDebounce";
+import GoodCheckIcon from "../icons/GoodCheckIcon";
 
 // Mock data for selects
 // const categoryOptions = [
@@ -73,7 +76,7 @@ const createEventInitialValues = {
   maxCap: "",
   isFree: "yes",
   isPrivate: "no",
-  feePayer: "organizer",
+  feePayer: "user",
   acceptedCurr: "",
   wishes: [],
   tickets: [],
@@ -401,7 +404,6 @@ const handleImageConvertUpload = async ({
         form.setFieldValue("bannerFile", file);
       }
     } catch (error) {
-      console.log("this is the error  ==== ", error);
       customErrorFunc(error);
     } finally {
       setIsUpload(false);
@@ -424,6 +426,7 @@ export default function GeneralCreateEventForm() {
     name: string;
   }>({ id: "", name: "" });
   const router = useRouter();
+
   // const [subcategories, setSubcategories] = useState<
   //   { value: string; label: string }[]
   // >([]);
@@ -462,10 +465,10 @@ export default function GeneralCreateEventForm() {
           : null;
       },
       description: (value: string) => {
-        const wordCount = value?.trim()?.length;
-        if (wordCount > 1000) {
-          return `Description should not exceed 1000 characters. Currently: ${wordCount} characters.`;
-        }
+        // const wordCount = value?.trim()?.length;
+        // if (wordCount > 1000) {
+        //   return `Description should not exceed 1000 characters. Currently: ${wordCount} characters.`;
+        // }
         if (!Boolean(value)) {
           return "Required";
         }
@@ -487,6 +490,17 @@ export default function GeneralCreateEventForm() {
     validateInputOnChange: true,
     validateInputOnBlur: true,
   });
+
+  const { trigger, data, isLoading } = usePost("event/check-name-availability");
+
+  const debouncedValue = useDebounce(form.values.eventTitle, 500);
+
+  useEffect(() => {
+    if (!debouncedValue) return;
+    trigger({
+      title: debouncedValue,
+    });
+  }, [debouncedValue, trigger]);
 
   const { data: subcategories, isLoading: subCategoryLoading } = useSelectData(
     form?.values?.category
@@ -662,7 +676,9 @@ export default function GeneralCreateEventForm() {
                       placeholder="Click to upload"
                       accept="image/png,image/jpeg,image/webp"
                       leftSection={<IconUpload size={14} />}
-                      rightSection={isUpload ? <Loader size={20} /> : null}
+                      rightSection={
+                        isUpload ? <Loader size={20} color="#EF790D" /> : null
+                      }
                       withAsterisk
                       {...form.getInputProps("bannerFile")}
                       onChange={(e) => {
@@ -716,13 +732,33 @@ export default function GeneralCreateEventForm() {
                       className="pb-2 border-b border-gray-200">
                       Event Details
                     </Text>
+                    <div>
+                      <TextInput
+                        label="Event Title"
+                        placeholder="Enter your event title"
+                        withAsterisk
+                        {...form.getInputProps("eventTitle")}
+                        rightSection={
+                          <>
+                            {isLoading && <Loader size={20} color="#EF790D" />}
 
-                    <TextInput
-                      label="Event Title"
-                      placeholder="Enter your event title"
-                      withAsterisk
-                      {...form.getInputProps("eventTitle")}
-                    />
+                            {data?.data?.isAvailable &&
+                              !isLoading &&
+                              form?.values?.eventTitle && <GoodCheckIcon />}
+                          </>
+                        }
+                      />
+                      <div
+                        className={` text-red-400 text-xs   ${
+                          data?.success &&
+                          !data?.data?.isAvailable &&
+                          form?.values?.eventTitle
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}>
+                        Event title already taken
+                      </div>
+                    </div>
 
                     <Box mt="md">
                       <EventDescriptionEditor
@@ -876,9 +912,9 @@ export default function GeneralCreateEventForm() {
                     <EventTicket form={form} />
                   </Box>
 
-                  <Box className="mt-6">
+                  {/* <Box className="mt-6">
                     <ServiceFee form={form} />
-                  </Box>
+                  </Box> */}
                 </Paper>
 
                 {/* Event Restrictions */}

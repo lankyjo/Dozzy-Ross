@@ -1,13 +1,12 @@
 import { Box, Button, Modal, Text } from "@mantine/core";
 import { Dispatch, SetStateAction } from "react";
 
-import { useRouter } from "next/router";
-
 import { useViewportSize } from "@mantine/hooks";
 import Confetti from "react-confetti";
 import IconFailure from "../icons/IconFailure";
 import IconSuccess from "../icons/IconSuccess";
 import { isEmpty } from "../utils/contextAPI/helperFunctions";
+import { useRouter } from "next/navigation";
 
 export default function SearchDialog({
   opened,
@@ -37,8 +36,7 @@ export default function SearchDialog({
 
   return (
     <>
-      {message?.success && <Confetti width={width} height={height} />}
-
+      {message?.success && <Confetti width={width} height={height} />}s
       <Modal
         opened={opened}
         onClose={() => close(false)}

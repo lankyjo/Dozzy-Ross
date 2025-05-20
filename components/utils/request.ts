@@ -87,6 +87,14 @@ export async function postFunc<DataProps>({
   return response;
 }
 
+export async function post<DataProps>(
+  url: string,
+  { arg }: { arg: DataProps }
+): Promise<any> {
+  const response = await axiosInstance.post(url, arg);
+  return response.data; // Or `response` if you prefer full AxiosResponse
+}
+
 export async function deleteFunc<DataProps>({
   url,
   values,

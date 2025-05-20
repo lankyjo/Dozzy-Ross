@@ -218,7 +218,7 @@ export default function EventOverviewTabs() {
     <div className="w-full mt-6">
       {isLoading ? (
         <Flex h={500} justify="center" align="center" mt={30}>
-          <Loader size={24} color="white" />
+          <Loader color="white" />
         </Flex>
       ) : (
         <>
@@ -230,7 +230,7 @@ export default function EventOverviewTabs() {
                     key={item.id}
                     value={item.value}
                     className="capitalize text-text_label font-normal font-poppins-regular text-[13px] md:text-[15px]">
-                    {item.label}
+                    <span className=" capitalize text-white">{item.label}</span>
                   </Tabs.Tab>
                 ))}
               </Tabs.List>
@@ -245,7 +245,10 @@ export default function EventOverviewTabs() {
                         <Box mt={32}>
                           <>
                             {seeEventSales && (
-                              <Text className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
+                              <Text
+                                fw={"bold"}
+                                c={"white"}
+                                className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
                                 Available Balance
                               </Text>
                             )}
@@ -267,7 +270,9 @@ export default function EventOverviewTabs() {
                                     }
                                   }
                                 }}>
-                                <Text className="font-poppins-semibold text-[30px] mt-[-20px] flex ">
+                                <Text
+                                  c={"white"}
+                                  className="font-poppins-semibold text-[30px] mt-[-20px] flex ">
                                   {eventDetail?.currency?.symbol ||
                                     defaultCurrency}
                                   {eventDetail?.availableBalanceAmount
@@ -278,6 +283,7 @@ export default function EventOverviewTabs() {
                                 </Text>
 
                                 <Text
+                                  c={"white"}
                                   onClick={() => setOpenModal(true)}
                                   className="transition-all duration-300 mt-[-10px] ml-[-10px] ease-in-out transform group-hover:translate-y-1">
                                   <ArrowDownIcon />
@@ -285,10 +291,14 @@ export default function EventOverviewTabs() {
                               </Flex>
                             ) : (
                               <Box className="flex flex-col items-start justify-start">
-                                <Text className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
+                                <Text
+                                  c={"white"}
+                                  className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
                                   Available Balance
                                 </Text>
-                                <Text className="font-poppins-semibold text-[30px] ">
+                                <Text
+                                  c={"white"}
+                                  className="font-poppins-semibold text-[30px] ">
                                   {"$"}
                                   {eventDetail?.availableBalanceAmount
                                     ? Math.round(
@@ -301,8 +311,8 @@ export default function EventOverviewTabs() {
                             {/* j */}
                             <Menu shadow="md" width={300} position="bottom-end">
                               <Menu.Target>
-                                <ActionIcon>
-                                  <IconDotsVertical size={30} />
+                                <ActionIcon bg={"white"}>
+                                  <IconDotsVertical color="#171717" size={30} />
                                 </ActionIcon>
                               </Menu.Target>
                               <Menu.Dropdown>
@@ -556,16 +566,18 @@ export default function EventOverviewTabs() {
                           <div
                             className="flex items-center gap-2"
                             onClick={() => setOpenSalesModal(true)}>
-                            <Text className="text-[#342D50] text-[13px] md:text-[14px]">
+                            <Text
+                              c={"#171717"}
+                              className="text-[#342D50] text-[13px] md:text-[14px]">
                               Registered
                             </Text>
                             {!isEmpty(overview) && (
-                              <div className="transition-all duration-300 ease-in-out transform hover:translate-y-1">
+                              <div className=" text-[#171717] transition-all duration-300 ease-in-out transform hover:translate-y-1">
                                 <ArrowDownIcon />
                               </div>
                             )}
                           </div>
-                          <div className=" ">
+                          <div className="text-[#171717]  ">
                             <span className="text-secondary_color ">
                               {eventDetail?.totalTicketsSold
                                 ? eventDetail?.totalTicketsSold?.toLocaleString()
@@ -664,16 +676,24 @@ export default function EventOverviewTabs() {
                         )}
 
                         <Box className="flex justify-between  my-2 text-[13px] md:text-[14px]">
-                          <Text className="   text-[#342D50]">Checked In</Text>
-                          <Text className=" text-secondary_color ">
+                          <Text c={"#171717"} className="   text-[#342D50]">
+                            Checked In
+                          </Text>
+                          <Text
+                            c={"#171717"}
+                            className=" text-secondary_color ">
                             {eventDetail?.totalCheckedIn
                               ? eventDetail?.totalCheckedIn?.toLocaleString()
                               : defaultNumber}
                           </Text>
                         </Box>
                         <Box className="flex justify-between  mb-2 text-[13px] md:text-[14px]">
-                          <Text className="   text-[#342D50]">Unchecked</Text>
-                          <Text className=" text-secondary_color ">
+                          <Text c={"#171717"} className="   text-[#342D50]">
+                            Unchecked
+                          </Text>
+                          <Text
+                            c={"#171717"}
+                            className=" text-secondary_color ">
                             {Number(eventDetail?.totalTicketsSold) -
                             Number(eventDetail?.totalCheckedIn)
                               ? (
@@ -687,13 +707,17 @@ export default function EventOverviewTabs() {
                         <Box className="flex flex-row  justify-between  mt-[-5px]  items-center">
                           <Box className="flex-row justify-start items-start  ">
                             {new Date(eventDetail.endDate) < new Date() ? (
-                              <Text className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl pr-2 text-center">
+                              <Text
+                                c={"#171717"}
+                                className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl pr-2 text-center">
                                 Event has ended
                               </Text>
                             ) : (
                               <>
                                 {eventDetail?.isSoldOut === true ? (
-                                  <Text className="text-[12px] capitalize text-orange">
+                                  <Text
+                                    c={"#171717"}
+                                    className="text-[12px] capitalize text-orange">
                                     Sold out
                                   </Text>
                                 ) : (
@@ -701,6 +725,7 @@ export default function EventOverviewTabs() {
                                     <>
                                       {eventDetail?.status !== "Event Ended" ? (
                                         <Text
+                                          c={"#171717"}
                                           className={`${
                                             eventDetail?.status?.toLowerCase() ===
                                             "published"
@@ -713,7 +738,9 @@ export default function EventOverviewTabs() {
                                             : "Closed by organizer"}
                                         </Text>
                                       ) : (
-                                        <Text className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl px-2 text-center">
+                                        <Text
+                                          c={"#171717"}
+                                          className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl px-2 text-center">
                                           Event has ended
                                         </Text>
                                       )}
@@ -819,9 +846,9 @@ export default function EventOverviewTabs() {
                         label="Header"
                         error={maxMessageHeader}
                         radius="xs"
-                        styles={(theme) => ({
+                        styles={() => ({
                           label: {
-                            color: theme.colors.primary_color[1],
+                            // color: .colors.primary_color[1],
                             fontFamily: "poppins-regular",
                             fontWeight: 400,
                             fontSize: 14,
@@ -856,9 +883,9 @@ export default function EventOverviewTabs() {
                         placeholder="Type your message here..."
                         label="Message"
                         error={maxMessageBody}
-                        styles={(theme) => ({
+                        styles={() => ({
                           label: {
-                            color: theme.colors.primary_color[1],
+                            // color: .colors.primary_color[1],
                             fontFamily: "poppins-regular",
                             fontWeight: 400,
                             fontSize: 14,
@@ -893,6 +920,7 @@ export default function EventOverviewTabs() {
                           loading={submit}
                           variant=""
                           type="submit"
+                          bg={"#EF790D"}
                           fullWidth
                           maw={250}
                           className="bg-secondary_color text-white capitalize font-poppins-medium font-medium">

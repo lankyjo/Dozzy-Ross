@@ -1,7 +1,6 @@
 import { Dispatch, Key, SetStateAction } from "react";
 import { Modal, Divider, Stack, Text, Box, Image } from "@mantine/core";
 import { format } from "date-fns";
-import { useRouter } from "next/router";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import EventOverviewAttendeeText from "../EventOverviewAttendeeText";
 import {
@@ -9,6 +8,7 @@ import {
   isEmpty,
   isValidDate,
 } from "../utils/contextAPI/helperFunctions";
+import { useRouter } from "next/navigation";
 
 export default function TransactionOverviewModal({
   open,
@@ -63,6 +63,19 @@ export default function TransactionOverviewModal({
         blur: 3,
         opacity: 0.5,
         color: "#000",
+      }}
+      styles={{
+        title: {
+          color: "#171717",
+          fontWeight: 500,
+        },
+        header: {
+          backgroundColor: "white",
+        },
+
+        body: {
+          backgroundColor: "white",
+        },
       }}
       size="lg"
       className="relative">

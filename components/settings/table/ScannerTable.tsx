@@ -276,7 +276,7 @@ export default function ScannerTable() {
           loaderSize="md"
           loaderColor="#EF790D"
           minHeight={180}
-          noRecordsText="No scanner has been invited yet"
+          // noRecordsText="No scanner has been invited yet"
           fs="sm"
           columns={[
             {
@@ -312,10 +312,11 @@ export default function ScannerTable() {
 
               render: (record) => (
                 <Text
+                  c="#171717"
                   className={`${
                     record.status?.toLowerCase() === "accepted"
                       ? "text-[#3B822E] text-[13px] md:text-[14px] font-poppins-regular bg-[#E9F5EA] rounded-xl p-2 text-center"
-                      : "text-[#bb4b4b] text-[13px] md:text-[14px] font-poppins-regular bg-[#f5e9e9] rounded-xl p-2 text-center"
+                      : "text-[red] text-[13px] md:text-[14px] font-poppins-regular bg-[#f5e9e9] rounded-xl p-2 text-center"
                   }`}>
                   {record.status}
                 </Text>
@@ -331,6 +332,7 @@ export default function ScannerTable() {
                   onClick={() => removeScanner(record)}
                   maw={100}
                   variant="white"
+                  c="#171717"
                   className="capitalize text-white bg-secondary_color rounded-full mx-auto  text-[12px] cursor-pointer md:text-[14px] font-poppins-medium  p-2 text-center">
                   remove
                 </Button>

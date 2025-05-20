@@ -15,6 +15,8 @@ export default function EmbededCode({
       <Button
         fz={{ base: 12, sm: 14 }}
         fw={500}
+        bg="#171717"
+        c="white"
         color="primary_color.0"
         onClick={() => setEmbedModalOpen(true)}
         className="font-poppins-regular  bg-[#1e1e1e00] text-primary_color hover:bg-[#1e1e1e00] hover:text-secondary_color  px-0  flex items-end justify-end">
