@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useGetter from "@/components/utils/hooks/useGetter";
 import useFormatSingleEventData from "@/components/utils/hooks/useSingleEventDataFormat";
 import AttendeesTab from "../profileTab/AttendeesTab";
-import GiftsTab from "../profileTab/GiftsTab";
+// import GiftsTab from "../profileTab/GiftsTab";
 import CouponTab from "../profileTab/CouponTab";
 import { useParams } from "next/navigation";
 
@@ -60,13 +60,13 @@ export default function AttendeesTable({
           <>
             {userRole.toLowerCase() === "admin" && (
               <>
-                {eventDetail?.wishlist && eventDetail.wishlist.length > 0 && (
+                {/* {eventDetail?.wishlist && eventDetail.wishlist.length > 0 && (
                   <Tabs.Tab
                     value="gifts"
                     className=" capitalize text-text_label font-normal font-poppins-regular  text-[13px] md:text-[15px]">
                     Gifts 🎁
                   </Tabs.Tab>
-                )}
+                )} */}
                 {eventDetail?.ticketGroups &&
                   eventDetail.ticketGroups.length > 0 && (
                     <Tabs.Tab
@@ -85,9 +85,9 @@ export default function AttendeesTable({
             setTicketOverview={setTicketOverview}
           />
         </Tabs.Panel>
-        <Tabs.Panel value="gifts" py={20}>
+        {/* <Tabs.Panel value="gifts" py={20}>
           <GiftsTab />
-        </Tabs.Panel>
+        </Tabs.Panel> */}
         <Tabs.Panel value="coupon" py={20}>
           <CouponTab eventDetail={eventDetail} />
         </Tabs.Panel>

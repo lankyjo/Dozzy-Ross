@@ -192,6 +192,7 @@ export default function AttendeesTab({
                     variant="white"
                     rightSection={<IconCamera size={24} />}
                     radius={100}
+                    c={"#171717"}
                     // c="white"
                     size="lg"
                     fw={500}
@@ -265,6 +266,7 @@ function SearchForAttendee({
         size="md"
         onClick={handleSearch}
         loading={isSearching}
+        bg={"#EF790D"}
         variant=""
         className="bg-secondary_color text-white capitalize font-poppins-medium font-medium rounded-lg">
         Search

@@ -1,4 +1,4 @@
-import { Button, Divider, Text, TextInput, rem } from "@mantine/core";
+import { Button, Divider, Text, TextInput } from "@mantine/core";
 import { inputBorder } from "../global/inputs/LocalTextinput";
 import { IconSearch } from "@tabler/icons-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -51,7 +51,7 @@ export default function EventOverviewSearchbox({
             }}
             className=" w-full max-w-[700px] rounded-lg"
             placeholder={placeholder}
-            rightSection={<IconSearch size={rem(20)} />}
+            rightSection={<IconSearch size={30} />}
             styles={() => ({
               input: {
                 width: "100%",
@@ -68,6 +68,7 @@ export default function EventOverviewSearchbox({
           {!isSearchEvent && (
             <Button
               size="md"
+              bg={"#EF790D"}
               onClick={() => {
                 if (handleSearch) {
                   handleSearch(search);

@@ -76,6 +76,19 @@ export default function EventOverviewAttendeeModal({
       overlayProps={{
         blur: 3,
       }}
+      styles={{
+        title: {
+          color: "#171717",
+          fontWeight: 500,
+        },
+        header: {
+          backgroundColor: "white",
+        },
+
+        body: {
+          backgroundColor: "white",
+        },
+      }}
       size="lg"
       className="relative bg-black/50 justify-end">
       <Box className="bg-white rounded-t-[20px] max-h-[80%]">

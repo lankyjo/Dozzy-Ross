@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export default function ELayout(props: { children: ReactNode }) {
   const { children } = props;
   return (
-    <Box  className="w-full overflow-x-hidden">
+    <Box className="w-full overflow-x-hidden">
       <Nav />
       {children}
     </Box>

@@ -20,9 +20,9 @@ export default function EventDescriptionEditor({
         minRows={4}
         {...form.getInputProps("description")}
       />
-      <Text size="xs" color="dimmed" mt={5}>
+      {/* <Text size="xs" color="dimmed" mt={5}>
         {form?.values?.description?.length || 0}/1000 characters
-      </Text>
+      </Text> */}
     </Box>
   );
 }

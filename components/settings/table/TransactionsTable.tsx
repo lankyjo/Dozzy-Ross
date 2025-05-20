@@ -1,7 +1,6 @@
 import { Badge, Box, Button, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { DataTable } from "mantine-datatable";
-import { useRouter } from "next/router";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import TransactionOverviewModal from "@/components/modal/TransactionOverviewModal";
@@ -13,14 +12,16 @@ import {
   defaultCurrency,
   defaultNumber,
 } from "@/components/utils/contextAPI/helperFunctions";
+import { useParams, useRouter } from "next/navigation";
 export default function TransactionsTable() {
   const setVal = useContext(TempValueContext).setVal;
   const [, setRecords] = useState<any[]>([]);
+  const params = useParams();
+  const slug = typeof params.slug === "string" ? params.slug : "";
   const router = useRouter();
   const [opened, { open, close }] = useDisclosure(false);
   const [info, showInfo] = useState({});
-  const { query } = router;
-  const slug = Array.isArray(query?.slug) ? query?.slug[0] : query?.slug;
+
   const { data: eventData, isLoading: eventLoading } = useGetter(
     `event/organizer/single?id=${slug}`
   );
@@ -91,6 +92,7 @@ export default function TransactionsTable() {
               <Box className="my-6 mx-auto">
                 <Button
                   variant=""
+                  bg={"#EF790D"}
                   disabled={
                     !Boolean(Number(eventDetail?.availableBalanceAmount)) ||
                     Number(eventDetail?.availableBalanceAmount) < 1
@@ -99,13 +101,9 @@ export default function TransactionsTable() {
                     setVal({
                       type: "withdrawal",
                     });
-                    router.push({
-                      pathname: "/profile/withdraw",
-                      query: {
-                        event: eventDetail?._id,
-                        currency: eventDetail?.currency?._id,
-                      },
-                    });
+                    router.push(
+                      `/profile/withdraw?event=${eventDetail?._id}& currency=${eventDetail?.currency?._id}`
+                    );
                   }}
                   className="bg-secondary_color rounded-md text-center text-white font-poppins-medium text-[12px]">
                   Withdraw Available Balance
