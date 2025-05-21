@@ -1,0 +1,58 @@
+.phoneInput {
+  width: 100% !important;
+  padding: 1.5rem 3rem !important;
+  background-color: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+  outline: none !important;
+  font-size: 16px !important;
+}
+
+.phoneInput:focus {
+  box-shadow: 0 0 0 2px orange !important;
+  border-color: transparent !important;
+}
+
+.phoneContainer {
+  width: 100% !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.btnBgColor {
+  background-color: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  border-top-left-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+  height: 100% !important;
+  padding: 0 0.5rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.btnBgColor .flag {
+  width: 20px !important;
+  height: 15px !important;
+  background-size: cover !important;
+  display: inline-block !important;
+}
+
+.dropdownHeight {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+  background-color: #1f2937 !important;
+  color: white !important;
+  border: 1px solid #374151 !important;
+  z-index: 9999 !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+.dropdownHeight .country:hover {
+  background-color: #374151 !important;
+}

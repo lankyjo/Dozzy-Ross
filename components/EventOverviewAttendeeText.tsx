@@ -21,7 +21,7 @@ export default function EventOverviewAttendeeText({
         tt="capitalize"
         fz={{ base: 12, sm: 14 }}
         className="cursor-pointer font-poppins-regular"
-        c="black_300.0">
+        c="#171717">
         {label === "category" && isFree ? "fee" : label || "free"}
       </Text>
       <Text
@@ -31,7 +31,7 @@ export default function EventOverviewAttendeeText({
         tt={normal ? "lowercase" : "capitalize"}
         fz={{ base: 12, sm: 13 }}
         className="cursor-pointer font-poppins-regular text-end"
-        c="primary_color.0">
+        c="#171717">
         {label === "amount" && isFree ? "free" : value || "free"}
       </Text>
     </Flex>

@@ -108,7 +108,7 @@ export default function AttendeesTab({
         handleSearch={handleFSearch}
       />
 
-      <Box h={records?.length ? 600 : 0} mt={40}>
+      <Box h={records?.length ? 500 : 0} mt={40} className=" mb-[40px]">
         <DataTable
           classNames={{
             header: classes.header,
@@ -183,30 +183,30 @@ export default function AttendeesTab({
             handleView(record?.record);
           }}
         />
-        <>
-          {Boolean(Number(eventDetail?.totalTicketsSold)) &&
-            !["Rejected"]?.includes(eventDetail?.approvalStatus || "") && (
-              <Box className="fixed z-10 bottom-0 left-0 py-2 backdrop-filter backdrop-blur-sm w-full">
-                <Flex justify={"center"} align={"center"}>
-                  <Button
-                    variant="white"
-                    rightSection={<IconCamera size={24} />}
-                    radius={100}
-                    c={"#171717"}
-                    // c="white"
-                    size="lg"
-                    fw={500}
-                    className={`relative bg-orange-500 border-[#EF790D] flex justify-center items-center font-poppins-medium ${
-                      isShaking ? "shake" : ""
-                    }`}
-                    onClick={() => closeScanner(true)}>
-                    Scan ticket
-                  </Button>
-                </Flex>
-              </Box>
-            )}
-        </>
+        <></>
       </Box>
+
+      {Boolean(Number(eventDetail?.totalTicketsSold)) &&
+        !["Rejected"]?.includes(eventDetail?.approvalStatus || "") && (
+          <Box className="fixed z-10 bottom-0 left-0 py-2 backdrop-filter backdrop-blur-sm w-full">
+            <Flex justify={"center"} align={"center"}>
+              <Button
+                variant="white"
+                rightSection={<IconCamera size={24} />}
+                radius={100}
+                c={"#171717"}
+                // c="white"
+                size="lg"
+                fw={500}
+                className={`relative bg-orange-500 border-[#EF790D] flex justify-center items-center font-poppins-medium ${
+                  isShaking ? "shake" : ""
+                }`}
+                onClick={() => closeScanner(true)}>
+                Scan ticket
+              </Button>
+            </Flex>
+          </Box>
+        )}
       {opened && (
         <EventOverviewAttendeeModal
           open={opened}

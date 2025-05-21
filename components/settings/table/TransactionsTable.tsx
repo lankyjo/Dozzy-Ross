@@ -46,6 +46,7 @@ export default function TransactionsTable() {
   }, [transaction]);
 
   function handleView(transaction_info: any) {
+    transaction_info = transaction_info?.record;
     const attachment = withdrawalRequestData?.data?.data?.find(
       (attach: { reference: string }) =>
         attach?.reference === transaction_info?.reference
@@ -102,7 +103,7 @@ export default function TransactionsTable() {
                       type: "withdrawal",
                     });
                     router.push(
-                      `/profile/withdraw?event=${eventDetail?._id}& currency=${eventDetail?.currency?._id}`
+                      `/withdraw?event=${eventDetail?._id}&currency=${eventDetail?.currency?._id}`
                     );
                   }}
                   className="bg-secondary_color rounded-md text-center text-white font-poppins-medium text-[12px]">

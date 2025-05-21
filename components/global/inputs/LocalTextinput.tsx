@@ -14,6 +14,9 @@ export default function LocalTextinput<T>({
   form,
   isDisabled = false,
   rightSection,
+  type = "text",
+  required = false,
+  readOnly = false,
 }: {
   label: string;
   placeholder: string;
@@ -21,6 +24,9 @@ export default function LocalTextinput<T>({
   form: UseFormReturnType<T>;
   isDisabled?: boolean;
   rightSection?: React.ReactNode;
+  type?: string;
+  required?: boolean;
+  readOnly?: boolean;
 }) {
   const { height, width } = useViewportSize();
   return (
@@ -30,9 +36,12 @@ export default function LocalTextinput<T>({
       withAsterisk
       disabled={isDisabled}
       rightSection={rightSection}
-      styles={(theme) => ({
+      required={required}
+      readOnly={readOnly}
+      type={type}
+      styles={() => ({
         label: {
-          color: theme.colors.primary_color?.[1] || theme.colors.gray[8],
+          color: "#171717",
           fontFamily: "poppins-regular",
           fontWeight: 400,
           fontSize: width > 700 ? 17 : 14,
@@ -41,7 +50,9 @@ export default function LocalTextinput<T>({
           height: height > 700 ? 50 : 40,
           border: inputBorder.border,
           fontFamily: "poppins-regular",
+          color: "#171717",
           fontSize: 16,
+          background: "white",
           borderRadius: inputBorder.borderRadius,
           "&:focus": {
             border: inputBorder.border,

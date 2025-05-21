@@ -14,6 +14,7 @@ import TicketsSection from "@/components/Ticket-section/TicketsSection";
 import Moments from "@/components/Moments/Moments";
 import ImageCarousel from "@/components/ImageCarousel/ImageCarousel";
 import ContactForm from "@/components/ContactForm/ContactForm";
+import "react-photo-view/dist/react-photo-view.css";
 
 export default function Home() {
   const { setEvents, setOrganizer, setClassyFieldEVents } = useAppContext();

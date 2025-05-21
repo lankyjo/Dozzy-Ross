@@ -437,3 +437,46 @@ interface TransactionProps {
   user: OrganizerProps;
   _id: string;
 }
+
+interface WishList {
+  isSelected?: boolean;
+  name: string;
+  description: string;
+  image: string;
+  currency: {
+    createdAt: string;
+    isActive: boolean;
+    isDeleted: boolean;
+    name: string;
+    symbol: string;
+    updatedAt: string;
+    _id: string;
+  };
+  price: number;
+  isCustom: boolean;
+  _id: string;
+}
+
+interface WithdrawalInput {
+  name: string;
+  value: string;
+}
+
+interface Withdrawal {
+  eventId?: string | string[];
+  type?: string;
+  currencyName?: string;
+  withdrawalMethodId: string;
+  amount: nullumber;
+  inputFields: WithdrawalInput[];
+}
+
+interface ChairProps {
+  tableNumber: number;
+  totalChairs: number;
+  sold: number;
+  category: string;
+  eventCategory: string;
+  amount: number;
+  id: string;
+}
