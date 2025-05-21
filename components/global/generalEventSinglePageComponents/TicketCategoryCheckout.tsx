@@ -253,7 +253,7 @@ function TicketCategoryCheckout({
       user: user,
     });
 
-    router.push(`/e/checkout`);
+    router.push(`/checkout`);
   };
 
   const isoStartDateString = new Date(event?.startDate);
@@ -498,7 +498,7 @@ function TicketCategoryCheckout({
                         </Text>
                         {item?.description && (
                           <Text
-                            fw={"bold"}
+                            c="#171717"
                             className="flex-wrap text-[14px] md:text-[14px] lg:text-[16px] font-poppins-regular mr-auto text-text_label">
                             {item?.description}
                           </Text>

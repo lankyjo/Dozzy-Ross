@@ -20,11 +20,12 @@ export default function TransactionOverviewModal({
   data: any;
 }) {
   const router = useRouter();
+
   const details = [
     { title: "Transaction ID", value: data?.reference },
     {
       title: "Amount",
-      value: `${data?.currencySymbol} ${data?.amount?.toLocaleString()}`,
+      value: `${data?.currency?.symbol} ${data?.amount?.toLocaleString()}`,
     },
     {
       title: "Date",
@@ -138,6 +139,7 @@ export default function TransactionOverviewModal({
         )}
 
         <Text
+          c={data?.status?.toLowerCase() === "completed" ? "green" : "#171717"}
           className={`${
             data?.status?.toLowerCase() === "completed"
               ? "text-[#3B822E] mt-4 text-[12px] md:text-[13px] font-poppins-regular bg-[#E9F5EA] rounded-xl p-1 text-center my-2"
@@ -148,7 +150,9 @@ export default function TransactionOverviewModal({
         {data?.status?.toLowerCase() === "rejected" && (
           <Text
             onClick={() =>
-              router.push(`/contact-us?eventTitle=${data?.event?.title}`)
+              router.push(
+                `https://ogaticket.com/contact-us?eventTitle=${data?.event?.title}`
+              )
             }
             className="capitalize text-[12px] md:text-[13px] text-end w-full border-0 text-secondary_color font-poppins-medium font-medium rounded-md cursor-pointer">
             Contact Admin

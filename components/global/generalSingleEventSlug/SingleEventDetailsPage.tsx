@@ -59,6 +59,7 @@ function SingleEventDetails({
       // DEV: EZEUGO
 
       //  change to  event?.approvalStatus  !== "Approved"
+
       if (
         new Date(localTimeISO) > new Date(eventDateObj) ||
         event?.approvalStatus?.toLowerCase() !== "approved" ||
@@ -138,11 +139,7 @@ function SingleEventDetails({
                           <EventEnded
                             title1=" Registration to this event has ended."
                             title2="  You can contact orgainzer with details below."
-                            link={`/e/timeline?category=${
-                              event?.category?._id
-                            }&title=${encodeURIComponent(
-                              event?.category?.name || ""
-                            )}&page=1&size=20`}
+                            link={`/e`}
                           />
                         )}
                       </>

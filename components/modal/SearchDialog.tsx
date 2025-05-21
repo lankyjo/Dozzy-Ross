@@ -41,6 +41,20 @@ export default function SearchDialog({
         opened={opened}
         onClose={() => close(false)}
         withCloseButton={false}
+        styles={{
+          title: {
+            color: "#171717",
+            fontWeight: 500,
+          },
+          header: {
+            backgroundColor: "white",
+          },
+
+          body: {
+            backgroundColor: "white",
+            color: "#171717",
+          },
+        }}
         centered>
         {message?.success ? (
           <Box className="   mt-6 w-full">
@@ -48,16 +62,24 @@ export default function SearchDialog({
               <IconSuccess />
             </div>
 
-            <Text className="font-poppins-bold  text-center "> Success</Text>
+            <Text c={"#171717"} className="font-poppins-bold  text-center ">
+              {" "}
+              Success
+            </Text>
 
-            <Text className=" text-center  mb-6 mt-3  text-[14px] md:text-[13px] text-[#020c2697] font-poppins-regular md:text-poppins-medium  max-w-[410px] md:max-w-[600px]">
+            <Text
+              c={"#171717"}
+              className=" text-center  mb-6 mt-3  text-[14px] md:text-[13px] text-[#020c2697] font-poppins-regular md:text-poppins-medium  max-w-[410px] md:max-w-[600px]">
               {message?.message}
             </Text>
 
             <Button
+              bg={"#EF790D"}
+              color="white"
+              fullWidth
               onClick={() => {
                 if (!isEmpty(isWithdrawal)) {
-                  window.location.href = `/${isWithdrawal}`;
+                  router.push(`/${isWithdrawal}`);
                 }
 
                 if (isEdit) {
@@ -71,7 +93,7 @@ export default function SearchDialog({
                 close(false);
               }}
               variant="white"
-              className="capitalize w-full border-0 text-white bg-secondary_color font-poppins-medium font-medium rounded-md ">
+              className="capitalize mt-4 w-full border-0 text-white bg-secondary_color font-poppins-medium font-medium rounded-md ">
               {!isEmpty(isWithdrawal) ? "Back to Dashboard" : "Okay"}
             </Button>
           </Box>
@@ -84,11 +106,13 @@ export default function SearchDialog({
             </div>
 
             {isRejected === "Rejected by admin" && (
-              <Text className="font-poppins-bold  text-center ">Notice</Text>
+              <Text c={"#171717"} className="font-poppins-bold  text-center ">
+                Notice
+              </Text>
             )}
 
             {isRejected === "Awaiting Approval" && (
-              <Text className="font-poppins-bold  text-center ">
+              <Text c={"#171717"} className="font-poppins-bold  text-center ">
                 Awaiting Approval
               </Text>
             )}
@@ -96,10 +120,15 @@ export default function SearchDialog({
             {!["Rejected by admin", "Awaiting Approval"].includes(
               isRejected || ""
             ) && (
-              <Text className="font-poppins-bold  text-center "> Error</Text>
+              <Text c={"#171717"} className="font-poppins-bold  text-center ">
+                {" "}
+                Error
+              </Text>
             )}
 
-            <Text className=" text-center  mb-6 mt-3  text-[14px] md:text-[13px] text-[#020c2697] font-poppins-regular md:text-poppins-medium  max-w-[410px] md:max-w-[600px]">
+            <Text
+              c={"#171717"}
+              className=" text-center  mb-6 mt-3  text-[14px] md:text-[13px] text-[#020c2697] font-poppins-regular md:text-poppins-medium  max-w-[410px] md:max-w-[600px]">
               {message?.message}
             </Text>
             {isRejected === "Rejected by admin" && (
@@ -128,7 +157,11 @@ export default function SearchDialog({
               <Button
                 onClick={() => close(false)}
                 variant="white"
-                className="capitalize w-full border-0 text-white bg-secondary_color font-poppins-medium font-medium rounded-md ">
+                bg="#171717"
+                c="white"
+                justify="center"
+                fullWidth
+                className="capitalize w-full border-0 mt-4 text-white bg-secondary_color font-poppins-medium font-medium rounded-md ">
                 Try Again
               </Button>
             )}

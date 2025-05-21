@@ -27,9 +27,10 @@ function EventEnded({
         </Text>
         <Box className=" w-[70%] md:w-[35%] max-w-[220px] mt-6 justify-around items-center relative cursor-pointer">
           <Button
-            onClick={() => router.push(link || "")}
+            onClick={() => router.push(link || "/")}
             loading={false}
-            color="gray.0"
+            bg="#171717"
+            c="white"
             type="submit"
             fullWidth
             variant="white"

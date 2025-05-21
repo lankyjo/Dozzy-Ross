@@ -361,3 +361,38 @@ export const formatTimeDuration = (
     return `${minutes} mins`;
   }
 };
+export function capitalizeNames(names: string): string {
+  return names
+    .split(" ")
+    .map((name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())
+    .join(" ");
+}
+
+export const wishlistscreenImage =
+  "https://res.cloudinary.com/isreal/image/upload/v1730183480/Ogaticket/ubaid-e-alyafizi-gQhrrWOG60c-unsplash-removebg-preview_pnj96i.png";
+
+export function every<T>(
+  collection: T[] | Record<string, T>,
+  predicate: (
+    value: T,
+    key: number | string,
+    collection: T[] | Record<string, T>
+  ) => boolean
+): boolean {
+  if (Array.isArray(collection)) {
+    for (let i = 0; i < collection.length; i++) {
+      if (!predicate(collection[i], i, collection)) {
+        return false;
+      }
+    }
+  } else {
+    for (const key in collection) {
+      if (Object.prototype.hasOwnProperty.call(collection, key)) {
+        if (!predicate(collection[key], key, collection)) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+}
