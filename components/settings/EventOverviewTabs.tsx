@@ -322,17 +322,7 @@ export default function EventOverviewTabs() {
                                       <Menu.Item
                                         leftSection={<IconEdit size={24} />}
                                         component={Link}
-                                        href={`/e/edit?type=${
-                                          eventDetail.category.name.split(
-                                            /[\s&]+/
-                                          )[0]
-                                        }&id=${
-                                          eventDetail?.category._id
-                                        }&title=${
-                                          eventDetail?.slug
-                                        }&edit=true&eventId=${
-                                          eventDetail?._id
-                                        }`}
+                                        href={`/edit?slug=${eventDetail.slug}`}
                                         className=" order-2 cursor-pointer no-underline hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]">
                                         Edit event
                                         <Divider

@@ -1,3 +1,18 @@
+type PrimaryVenue = {
+  address: string;
+  city: string;
+  country: string;
+  latitude: string;
+  longitude: string;
+  region: string;
+  state: string;
+};
+
+type OnlineVenue = {
+  platform?: string;
+  url?: string;
+  additionalInfo?: string;
+};
 interface ReasonProps {
   id: number;
   value: string;

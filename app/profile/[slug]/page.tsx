@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
 import EventOverviewTabs from "@/components/settings/EventOverviewTabs";
+import { Paper } from "@mantine/core";
 
 export default function page() {
   return (
-    <div className="w-full flex-1 max-w-[1272px] mx-auto px-5 mt-[100px] ">
-      <EventOverviewTabs />
-    </div>
+    <Paper withBorder p="md" radius="md" className="mt-6 mb-6 ">
+      <div className="w-full flex-1 max-w-[1272px] mx-auto px-5 mt-[100px] ">
+        <EventOverviewTabs />
+      </div>
+    </Paper>
   );
 }
