@@ -46,6 +46,7 @@
     "react-phone-input-2": "^2.15.1",
     "react-photo-view": "^1.2.7",
     "sharp": "^0.34.1",
+    "styled-components": "^6.1.18",
     "swr": "^2.3.3"
   },
   "devDependencies": {

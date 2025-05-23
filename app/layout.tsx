@@ -47,6 +47,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css"
+          rel="stylesheet"
+        />
+      </head>
       <body className={inter.variable}>
         <TempValueProvider>
           <MantineProvider defaultColorScheme="auto">
@@ -54,6 +60,7 @@ export default function RootLayout({
             {children}
           </MantineProvider>
         </TempValueProvider>
+
       </body>
     </html>
   );

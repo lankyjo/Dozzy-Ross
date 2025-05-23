@@ -9,6 +9,7 @@ import {
   FaEnvelope,
   FaPhone,
 } from "react-icons/fa";
+import Logo from "../utils/Logo";
 
 const Footer = () => {
   return (
@@ -18,9 +19,7 @@ const Footer = () => {
     >
       <div className="grid  grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <div id="logo" className="space-y-5">
-          <h1 className="text-3xl font-anton uppercase font-bold">
-            <span className="text-primary">W</span>ATAWI
-          </h1>
+          <Logo/>
           <p>
             Trusted platform for all things live music bringing you closer to
             the best concerts, artists, and unforgettable performances.
