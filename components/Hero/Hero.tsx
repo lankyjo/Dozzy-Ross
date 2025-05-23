@@ -9,8 +9,8 @@ import Loader from "../utils/Loader";
 
 const Hero = () => {
   // const [videoSrc, setVideoSrc] = useState("");
-  const [details, setDetails] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const [details, setDetails] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   // const [playingVideo, setPlayingVideo] = useState<string | null>(null); // Track playing video
   // const { events, organizer, classifyEvents } = useAppContext();
@@ -18,84 +18,46 @@ const Hero = () => {
   // A USE EFFECT TO GET DETAILS FROM THE CMS
   useEffect(() => {
     async function getLanding() {
-      const res = await fetch('/api/details')
-      const landingDetails = await res.json()
-      setDetails(landingDetails)
+      const res = await fetch("/api/details");
+      const landingDetails = await res.json();
+      setDetails(landingDetails);
     }
-    getLanding()
-  }, [])
-// USE EFFECT TO STOP SCROLLING WHILE LOADING CMS DATA
+    getLanding();
+  }, []);
+  // USE EFFECT TO STOP SCROLLING WHILE LOADING CMS DATA
   useEffect(() => {
-  if (loading) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
+    if (loading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return () => {
-    document.body.style.overflow = ''; // Cleanup on unmount
-  };
-}, [loading]);
+    return () => {
+      document.body.style.overflow = ""; // Cleanup on unmount
+    };
+  }, [loading]);
 
   const handleMediaLoaded = () => {
-    setLoading(false)
-  }
-
-  // HANdLES RESIZE
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setVideoSrc(
-  //       window.innerWidth >= 1024 ? "/hero-desktop2.mp4" : "/hero-desktop1.mp4"
-  //     );
-  //   };
-
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
-  // const handlePlay = (videoId: string) => {
-  //   setPlayingVideo(videoId); // Set the current video to play
-  // };
-
-  // const handlePause = () => {
-  //   setPlayingVideo(null); // Stop playing
-  // };
+    setLoading(false);
+  };
 
   return (
-    <section className="relative z-10 h-full min-h-screen md:pt-44 pt-30 pb-10 md:mt-0">
-      {/* <div
-        id="video-bg"
-        className="absolute inset-0 -z-[2] w-full h-full bg-cover bg-center"
-        style={{ backgroundImage: `url("/wizkid.webp")` }}
-      >
-        <video
-          className="w-full h-full  object-cover"
-          loop
-          muted
-          autoPlay
-          playsInline
-          src={videoSrc || undefined} // Ensure videoSrc is not an empty string
-        />
-      </div>
-      <div className="absolute inset-0 bg-black/70 z-10 "></div> */}
-
-            {loading && (
-                <div className="absolute inset-0 flex justify-center items-center bg-black z-100">
-                    <Loader/>
-                </div>
-            )}
+    <section className="relative z-10 h-full min-h-screen md:pt-44 pt-20 pb-10 md:mt-0">
+      {loading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black z-100">
+          <Loader />
+        </div>
+      )}
 
       {/* BG IMAGE */}
       {details?.backgroundImage?.url && (
         <Image
           src={details?.backgroundImage.url}
-          alt={details?.backgroundImage.alt || 'background image'}
+          alt={details?.backgroundImage.alt || "background image"}
           fill
-          className='absolute inset-0 object-center w-full h-full object-cover z-1'
+          className="absolute inset-0 object-center w-full h-full object-cover z-1"
           onLoadingComplete={handleMediaLoaded}
-          style={{ display: loading ? 'none' : 'block' }}
+          style={{ display: loading ? "none" : "block" }}
         />
       )}
 
@@ -106,24 +68,23 @@ const Hero = () => {
           loop
           muted
           playsInline
-          className='absolute w-full h-full object-cover object-center z-2 inset-0'
+          className="absolute w-full h-full object-cover object-center z-2 inset-0"
           onCanPlayThrough={handleMediaLoaded}
-          style={{ display: loading ? 'none' : 'block' }}
+          style={{ display: loading ? "none" : "block" }}
         >
-          <source src={details?.backgroundVideo.url} type='video/mp4' />
+          <source src={details?.backgroundVideo.url} type="video/mp4" />
         </video>
       )}
 
       {/* Overlay */}
-      <div className='absolute z-3 inset-0 w-full bg-black/80'></div>
-
+      <div className="absolute z-3 inset-0 w-full bg-black/70"></div>
 
       <div className="relative z-50 contain space-y-20 md:gap-0 px-5 mx-auto md:mt-10 mt-20">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="flex flex-col justify-center w-full">
             <div className="flex flex-col justify-center gap-5 md:gap-10 max-w-[32rem] sm:mr-0">
               <h1 className="font-anton uppercase text-[#F4F2F2] text-4xl font-bold md:text-7xl lg::text-8xl">
-                {details?.heroTitle || 'WATAWI-MIAMI'}
+                {details?.heroTitle || "WATAWI-MIAMI"}
               </h1>
               <h1 className="mt-[-26px] md:mt-[-40px] font-medium text-[#F4F2F2]">
                 {details?.heroTicker}
@@ -132,10 +93,10 @@ const Hero = () => {
               <p className="w-full text-[#f4f2f2c8] text-sm md:text-xl">
                 {details?.heroSubText}
               </p>
-              <div className="mt-[50px]">
+              <div className="mt-[10px] md:mt-[20px]">
                 <button
                   id="CTA"
-                  className="px-5 py-2 bg-primary text-white rounded-3xl cursor-pointer duration-300 hover:text-white"
+                  className="px-6 py-2 bg-primary text-white rounded-3xl cursor-pointer duration-300 hover:text-white"
                 >
                   <Link className="inline-block w-full h-full" href={"/e"}>
                     Explore Events

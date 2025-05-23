@@ -19,6 +19,20 @@ export default function ConfirmLogout({
 
   const router = useRouter();
 
+  const handleLogout = async () => {
+    setLoader(true);
+    try {
+      await logUserOut(collection);
+      // Force a refresh to update authentication state throughout the app
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -37,7 +51,8 @@ export default function ConfirmLogout({
         }}
         overlayProps={{
           blur: 3,
-        }}>
+        }}
+      >
         <Box>
           <Flex gap={20}>
             <Button
@@ -49,7 +64,8 @@ export default function ConfirmLogout({
               c="white"
               ff="poppins-medium"
               fw={500}
-              onClick={close}>
+              onClick={close}
+            >
               Cancel
             </Button>
             <Button
@@ -64,11 +80,8 @@ export default function ConfirmLogout({
               loaderProps={{
                 color: "white",
               }}
-              onClick={() => {
-                logUserOut(collection);
-
-                router.push("/");
-              }}>
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           </Flex>

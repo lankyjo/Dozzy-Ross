@@ -1,7 +1,6 @@
 import { Button, Drawer, Stack } from "@mantine/core";
 import NavItem from "./NavItem";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import ConfirmLogout from "../modal/ConfirmLogout";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -9,12 +8,13 @@ export default function NavDraw({
   opened,
   close,
   openLogin,
+  isAuthenticated,
 }: {
   opened: boolean;
   close: () => void;
   openLogin: () => void;
+  isAuthenticated: boolean;
 }) {
-  const token = Cookies.get("access_token");
   const [openedLogout, { open: openLogout, close: closed }] =
     useDisclosure(false);
 
@@ -45,12 +45,13 @@ export default function NavDraw({
           close: {
             backgroundColor: "black",
           },
-        }}>
+        }}
+      >
         <div>
           {/* Drawer content */}
           <NavItem />
 
-          {token && (
+          {isAuthenticated && (
             <ul className="gap-4 mt-3 flex flex-col md:flex-row md:gap-10">
               <li className="font-semibold uppercase">
                 <Link href={"/profile"}>profile</Link>
@@ -58,14 +59,15 @@ export default function NavDraw({
             </ul>
           )}
           <Stack gap={5} mt={16}>
-            {token ? (
+            {isAuthenticated ? (
               <Button
                 variant="white"
                 bg="dark.7"
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogout}>
+                onClick={openLogout}
+              >
                 Logout
               </Button>
             ) : (
@@ -75,7 +77,8 @@ export default function NavDraw({
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogin}>
+                onClick={openLogin}
+              >
                 Login
               </Button>
             )}
@@ -86,7 +89,8 @@ export default function NavDraw({
               c="white"
               component={Link}
               href="/create"
-              size="md">
+              size="md"
+            >
               Create Event
             </Button>
           </Stack>

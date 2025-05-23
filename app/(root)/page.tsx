@@ -21,6 +21,7 @@ export default function Home() {
   const { data: eventData } = useGetter(
     `event/user-events/${process.env.NEXT_PUBLIC_USER_ID}`
   );
+
   const events = useFormatEventData(eventData?.data);
   const { data: user } = useGetter(
     `user/public?usernameSlug=${process.env.NEXT_PUBLIC_USER_NAME}`

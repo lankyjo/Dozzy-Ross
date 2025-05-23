@@ -228,7 +228,7 @@ export async function logUserOut({ close, setLoader }: LogoutProps) {
       });
 
       close();
-      //  window.location.reload();
+      // window.location.reload();
     }
   } catch (error) {
     console.error(error);

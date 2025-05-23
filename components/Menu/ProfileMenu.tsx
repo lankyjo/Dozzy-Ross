@@ -1,3 +1,5 @@
+"use client";
+
 import { Menu, Avatar } from "@mantine/core";
 import { IconUser, IconLogout } from "@tabler/icons-react";
 import ConfirmLogout from "../modal/ConfirmLogout";
@@ -26,6 +28,7 @@ export default function ProfileMenu({ image }: { image: string }) {
             radius="xl"
             size={33}
             className=" cursor-pointer"
+            component="button"
           />
         )}
       </Menu.Target>
