@@ -11,7 +11,7 @@ import { Box, Button } from "@mantine/core";
 import ProfileMenu from "../Menu/ProfileMenu";
 import useGetter from "../utils/hooks/useGetter";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Nav = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -21,6 +21,14 @@ const Nav = () => {
   const router = useRouter();
   const { data: user } = useGetter(token ? "user" : null);
 
+  const params = useSearchParams();
+  const query = params.get("login");
+
+  useEffect(() => {
+    if (query) {
+      oLogin();
+    }
+  }, [query, oLogin]);
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
