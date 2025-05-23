@@ -2,6 +2,7 @@ import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import GoodCheckIcon from "@/components/icons/GoodCheckIcon";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import classes from "./TicketCheckout.module.css";
 
 import {
   BackgroundImage,
@@ -349,7 +350,7 @@ export default function TicketCheckout({
               Enter details below
             </Text>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 text-white">
                 Full Name
               </label>
               <input
@@ -474,8 +475,8 @@ export default function TicketCheckout({
                       enableAreaCodeStretch
                       prefix="+"
                       autoFormat={false}
-                      containerClass="phoneContainer"
-                      inputClass="phoneInput"
+                      containerClass={classes.phoneContainer}
+                      inputClass={classes.phoneInput}
                       buttonClass="btnBgColor"
                       value={checkoutDetails?.phone}
                       onChange={(

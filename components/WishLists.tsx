@@ -15,7 +15,7 @@ import IconSuccess from "./icons/IconSuccess";
 import IconFailure from "./icons/IconFailure";
 import { mutate } from "swr";
 import { TempValueContext } from "./utils/contextAPI/TempValueContext";
-import useGetter from "./utils/hooks/useGetter";
+// import useGetter from "./utils/hooks/useGetter";
 import {
   capitalizeNames,
   customErrorFunc,
@@ -62,7 +62,7 @@ export default function WishLists() {
       router.back();
     }
   }, [router, val]);
-  const { data: url } = useGetter("settings");
+  // const { data: url } = useGetter("settings");
   const [checkoutDetails, setChechoutDetails] = useState<{
     name: string;
     email: string;
@@ -156,7 +156,7 @@ export default function WishLists() {
         // router.back();
         return;
       } else {
-        window.location.replace("/");
+        router.push("/success");
       }
     } catch (error: any) {
       customNotification(
@@ -211,7 +211,7 @@ export default function WishLists() {
         : user?.phone
         ? user.phone
         : null,
-      successRedirectUrl: `${url?.data?.app?.paymentRedirectUrl?.web}`,
+      successRedirectUrl: `${process.env.NEXT_PUBLIC_ORGANIZER_PLATFORM_FRONTEND_URL}/success`,
     };
 
     if (!isEmpty(tickets) || !isEmpty(wishLists)) {
@@ -241,7 +241,7 @@ export default function WishLists() {
     } else {
       customNotification(
         "Notification",
-        "This is a paid event, please select atleast one ticket or wishlist",
+        "This is a paid event, please select at least one ticket or wishlist",
         "secondary_color.0"
       );
     }

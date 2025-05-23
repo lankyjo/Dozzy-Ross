@@ -11,7 +11,10 @@ import { Box, Button } from "@mantine/core";
 import dynamic from "next/dynamic";
 import useGetter from "../utils/hooks/useGetter";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+
+import { useRouter, useSearchParams } from "next/navigation";
+
+
 import Logo from "../utils/Logo";
 
 const ProfileMenu = dynamic(() => import("../Menu/ProfileMenu"), {
@@ -53,6 +56,14 @@ const Nav = () => {
     }
   }, [user]);
 
+  const params = useSearchParams();
+  const query = params.get("login");
+
+  useEffect(() => {
+    if (query) {
+      oLogin();
+    }
+  }, [query, oLogin]);
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
