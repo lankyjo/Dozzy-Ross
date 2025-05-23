@@ -5,7 +5,7 @@ import SingleEventDetailsPage from "@/components/global/generalSingleEventSlug/S
 
 export default function SingleEvent() {
   return (
-    <main className="">
+    <main className="bg-gray-500">
       {/* <div
         style={{
           width: "100%",

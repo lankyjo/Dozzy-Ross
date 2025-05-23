@@ -1,6 +1,6 @@
 import Nav from "@/components/Navigation/Nav";
 import { Box } from "@mantine/core";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 import type { Metadata } from "next";
 
@@ -70,7 +70,9 @@ export default function CustomRootLayout(props: { children: ReactNode }) {
   const { children } = props;
   return (
     <Box w="100%">
-      <Nav />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Nav />
+      </Suspense>
       {children}
     </Box>
   );

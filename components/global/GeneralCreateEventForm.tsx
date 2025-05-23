@@ -661,7 +661,7 @@ export default function GeneralCreateEventForm() {
                 withBorder
                 p="md"
                 radius="md"
-                className="mt-6 mb-6 bg-gray-50">
+                className="mt-6 mb-6 bg-gray-500">
                 <Stack gap="xl">
                   <Box>
                     <Text

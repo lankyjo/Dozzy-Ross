@@ -351,7 +351,7 @@ function Withdraw() {
 
   return (
     <>
-      <main className="w-full min-h-screen   ">
+      <main className="w-full min-h-screen   mt-25  ">
         {otpSuccess ? (
           <Container size={2000} px={0}>
             <VerifyOTP

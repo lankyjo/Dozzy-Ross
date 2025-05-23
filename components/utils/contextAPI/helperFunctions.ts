@@ -396,3 +396,27 @@ export function every<T>(
   }
   return true;
 }
+
+export async function urlToImageFile(
+  imageUrl: string,
+  fileName = "image"
+): Promise<File | null> {
+  try {
+    const response = await fetch(imageUrl);
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch image: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const blob = await response.blob();
+    const contentType = blob.type || "image/jpeg";
+    const extension = contentType.split("/")[1] || "jpg";
+
+    return new File([blob], `${fileName}.${extension}`, { type: contentType });
+  } catch (error) {
+    console.error("Error converting image URL to file:", error);
+    return null;
+  }
+}
