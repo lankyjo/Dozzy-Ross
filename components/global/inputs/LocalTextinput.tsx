@@ -29,6 +29,12 @@ export default function LocalTextinput<T>({
   readOnly?: boolean;
 }) {
   const { height, width } = useViewportSize();
+
+  // Get input props with modifications to ensure value is never undefined
+  const inputProps = form.getInputProps(formKey);
+  // Ensure value is always a defined string to prevent uncontrolled to controlled input error
+  const value = inputProps.value === undefined ? "" : inputProps.value;
+
   return (
     <TextInput
       label={label}
@@ -59,7 +65,9 @@ export default function LocalTextinput<T>({
           },
         },
       })}
-      {...form.getInputProps(formKey)}
+      // Spread modified input props with defined value
+      {...inputProps}
+      value={value}
     />
   );
 }

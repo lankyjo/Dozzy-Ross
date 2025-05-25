@@ -16,7 +16,7 @@ export default function ResetPassword() {
               input: {
                 borderColor: "black",
                 marginTop: 4,
-                "&:focus-within": {
+                "&:focusWithin": {
                   borderColor: "black",
                 },
                 backgroundColor: "transparent",
@@ -45,7 +45,7 @@ export default function ResetPassword() {
               input: {
                 borderColor: "black",
                 marginTop: 4,
-                "&:focus-within": {
+                "&:focusWithin": {
                   borderColor: "black",
                 },
                 backgroundColor: "transparent",
