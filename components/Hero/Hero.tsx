@@ -4,16 +4,11 @@ import { Box } from "@mantine/core";
 import Link from "next/link";
 import Image from "next/image";
 import Loader from "../utils/Loader";
-// import VideoCard from "../VideoCard";
-// import useAppContext from "../utils/hooks/useAppContext";
 
 const Hero = () => {
   // const [videoSrc, setVideoSrc] = useState("");
   const [details, setDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  // const [playingVideo, setPlayingVideo] = useState<string | null>(null); // Track playing video
-  // const { events, organizer, classifyEvents } = useAppContext();
 
   // A USE EFFECT TO GET DETAILS FROM THE CMS
   useEffect(() => {
@@ -24,6 +19,7 @@ const Hero = () => {
     }
     getLanding();
   }, []);
+
   // USE EFFECT TO STOP SCROLLING WHILE LOADING CMS DATA
   useEffect(() => {
     if (loading) {
@@ -33,7 +29,7 @@ const Hero = () => {
     }
 
     return () => {
-      document.body.style.overflow = ""; // Cleanup on unmount
+      document.body.style.overflow = "";
     };
   }, [loading]);
 

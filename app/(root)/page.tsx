@@ -3,7 +3,7 @@ import Hero from "@/components/Hero/Hero";
 import useAppContext from "@/components/utils/hooks/useAppContext";
 import useFormatEventData from "@/components/utils/hooks/useFormatEvent";
 import useGetter from "@/components/utils/hooks/useGetter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Artist from "@/components/Artist/Artist";
 import CountDown from "@/components/CountDown/CountDown";
 import Footer from "@/components/Footer/Footer";
@@ -18,13 +18,25 @@ import "react-photo-view/dist/react-photo-view.css";
 
 export default function Home() {
   const { setEvents, setOrganizer, setClassyFieldEVents } = useAppContext();
+
+  const [userVariables, setUserVariables] = useState<any>(null);
+  useEffect(() => {
+    const getUserVariables = async () => {
+      const res = await fetch("/api/details");
+      const variableVals = await res.json();
+      setUserVariables(variableVals);
+    };
+
+    getUserVariables();
+  }, []);
+
   const { data: eventData } = useGetter(
-    `event/user-events/${process.env.NEXT_PUBLIC_USER_ID}`
+    `event/user-events/${userVariables?.variables?.userId}`
   );
 
   const events = useFormatEventData(eventData?.data);
   const { data: user } = useGetter(
-    `user/public?usernameSlug=${process.env.NEXT_PUBLIC_USER_NAME}`
+    `user/public?usernameSlug=${userVariables?.variables?.userName}`
   );
 
   useEffect(() => {

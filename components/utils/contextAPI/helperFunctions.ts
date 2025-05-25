@@ -142,21 +142,6 @@ export function customNotification(
   icon?: ReactNode
   // naviagate?: () => void
 ) {
-  // return notifications.show({
-  //   title,
-  //   message,
-  //   color,
-  //   icon: icon,
-  //   autoClose: 3000,
-  //   styles: () => ({
-  //     title: {
-  //       fontSize: 20,
-  //       textTransform: "capitalize",
-  //       fontFamily: "poppins-bold",
-  //     },
-  //   }),
-  // });
-
   return showNotification({
     message,
     title,
@@ -201,7 +186,7 @@ export const getFilteredEvents = ({
     return upcomingEvents;
   }
 
-  return filterEvents(allEvents, 0, 4); // If no upcoming events, take first 4 from 'events'
+  return filterEvents(allEvents, 0, 3); // If no upcoming events, take first 4 from 'events'
 };
 
 type LogoutProps = {

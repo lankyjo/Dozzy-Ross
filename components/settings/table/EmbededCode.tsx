@@ -12,7 +12,7 @@ export default function EmbededCode({
 }) {
   return (
     <>
-      <Button
+      {/* <Button
         fz={{ base: 12, sm: 14 }}
         fw={500}
         bg="#171717"
@@ -21,7 +21,7 @@ export default function EmbededCode({
         onClick={() => setEmbedModalOpen(true)}
         className="font-poppins-regular  bg-[#1e1e1e00] text-primary_color hover:bg-[#1e1e1e00] hover:text-secondary_color  px-0  flex items-end justify-end">
         Embed Code
-      </Button>
+      </Button> */}
 
       <Modal
         opened={embedModalOpen}

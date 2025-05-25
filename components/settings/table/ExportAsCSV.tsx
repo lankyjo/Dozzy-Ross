@@ -59,10 +59,9 @@ export default function ExportAsCSV({ event }: { event: SingleEventProps }) {
           });
           console.log("e: ", e);
         }
-      }}>
-      <p className="flex items-center justify-center  ">
-        Download Attendee List
-      </p>
+      }}
+    >
+      <p className="flex items-center justify-center  ">Download List</p>
     </Button>
   );
 }

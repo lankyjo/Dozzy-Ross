@@ -47,9 +47,9 @@ import {
 import { postFunc } from "../utils/request";
 import SearchDialog from "../modal/SearchDialog";
 import { inputBorder } from "../global/inputs/LocalTextinput";
-import WhatsappIcon from "../icons/WhatsappIcon";
+// import WhatsappIcon from "../icons/WhatsappIcon";
 import ExportAsCSV from "./table/ExportAsCSV";
-import WhatsAppReminder from "./table/WhatsAppReminder";
+// import WhatsAppReminder from "./table/WhatsAppReminder";
 import EmbededCode from "./table/EmbededCode";
 import { useParams, useRouter } from "next/navigation";
 
@@ -229,8 +229,11 @@ export default function EventOverviewTabs() {
                   <Tabs.Tab
                     key={item.id}
                     value={item.value}
-                    className="capitalize text-text_label font-normal font-poppins-regular text-[13px] md:text-[15px]">
-                    <span className=" capitalize text-white">{item.label}</span>
+                    className="capitalize text-text_label font-normal font-poppins-regular "
+                  >
+                    <span className=" capitalize text-white text-[12px] md:text-[15px]">
+                      {item.label}
+                    </span>
                   </Tabs.Tab>
                 ))}
               </Tabs.List>
@@ -248,7 +251,8 @@ export default function EventOverviewTabs() {
                               <Text
                                 fw={"bold"}
                                 c={"white"}
-                                className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
+                                className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular"
+                              >
                                 Available Balance
                               </Text>
                             )}
@@ -269,10 +273,12 @@ export default function EventOverviewTabs() {
                                       setOpenModal(true);
                                     }
                                   }
-                                }}>
+                                }}
+                              >
                                 <Text
                                   c={"white"}
-                                  className="font-poppins-semibold text-[30px] mt-[-20px] flex ">
+                                  className="font-poppins-semibold text-[30px] mt-[-20px] flex "
+                                >
                                   {eventDetail?.currency?.symbol ||
                                     defaultCurrency}
                                   {eventDetail?.availableBalanceAmount
@@ -285,7 +291,8 @@ export default function EventOverviewTabs() {
                                 <Text
                                   c={"white"}
                                   onClick={() => setOpenModal(true)}
-                                  className="transition-all duration-300 mt-[-10px] ml-[-10px] ease-in-out transform group-hover:translate-y-1">
+                                  className="transition-all duration-300 mt-[-10px] ml-[-10px] ease-in-out transform group-hover:translate-y-1"
+                                >
                                   <ArrowDownIcon />
                                 </Text>
                               </Flex>
@@ -293,12 +300,14 @@ export default function EventOverviewTabs() {
                               <Box className="flex flex-col items-start justify-start">
                                 <Text
                                   c={"white"}
-                                  className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular">
+                                  className="text-text_label capitalize text-[13px] md:text-[15px] font-poppins-regular"
+                                >
                                   Available Balance
                                 </Text>
                                 <Text
                                   c={"white"}
-                                  className="font-poppins-semibold text-[30px] ">
+                                  className="font-poppins-semibold text-[30px] "
+                                >
                                   {"$"}
                                   {eventDetail?.availableBalanceAmount
                                     ? Math.round(
@@ -323,7 +332,8 @@ export default function EventOverviewTabs() {
                                         leftSection={<IconEdit size={24} />}
                                         component={Link}
                                         href={`/edit?slug=${eventDetail.slug}`}
-                                        className=" order-2 cursor-pointer no-underline hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]">
+                                        className=" order-2 cursor-pointer no-underline hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]"
+                                      >
                                         Edit event
                                         <Divider
                                           orientation="vertical"
@@ -340,8 +350,9 @@ export default function EventOverviewTabs() {
                                   leftSection={<IconEye size={24} />}
                                   component={Link}
                                   href={`/e/${eventDetail?.slug}`}
-                                  className="cursor-pointer border-l-[1px]  hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]">
-                                  see event
+                                  className="cursor-pointer border-l-[1px]  hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]"
+                                >
+                                  Open event
                                 </Menu.Item>
                                 {/* <Menu.Item icon={<IconCode size={24} />}>
                                     <EmbededCode
@@ -350,11 +361,12 @@ export default function EventOverviewTabs() {
                                       slug={eventDetail?.slug}
                                     />
                                   </Menu.Item> */}
-                                <Menu.Item leftSection={<WhatsappIcon />}>
+                                {/* <Menu.Item leftSection={<WhatsappIcon />}>
                                   <WhatsAppReminder event={eventDetail} />
-                                </Menu.Item>
+                                </Menu.Item> */}
                                 <Menu.Item
-                                  leftSection={<IconDownload size={24} />}>
+                                  leftSection={<IconDownload size={24} />}
+                                >
                                   <ExportAsCSV event={eventDetail} />
                                 </Menu.Item>
                                 {/* <>
@@ -385,7 +397,8 @@ export default function EventOverviewTabs() {
                                 <Menu.Item
                                   leftSection={<IconTicket size={24} />}
                                   // color="red"
-                                  className="flex items-center justify-between w-full">
+                                  className="flex items-center justify-between w-full"
+                                >
                                   <div className="flex items-center justify-between w-full">
                                     <span>
                                       {eventDetail?.status?.toLowerCase() ===
@@ -400,7 +413,8 @@ export default function EventOverviewTabs() {
                                           withBorder
                                           w={80}
                                           h={30}
-                                          className="flex items-center justify-center">
+                                          className="flex items-center justify-center"
+                                        >
                                           <Loader color="orange" size="sm" />
                                         </Paper>
                                       ) : (
@@ -429,7 +443,8 @@ export default function EventOverviewTabs() {
                             opened={openModal}
                             onClose={() => setOpenModal(false)}
                             title="Financial Details"
-                            centered>
+                            centered
+                          >
                             <Accordion
                               variant="separated"
                               style={{
@@ -439,13 +454,16 @@ export default function EventOverviewTabs() {
                                 background: "transparent",
                               }}
                               value={openAccordion}
-                              className="border-0 px-0 mx-0 border-none outline-none bg-transparent">
+                              className="border-0 px-0 mx-0 border-none outline-none bg-transparent"
+                            >
                               <Accordion.Item
                                 value="photos"
-                                className="border-0 border-none outline-none bg-transparent px-0">
+                                className="border-0 border-none outline-none bg-transparent px-0"
+                              >
                                 <Accordion.Panel
                                   className="mx-0 px-0"
-                                  style={{ padding: 0, margin: 0 }}>
+                                  style={{ padding: 0, margin: 0 }}
+                                >
                                   <Box>
                                     <Flex justify="space-between" mt={16}>
                                       <Text className="text-grey_80 text-xs md:text-[15px]">
@@ -552,13 +570,16 @@ export default function EventOverviewTabs() {
                           }}
                           className={`flex justify-between mb-0   text-[13px] md:text-[14px] ${
                             isEmpty(overview) && "mb-4"
-                          }`}>
+                          }`}
+                        >
                           <div
                             className="flex items-center gap-2"
-                            onClick={() => setOpenSalesModal(true)}>
+                            onClick={() => setOpenSalesModal(true)}
+                          >
                             <Text
                               c={"#171717"}
-                              className="text-[#342D50] text-[13px] md:text-[14px]">
+                              className="text-[#342D50] text-[13px] md:text-[14px]"
+                            >
                               Registered
                             </Text>
                             {!isEmpty(overview) && (
@@ -582,7 +603,8 @@ export default function EventOverviewTabs() {
                               opened={openSalesModal}
                               onClose={() => setOpenSalesModal(false)}
                               title=""
-                              centered>
+                              centered
+                            >
                               <Box>
                                 {/* General Progress */}
                                 <Box>
@@ -671,7 +693,8 @@ export default function EventOverviewTabs() {
                           </Text>
                           <Text
                             c={"#171717"}
-                            className=" text-secondary_color ">
+                            className=" text-secondary_color "
+                          >
                             {eventDetail?.totalCheckedIn
                               ? eventDetail?.totalCheckedIn?.toLocaleString()
                               : defaultNumber}
@@ -683,7 +706,8 @@ export default function EventOverviewTabs() {
                           </Text>
                           <Text
                             c={"#171717"}
-                            className=" text-secondary_color ">
+                            className=" text-secondary_color "
+                          >
                             {Number(eventDetail?.totalTicketsSold) -
                             Number(eventDetail?.totalCheckedIn)
                               ? (
@@ -699,7 +723,8 @@ export default function EventOverviewTabs() {
                             {new Date(eventDetail.endDate) < new Date() ? (
                               <Text
                                 c={"#171717"}
-                                className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl pr-2 text-center">
+                                className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl pr-2 text-center"
+                              >
                                 Event has ended
                               </Text>
                             ) : (
@@ -707,7 +732,8 @@ export default function EventOverviewTabs() {
                                 {eventDetail?.isSoldOut === true ? (
                                   <Text
                                     c={"#171717"}
-                                    className="text-[12px] capitalize text-orange">
+                                    className="text-[12px] capitalize text-orange"
+                                  >
                                     Sold out
                                   </Text>
                                 ) : (
@@ -721,7 +747,8 @@ export default function EventOverviewTabs() {
                                             "published"
                                               ? "text-[#3B822E]  text-[13px] md:text-[14px]font-poppins-regular bg-[#E9F5EA] rounded-sm px-2 text-center"
                                               : "text-[#bb4b4b] text-[13px] md:text-[14px] font-poppins-regular bg-[#f5e9e9] rounded-sm px-2 text-center"
-                                          }`}>
+                                          }`}
+                                        >
                                           {eventDetail?.status?.toLowerCase() ===
                                           "published"
                                             ? "Event is Live"
@@ -730,7 +757,8 @@ export default function EventOverviewTabs() {
                                       ) : (
                                         <Text
                                           c={"#171717"}
-                                          className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl px-2 text-center">
+                                          className="text-[#bb4b4b] text-[13px] md:text-[14px] capitalize font-poppins-regular bg-[#f5e9e9] rounded-xl px-2 text-center"
+                                        >
                                           Event has ended
                                         </Text>
                                       )}
@@ -746,7 +774,8 @@ export default function EventOverviewTabs() {
                                 onClick={() =>
                                   router.push(`/e/${eventDetail?.slug}`)
                                 }
-                                className="  cursor-pointer border-l-[1px]    text-secondary_color  hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]">
+                                className="  cursor-pointer border-l-[1px]    text-secondary_color  hover:text-text_label capitalize font-poppins-regular text-[13px] md:text-[14px]"
+                              >
                                 see event
                               </Text>
                             ) : (
@@ -784,7 +813,8 @@ export default function EventOverviewTabs() {
                         height="64"
                         viewBox="0 0 24 24"
                         fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           d="M12 7V13"
                           stroke="#EF790D"
@@ -897,7 +927,8 @@ export default function EventOverviewTabs() {
                         ff="poppins-regular"
                         fz={12}
                         mb={24}
-                        c="secondary_color.0">
+                        c="secondary_color.0"
+                      >
                         N/B: The email broadcast feature is deactivated 36 hours
                         after the end of the event.
                       </Text>
@@ -913,7 +944,8 @@ export default function EventOverviewTabs() {
                           bg={"#EF790D"}
                           fullWidth
                           maw={250}
-                          className="bg-secondary_color text-white capitalize font-poppins-medium font-medium">
+                          className="bg-secondary_color text-white capitalize font-poppins-medium font-medium"
+                        >
                           Send Message
                         </Button>
                       </Group>

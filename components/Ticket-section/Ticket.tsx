@@ -84,20 +84,6 @@ const Ticket = ({
   }, []);
 
   function handleNavigate() {
-    // there might be need to include this check
-    // const status = eventOngoing?.toLowerCase();
-
-    // if (status === "pending") {
-    //   setMessage("This event is currently awaiting approval.");
-    //   open();
-    //   return;
-    // }
-    // if (status === "declined") {
-    //   setMessage("This event was rejected. Please to contact Ogaticket.");
-    //   open();
-    //   return;
-    // }
-
     router.push(`/profile/${id}?admin`);
   }
 
@@ -117,7 +103,8 @@ const Ticket = ({
           isProfile
             ? "transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:bg-gray-500/70 hover:shadow-xl cursor-pointer"
             : ""
-        }`}>
+        }`}
+      >
         {/* Image Section */}
 
         <div className="relative w-full mx-auto flex-1 aspect-video overflow-hidden rounded-2xl max-w-[350px]">
@@ -199,7 +186,6 @@ const Ticket = ({
           </div>
         </div>
       </motion.li>
-      {/* <EventStateModal message={message} opened={opened} close={close} /> */}
     </>
   );
 };
