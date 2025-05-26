@@ -53,7 +53,6 @@ export default function AllEvent() {
     approvalStatus: event?.approvalStatus,
     totalTicketsSold: event?.totalTicketsSold,
   }));
-  console.log("hi");
 
   return (
     <section className="padding md:py-36 py-20 bg-black text-gray-200 space-y-10">

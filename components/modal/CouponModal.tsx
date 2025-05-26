@@ -81,8 +81,6 @@ export default function CouponModal({
     },
   });
 
-  console.log("thse are the ticket groups  ==== ", ticketGroups);
-
   async function createCoupon({
     values,
     e,

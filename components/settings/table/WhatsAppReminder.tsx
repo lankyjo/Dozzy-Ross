@@ -21,7 +21,6 @@ function WhatsAppReminder({ event }: { event: SingleEventProps }) {
         },
         url: "event-notification/send-event-reminder-notification-via-whatsapp",
       });
-      // console.log("data", data);
       if (data?.data?.success) {
         showNotification({
           message: "Reminder sent successfully!",

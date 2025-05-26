@@ -57,10 +57,8 @@ export default function ExportAsCSV({ event }: { event: SingleEventProps }) {
             message: e?.response?.data?.message || "Failed to download CSV",
             color: "red",
           });
-          console.log("e: ", e);
         }
-      }}
-    >
+      }}>
       <p className="flex items-center justify-center  ">Download List</p>
     </Button>
   );
