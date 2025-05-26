@@ -410,50 +410,52 @@ export default function TicketCheckout({
             )}
 
             <>
-              {event?.isPaidEvent && (
-                <Box>
-                  <Flex align="center">
-                    <Box className=" relative w-full">
-                      <label className="block text-sm font-medium text-gray-700 mb-1 text-white">
-                        Coupon Code
-                      </label>
-                      <input
-                        type="text"
-                        name="coupon"
-                        onChange={handleInput}
-                        placeholder="Enter coupon code (optional)"
-                        value={checkoutDetails?.coupon}
-                        className="w-full border-[1px] font-poppins-regular border-grey_70 rounded-lg focus-within:border-grey_70 h-12 p-2.5 pr-8 outline-none text-sm text-white"
-                        style={{ fontSize: "16px" }}
-                      />
-                      <span className=" absolute   transform translate-x-[50%] translate-y-[50%] right-4">
-                        {isMutating && <Loader size={20} color="#EF790D" />}
-                        {resType === "valid" && <GoodCheckIcon />}
-                      </span>
-                    </Box>
-                  </Flex>
-                  <>
-                    <>
-                      {resType === "valid" && couponValue && (
-                        <>
-                          <span className="text-[12px] text-green-800 font-poppins-regular">
-                            {couponAlert}
-                          </span>
-                        </>
-                      )}
-                    </>
-                    <>
-                      {resType === "invalid" && couponValue && (
-                        <span>
-                          <span className="text-[12px] text-red-500 font-poppins-regular">
-                            {couponAlert}
-                          </span>
+              {event?.isPaidEvent &&
+                !isEmpty(event?.ticketGroups) &&
+                total > 0 && (
+                  <Box>
+                    <Flex align="center">
+                      <Box className=" relative w-full">
+                        <label className="block text-sm font-medium text-gray-700 mb-1 text-white">
+                          Coupon Code
+                        </label>
+                        <input
+                          type="text"
+                          name="coupon"
+                          onChange={handleInput}
+                          placeholder="Enter coupon code (optional)"
+                          value={checkoutDetails?.coupon}
+                          className="w-full border-[1px] font-poppins-regular border-grey_70 rounded-lg focus-within:border-grey_70 h-12 p-2.5 pr-8 outline-none text-sm text-white"
+                          style={{ fontSize: "16px" }}
+                        />
+                        <span className=" absolute   transform translate-x-[50%] translate-y-[50%] right-4">
+                          {isMutating && <Loader size={20} color="#EF790D" />}
+                          {resType === "valid" && <GoodCheckIcon />}
                         </span>
-                      )}
+                      </Box>
+                    </Flex>
+                    <>
+                      <>
+                        {resType === "valid" && couponValue && (
+                          <>
+                            <span className="text-[12px] text-green-800 font-poppins-regular">
+                              {couponAlert}
+                            </span>
+                          </>
+                        )}
+                      </>
+                      <>
+                        {resType === "invalid" && couponValue && (
+                          <span>
+                            <span className="text-[12px] text-red-500 font-poppins-regular">
+                              {couponAlert}
+                            </span>
+                          </span>
+                        )}
+                      </>
                     </>
-                  </>
-                </Box>
-              )}
+                  </Box>
+                )}
             </>
             <>
               {isPhone && (

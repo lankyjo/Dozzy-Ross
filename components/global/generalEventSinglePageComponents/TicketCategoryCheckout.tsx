@@ -456,8 +456,6 @@ function TicketCategoryCheckout({
                                     item?.units === 5 ? true : false
                                   }
                                   onClick={() => {
-                                    console.log(item);
-
                                     handleEventCartIncrease({
                                       amount: item.amount,
                                       id: item._id,

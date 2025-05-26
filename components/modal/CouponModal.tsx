@@ -17,6 +17,7 @@ import IconFailure from "../icons/IconFailure";
 import {
   customErrorFunc,
   customNotification,
+  isEmpty,
 } from "../utils/contextAPI/helperFunctions";
 import { postFunc } from "../utils/request";
 
@@ -80,6 +81,8 @@ export default function CouponModal({
     },
   });
 
+  console.log("thse are the ticket groups  ==== ", ticketGroups);
+
   async function createCoupon({
     values,
     e,
@@ -91,6 +94,10 @@ export default function CouponModal({
     setLoader(true);
     // const uniqueCode: string = generateUniqueRandomString().toUpperCase();
     const formattedCode = values.code.replace(" ", "").toUpperCase();
+    const allTicketGroupIds = ticketGroups?.map(
+      (ticket: TicketGroup) => ticket?._id
+    );
+
     const data = {
       name: formattedCode,
       description: `Congratulations, you have got a ${values.discount}% discount`,
@@ -100,7 +107,9 @@ export default function CouponModal({
       totalAvailable: values.totalAvailable,
       startDate: new Date(),
       endDate: new Date(endDate),
-      ticketGroupIds: values.ticketGroupIds,
+      ticketGroupIds: isEmpty(values.ticketGroupIds)
+        ? allTicketGroupIds
+        : values.ticketGroupIds,
     };
 
     try {
@@ -161,7 +170,7 @@ export default function CouponModal({
             styles={(theme) => ({
               input: {
                 // borderColor: theme.colors.grey_70[0],
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
                 fontSize: 16,
                 marginTop: 4,
                 width: "100%",
@@ -170,13 +179,13 @@ export default function CouponModal({
                 },
               },
               label: {
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
                 fontSize: 14,
                 color: theme.colors.orange[5],
               },
               error: {
                 fontSize: 12,
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
               },
             })}
             {...form.getInputProps("code")}
@@ -194,7 +203,7 @@ export default function CouponModal({
               styles={(theme) => ({
                 input: {
                   // borderColor: theme.colors.grey_70[0],
-                  fontFamily: "poppins-regular",
+                  // fontFamily: "poppins-regular",
                   fontSize: 16,
                   marginTop: 4,
                   width: "100%",
@@ -203,7 +212,7 @@ export default function CouponModal({
                   },
                 },
                 label: {
-                  fontFamily: "poppins-regular",
+                  // fontFamily: "poppins-regular",
                   fontSize: 14,
                   color: theme.colors.orange[5],
                 },
@@ -227,7 +236,7 @@ export default function CouponModal({
               styles={(theme) => ({
                 input: {
                   // borderColor: theme.colors.grey_70[0],
-                  fontFamily: "poppins-regular",
+                  // fontFamily: "poppins-regular",
                   fontSize: 14,
                   marginTop: 4,
                   width: "100%",
@@ -236,13 +245,13 @@ export default function CouponModal({
                   },
                 },
                 label: {
-                  fontFamily: "poppins-regular",
+                  // fontFamily: "poppins-regular",
                   fontSize: 14,
                   color: theme.colors.orange[5],
                 },
                 error: {
                   fontSize: 12,
-                  fontFamily: "poppins-regular",
+                  // fontFamily: "poppins-regular",
                 },
               })}
               {...form.getInputProps("totalAvailable")}
@@ -256,7 +265,7 @@ export default function CouponModal({
             styles={(theme) => ({
               input: {
                 // borderColor: theme.colors.grey_70[0],
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
                 fontSize: 14,
                 marginTop: 4,
                 width: "100%",
@@ -265,21 +274,21 @@ export default function CouponModal({
                 },
               },
               label: {
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
                 fontSize: 14,
                 color: theme.colors.orange[5],
               },
               description: {
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
                 fontSize: 12,
               },
               error: {
                 fontSize: 12,
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
               },
               item: {
                 fontSize: 13,
-                fontFamily: "poppins-regular",
+                // fontFamily: "poppins-regular",
               },
             })}
             {...form.getInputProps("ticketGroupIds")}
@@ -291,10 +300,14 @@ export default function CouponModal({
               size="lg"
               type="submit"
               variant="white"
-              color="gray.0"
+              bg="rgb(239 121 13)"
+              c={"white"}
               loading={loader}
-              className="w-full capitalize border-0 text-white bg-secondary_color font-poppins-medium font-medium rounded-md ">
-              create coupon
+              loaderProps={{
+                color: "white",
+              }}
+              className="w-full capitalize border-0 text-white rounded-md ">
+              Create Coupon
             </Button>
           </div>
         </Stack>

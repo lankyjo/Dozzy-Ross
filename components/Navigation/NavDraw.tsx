@@ -45,16 +45,18 @@ export default function NavDraw({
           close: {
             backgroundColor: "black",
           },
-        }}
-      >
+        }}>
         <div>
           {/* Drawer content */}
-          <NavItem />
+          <NavItem close={close} />
 
           {isAuthenticated && (
             <ul className="gap-4 mt-3 flex flex-col md:flex-row md:gap-10">
               <li className="font-semibold uppercase">
-                <Link href={"/profile"}>profile</Link>
+                <Link href={"/profile"}>
+                  {" "}
+                  <span onClick={close}>profile</span>{" "}
+                </Link>
               </li>
             </ul>
           )}
@@ -66,8 +68,10 @@ export default function NavDraw({
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogout}
-              >
+                onClick={() => {
+                  close();
+                  openLogout();
+                }}>
                 Logout
               </Button>
             ) : (
@@ -77,8 +81,10 @@ export default function NavDraw({
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogin}
-              >
+                onClick={() => {
+                  close();
+                  openLogin();
+                }}>
                 Login
               </Button>
             )}
@@ -89,8 +95,7 @@ export default function NavDraw({
               c="white"
               component={Link}
               href="/create"
-              size="md"
-            >
+              size="md">
               Create Event
             </Button>
           </Stack>

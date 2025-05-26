@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import { IconPencil, IconX } from "@tabler/icons-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import QuestionRadiobox from "./QuestionRadiobox";
 import useSelectData from "@/components/utils/hooks/useSelectData";
 import { customErrorFunc } from "@/components/utils/contextAPI/helperFunctions";
@@ -102,9 +102,13 @@ export function LocalSelect({ label, data, form, formKey, description }: any) {
 export default function EditEventTicket({
   form,
   isTour = false,
+  setOpenCurrencyModal,
+  isEdit = false,
 }: {
   form: UseFormReturnType<EventFormValues>;
   isTour?: boolean;
+  setOpenCurrencyModal?: (value: boolean) => void;
+  isEdit?: boolean;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const ticketsType = form.getInputProps("isFree").value;
@@ -238,6 +242,17 @@ export default function EditEventTicket({
     form.setFieldValue("tickets", tickets);
   };
 
+  useEffect(() => {
+    if (isEdit && !form?.values.acceptedCurr && form.values.isFree === "no") {
+      setOpenCurrencyModal?.(true);
+    }
+  }, [
+    isEdit,
+    form?.values.acceptedCurr,
+    form.values.isFree,
+    setOpenCurrencyModal,
+  ]);
+
   return (
     <div className="flex flex-col gap-6">
       {!isTour && (
@@ -343,7 +358,8 @@ export default function EditEventTicket({
                   description="Free ticket has a price of 0"
                 />
                 <LocalSelect
-                  description="Accepted Currency"
+                  description=""
+                  label="Accepted Currency"
                   placeholder="Select currency"
                   data={currencyData}
                   formKey="acceptedCurr"
