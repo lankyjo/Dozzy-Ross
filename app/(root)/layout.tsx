@@ -5,32 +5,34 @@ import { ReactNode, Suspense } from "react";
 import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "AFRO EVENTS MIAMI";
-  const description =
-    "The Energy Hits Different, Bringing all the Good vibes and sounds from the continent of Africa & Caribbean. Music by the hottest DJs and Artists from EVERY culture Playing the best of #Afrobeat #Amapiano #Dancehall #Reggae #Soca #Kompa ";
-
+  let title = "";
+  let description = "";
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}user/public?usernameSlug=${process.env.NEXT_PUBLIC_USER_NAME}`
+      `${process.env.NEXT_PUBLIC_ORGANIZER_PLATFORM_FRONTEND_URL}/api/details`
     );
-
     if (!res.ok) {
       throw new Error("Failed to fetch metadata");
     }
 
     const data = await res.json();
-    const url = data?.data?.imageUrl;
+
+    title = data?.heroTitle;
+    description = data?.heroSubText;
+
+    const url = data?.backgroundImage?.url;
 
     return {
       title,
       description,
+      icons: "/next.ico",
       openGraph: {
         title,
         description,
         images: url
           ? [
               {
-                url,
+                url: url,
                 width: 1200,
                 height: 630,
                 alt: title,
@@ -52,6 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title,
       description,
+      icons: "/next.ico",
       openGraph: {
         title,
         description,
