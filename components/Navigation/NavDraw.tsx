@@ -1,14 +1,23 @@
-import { Drawer } from "@mantine/core";
+import { Button, Drawer, Stack } from "@mantine/core";
 import NavItem from "./NavItem";
+import Link from "next/link";
+import ConfirmLogout from "../modal/ConfirmLogout";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function NavDraw({
   opened,
   close,
+  openLogin,
+  isAuthenticated,
 }: {
   opened: boolean;
   close: () => void;
   openLogin: () => void;
+  isAuthenticated: boolean;
 }) {
+  const [openedLogout, { open: openLogout, close: closed }] =
+    useDisclosure(false);
+
   return (
     <>
       <Drawer
@@ -33,25 +42,46 @@ export default function NavDraw({
           header: {
             backgroundColor: "transparent", // Slight transparency
           },
-          // close: {
-          //   backgroundColor: "black",
-          // },
+          close: {
+            backgroundColor: "black",
+          },
         }}
       >
         <div>
           {/* Drawer content */}
           <NavItem />
-          {/* <Stack gap={5} mt={16}>
-            <Button
-              variant="white"
-              bg="dark.7"
-              radius={100}
-              c="white"
-              size="md"
-              onClick={openLogin}
-            >
-              Login
-            </Button>
+
+          {isAuthenticated && (
+            <ul className="gap-4 mt-3 flex flex-col md:flex-row md:gap-10">
+              <li className="font-semibold uppercase">
+                <Link href={"/profile"}>profile</Link>
+              </li>
+            </ul>
+          )}
+          <Stack gap={5} mt={16}>
+            {isAuthenticated ? (
+              <Button
+                variant="white"
+                bg="dark.7"
+                radius={100}
+                c="white"
+                size="md"
+                onClick={openLogout}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                variant="white"
+                bg="dark.7"
+                radius={100}
+                c="white"
+                size="md"
+                onClick={openLogin}
+              >
+                Login
+              </Button>
+            )}
             <Button
               variant="white"
               bg="rgb(239 121 13)"
@@ -63,9 +93,10 @@ export default function NavDraw({
             >
               Create Event
             </Button>
-          </Stack> */}
+          </Stack>
         </div>
       </Drawer>
+      <ConfirmLogout close={closed} opened={openedLogout} />
     </>
   );
 }

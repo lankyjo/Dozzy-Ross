@@ -1,15 +1,22 @@
 import { Avatar } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 
-export default function Performance({
-  count,
-  title,
-  images,
-}: {
-  count: number;
-  title: string;
-  images: [string, string, string];
-}) {
+interface ImageItem {
+  id: string
+  image: {
+    id: string
+    url: string
+    alt?: string
+  }
+}
+
+interface Props {
+  count: number
+  title: string
+  images: ImageItem[] // always 3 images
+}
+
+export default function Performance({count,title,images,}:Props) {
   const [value, setValue] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -43,10 +50,10 @@ export default function Performance({
   return (
     <div className="relative -z-10 flex md:flex-col justify-between mb-[30px] gap-5">
       <Avatar.Group>
-        {images?.map((image, index) => (
+        {images?.map(({id, image}) => (
           <Avatar
-            key={index}
-            src={image}
+            key={id}
+            src={image?.url}
             className="rounded-full border-4 border-[#F4F2F2] "
             size={windowWidth >= 1024 ? 65 : 50}
             radius="xl"

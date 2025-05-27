@@ -1,21 +1,21 @@
 .title {
-    font-size: 20px;
-    color: var(--foreground);
+  font-size: 20px;
+  color: var(--foreground);
 }
 
 .body {
-    background-color: white;
+  background-color: white;
 }
 
 .label {
-    font-size: 14px;
-    color: var(--foreground);
+  font-size: 14px;
+  color: var(--foreground);
 }
 
 .input {
-    border: 1px solid black;
-    background-color: transparent;
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--foreground);
+  border: 1px solid black;
+  background-color: transparent;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--foreground);
 }

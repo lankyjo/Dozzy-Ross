@@ -1,0 +1,43 @@
+/* Header styles */
+.header {
+  color: white;
+  /* background-color: #yourPrimaryColor; */
+  font-family: "poppins-regular";
+  font-weight: 400;
+}
+
+/* Success text */
+.success {
+  color: green;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-family: "poppins-regular";
+}
+
+/* Failed text */
+.failed {
+  color: red;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-family: "poppins-regular";
+}
+
+/* Pagination */
+.pagination {
+  background: transparent;
+  color: var(--foreground);
+}
+
+/* Active pagination button */
+.pagination button[data-active="true"] {
+  /* background: white; */
+}
+
+/* Active pagination button hover (if not disabled) */
+.pagination button[data-active="true"]:not([data-disabled="true"]):hover {
+  /* background: white; */
+}
+
+.transForm {
+  text-transform: uppercase;
+}

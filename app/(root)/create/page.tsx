@@ -1,22 +1,12 @@
-// import CreateEventIframe from "@/components/iframe/CreateEventIframe";
+"use client";
 
-import { Flex, Text } from "@mantine/core";
+import GeneralCreateEventForm from "@/components/global/GeneralCreateEventForm";
 
-export default async function CreateEvent() {
+export default function CreateEvent() {
   return (
-    <main className=" bg-white">
-      <div
-        style={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Flex h={"100%"} w={"100%"} justify={"center"} align={"center"}>
-          <Text>The create event form will be here.</Text>
-        </Flex>
-        {/* <CreateEventIframe /> */}
+    <main className="bg-gray-50">
+      <div className="w-full">
+        <GeneralCreateEventForm />
       </div>
     </main>
   );

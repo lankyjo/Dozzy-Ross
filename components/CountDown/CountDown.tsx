@@ -74,7 +74,7 @@ const CountDown = () => {
     };
   }, [count_down]);
 
-  return (
+  return new Date(localTimeISO) < new Date(endDate) ? (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -82,8 +82,7 @@ const CountDown = () => {
       className="padding text-white py-36"
       style={{
         background: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/countdownbg.jpg)`,
-      }}
-    >
+      }}>
       <div className="contain  flex items-center justify-center">
         <div className="max-w-3xl text-center space-y-10">
           <h3 className="font-anton text-4xl uppercase font-extrabold">
@@ -139,7 +138,7 @@ const CountDown = () => {
         </div>
       </div>
     </motion.section>
-  );
+  ) : null;
 };
 
 export default CountDown;

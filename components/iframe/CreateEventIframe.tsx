@@ -3,23 +3,6 @@
 // import { useEffect } from "react";
 
 export default function CreateEventIframe() {
-  //   useEffect(() => {
-  //     const handleMessage = (event: {
-  //       origin: string;
-  //       data: { type: string; paymentUrl: string };
-  //     }) => {
-  //       //   if (event.origin !== "https://ogaticket.com") return; // Security check
-
-  //       if (event.data && event.data.type === "INITIATE_PAYMENT") {
-  //         // Redirect to checkout page or open modal with Stripe
-  //         window.location.href = event?.data?.paymentUrl;
-  //       }
-  //     };
-
-  //     window.addEventListener("message", handleMessage);
-  //     return () => window.removeEventListener("message", handleMessage);
-  //   }, []);
-
   return (
     <>
       <iframe
