@@ -367,7 +367,10 @@ export default function EventOverviewTabs() {
                                 <Menu.Item
                                   leftSection={<IconDownload size={24} />}
                                 >
-                                  <ExportAsCSV event={eventDetail} />
+                                  <ExportAsCSV
+                                    event={eventDetail}
+                                    isMenuItem={true}
+                                  />
                                 </Menu.Item>
                                 {/* <>
                                     {user === "admin" && (
