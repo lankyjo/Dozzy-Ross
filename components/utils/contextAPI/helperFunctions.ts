@@ -200,26 +200,26 @@ export async function logUserOut({ close, setLoader }: LogoutProps) {
   setLoader(true);
 
   try {
-    const res = await logoutUser();
-    if (res?.data?.success) {
-      Cookies.remove("access_token");
-      localStorage.clear();
-      sessionStorage.clear();
-      mutate(() => true, undefined, { revalidate: false }); // clear all SWR cache
+    await logoutUser();
 
-      // Clear cookies (if using cookies for session)
-      document.cookie.split(";").forEach((cookie) => {
-        document.cookie = cookie
-          .replace(/^ +/, "")
-          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-      });
-
-      close();
-      // window.location.reload();
-    }
+    // window.location.reload();
   } catch (error) {
     console.error(error);
   } finally {
+    Cookies.remove("access_token");
+
+    localStorage.clear();
+    sessionStorage.clear();
+    mutate(() => true, undefined, { revalidate: false }); // clear all SWR cache
+
+    // Clear cookies (if using cookies for session)
+    document.cookie.split(";").forEach((cookie) => {
+      document.cookie = cookie
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    close();
     setLoader(false);
   }
 }

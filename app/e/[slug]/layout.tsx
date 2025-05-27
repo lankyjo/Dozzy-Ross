@@ -10,8 +10,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const { slug } = await params;
 
-    console.log(await params);
-
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}event/single?slug=${slug}`
     );

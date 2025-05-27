@@ -7,6 +7,7 @@ import TempValueProvider from "@/components/utils/contextAPI/TempValueContext";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import "mantine-datatable/styles.layer.css";
+import { ModalsProvider } from "@mantine/modals";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -56,8 +57,10 @@ export default function RootLayout({
       <body className={inter.variable}>
         <TempValueProvider>
           <MantineProvider defaultColorScheme="auto">
-            <Notifications position="top-right" />
-            {children}
+            <ModalsProvider>
+              <Notifications position="top-right" />
+              {children}
+            </ModalsProvider>
           </MantineProvider>
         </TempValueProvider>
 

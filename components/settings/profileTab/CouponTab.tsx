@@ -62,9 +62,13 @@ export default function CouponTab({ eventDetail }: { eventDetail: any }) {
     <>
       <Box w="100%">
         <Flex justify="end" mb={10}>
+          {}
           <Button
             variant="white"
-            bg="primary_color.0"
+            c={"#171717"}
+            disabled={
+              new Date().getTime() > new Date(eventDetail?.endDate).getTime()
+            }
             ff="poppins-medium"
             fw={500}
             onClick={open}>
@@ -158,7 +162,7 @@ export default function CouponTab({ eventDetail }: { eventDetail: any }) {
                 width: 150,
                 render: ({ id, code }) => (
                   <Button
-                    bg="secondary_color.0"
+                    c={"#171717"}
                     variant="white"
                     radius={100}
                     fz={13}

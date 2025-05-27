@@ -46,6 +46,7 @@ import { useDebounce } from "../utils/hooks/useDebounce";
 import GoodCheckIcon from "../icons/GoodCheckIcon";
 import useGetter from "../utils/hooks/useGetter";
 import EditEventTicket from "../form/create-event/EditEventTicket";
+import SelectCurrencyModal from "../modal/SelectedCurrencyModal";
 
 // Mock data for selects
 // const categoryOptions = [
@@ -203,17 +204,16 @@ export interface EventFormValues {
   ticketsPerPurchase: number;
 }
 
-interface CreateEventHandlerParams {
+export interface CreateEventHandlerParams {
   values: EventFormValues;
   event: FormEvent | undefined;
-  setLoader: (value: boolean) => void;
-  setShowDialog: (value: boolean) => void;
-  setshowEventDialogue: (value: {
+  setLoader?: (value: boolean) => void;
+  setShowDialog?: (value: boolean) => void;
+  setshowEventDialogue?: (value: {
     success: boolean;
     message: string;
     error: boolean;
   }) => void;
-  form: any;
 }
 
 async function handleCreateEvent({
@@ -222,10 +222,9 @@ async function handleCreateEvent({
   setLoader,
   setShowDialog,
   setshowEventDialogue,
-  form,
 }: CreateEventHandlerParams) {
   event?.preventDefault();
-  setLoader(true);
+  setLoader?.(true);
 
   const startDate = new Date(values.startDate).toISOString();
   const endDate = new Date(values.endDate).toISOString();
@@ -323,25 +322,28 @@ async function handleCreateEvent({
     if (res?.data?.success) {
       // If creating a ticket is needed after event creation
 
-      setshowEventDialogue({
+      setshowEventDialogue?.({
         success: true,
         message: "Event updated successfully",
         error: false,
       });
-      setShowDialog(true);
+      setShowDialog?.(true);
       mutate("event/my-events?page=1&size=50");
-      form.reset();
     }
+
+    return res;
   } catch (error: any) {
     console.error("Error creating event:", error);
-    setshowEventDialogue({
+    setshowEventDialogue?.({
       success: false,
       message: error?.response?.data?.message || "Error creating event",
       error: true,
     });
-    setShowDialog(true);
+
+    setShowDialog?.(true);
+    throw error;
   } finally {
-    setLoader(false);
+    setLoader?.(false);
   }
 }
 
@@ -467,6 +469,8 @@ export default function GeneralEditEventForm() {
   const router = useRouter();
   const params = useSearchParams();
   const slug = params.get("slug");
+  const [openCurrencyModal, setOpenCurrencyModal] = useState(false);
+
   // const title  =  params.get("title")
   // const categoryId  = params.get("categoryId")
 
@@ -671,7 +675,6 @@ export default function GeneralEditEventForm() {
       setLoader,
       setShowDialog,
       setshowEventDialogue,
-      form,
     });
   }
 
@@ -991,7 +994,11 @@ export default function GeneralEditEventForm() {
                     </Text>
 
                     <Box className="py-4">
-                      <EditEventTicket form={form} />
+                      <EditEventTicket
+                        form={form}
+                        setOpenCurrencyModal={setOpenCurrencyModal}
+                        isEdit={true}
+                      />
                     </Box>
 
                     {/* <Box className="mt-6">
@@ -1152,7 +1159,7 @@ export default function GeneralEditEventForm() {
             <Button
               onClick={() => {
                 if (showEventDialogue.success) {
-                  router.push("/profile");
+                  router.back();
                 }
                 setShowDialog(false);
               }}
@@ -1164,6 +1171,14 @@ export default function GeneralEditEventForm() {
           </div>
         </div>
       )}
+      {
+        <SelectCurrencyModal
+          opened={openCurrencyModal}
+          close={setOpenCurrencyModal}
+          form={form}
+          handleCreateEvent={handleCreateEvent}
+        />
+      }
     </div>
   );
 }

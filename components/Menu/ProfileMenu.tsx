@@ -34,8 +34,11 @@ export default function ProfileMenu({ image }: { image: string }) {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item leftSection={<IconUser size={14} />}>
-          <Link href={"/profile"}>Profile</Link>{" "}
+        <Menu.Item
+          leftSection={<IconUser size={14} />}
+          component={Link}
+          href={"/profile"}>
+          Profile
         </Menu.Item>
         <Menu.Item leftSection={<IconLogout size={14} />} onClick={open}>
           Logout

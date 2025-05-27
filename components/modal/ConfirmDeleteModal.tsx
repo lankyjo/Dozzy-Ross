@@ -75,16 +75,16 @@ export default function ConfirmDeleteModal({
           <Text
             fz={16}
             ta="center"
-            ff="poppins-medium"
+            // ff="poppins-medium"
             fw={500}
-            c="dark.9"
+            c="white"
             mb={3}>
             Are you sure you want to delete this coupon code?
           </Text>
           <Text
             fz={16}
             ta="center"
-            ff="poppins-bold"
+            // ff="poppins-bold"
             fw={700}
             c="dark.9"
             mb={20}>
@@ -98,7 +98,7 @@ export default function ConfirmDeleteModal({
               bg="gray.7"
               fullWidth
               c="white"
-              ff="poppins-medium"
+              // ff="poppins-medium"
               fw={500}
               onClick={close}>
               Cancel
@@ -110,7 +110,7 @@ export default function ConfirmDeleteModal({
               fullWidth
               c="white"
               bg="red.7"
-              ff="poppins-medium"
+              // ff="poppins-medium"
               fw={500}
               loading={spin}
               loaderProps={{

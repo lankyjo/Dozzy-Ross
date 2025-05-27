@@ -89,8 +89,7 @@ export default function NavDraw({
               c="white"
               component={Link}
               href="/create"
-              size="md"
-            >
+              size="md">
               Create Event
             </Button>
           </Stack>
