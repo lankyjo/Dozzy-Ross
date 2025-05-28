@@ -2,21 +2,21 @@ import { Avatar } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 
 interface ImageItem {
-  id: string
+  id: string;
   image: {
-    id: string
-    url: string
-    alt?: string
-  }
+    id: string;
+    url: string;
+    alt?: string;
+  };
 }
 
 interface Props {
-  count: number
-  title: string
-  images: ImageItem[] // always 3 images
+  count: number;
+  title: string;
+  images: ImageItem[]; // always 3 images
 }
 
-export default function Performance({count,title,images,}:Props) {
+export default function Performance({ count, title, images }: Props) {
   const [value, setValue] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -50,7 +50,7 @@ export default function Performance({count,title,images,}:Props) {
   return (
     <div className="relative -z-10 flex md:flex-col justify-between mb-[30px] gap-5">
       <Avatar.Group>
-        {images?.map(({id, image}) => (
+        {images?.map(({ id, image }) => (
           <Avatar
             key={id}
             src={image?.url}
@@ -73,13 +73,14 @@ export default function Performance({count,title,images,}:Props) {
         <div className="  ml-0">
           <h3 className=" text-[1.7rem] md:text-3xl font-extrabold self-center ">
             {value}
+            <span className=" text-[1.7rem] font-extrabold">
+              {title == "Tickets Sold" ? "k" : ""}
+            </span>
             <span className=" text-[1.7rem] font-extrabold  ">+</span>
           </h3>
         </div>
         <div className="w-full">
-          <p className=" text-sm md:text-xl           self-center   ">
-            {title}
-          </p>
+          <p className=" text-sm md:text-xl self-center   ">{title}</p>
         </div>
       </div>
     </div>

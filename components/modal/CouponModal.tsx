@@ -156,9 +156,11 @@ export default function CouponModal({
         <Text fw={500} ff="poppins-medium" fz={16}>
           Create Coupon
         </Text>
-      }>
+      }
+    >
       <form
-        onSubmit={form.onSubmit((values, e) => createCoupon({ values, e }))}>
+        onSubmit={form.onSubmit((values, e) => createCoupon({ values, e }))}
+      >
         <Stack gap={10}>
           <TextInput
             size="md"
@@ -225,7 +227,7 @@ export default function CouponModal({
               w="100%"
               size="md"
               label="Total available"
-              type="number"
+              // type="number"
               min={1}
               stepHoldDelay={500}
               stepHoldInterval={100}
@@ -304,7 +306,8 @@ export default function CouponModal({
               loaderProps={{
                 color: "white",
               }}
-              className="w-full capitalize border-0 text-white rounded-md ">
+              className="w-full capitalize border-0 text-white rounded-md "
+            >
               Create Coupon
             </Button>
           </div>

@@ -183,7 +183,7 @@ export const getFilteredEvents = ({
     if (upcomingEvents.length === 1) {
       // If only one upcoming event, take more from 'events'
       const additionalEvents = filterEvents(allEvents, 1, 4); // Take up to 3 more
-      return [...upcomingEvents, ...additionalEvents].slice(0, 4); // Ensure max 4 events
+      return [...upcomingEvents, ...additionalEvents].slice(0, 3); // Ensure max 4 events
     }
     return upcomingEvents;
   }

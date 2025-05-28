@@ -9,10 +9,6 @@ const axiosInstance = axios.create({
   timeout: 15000, // Add timeout to prevent long-hanging requests
 });
 
-// Add additional logging for debugging
-const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
-console.log("API URL:", apiUrl);
-
 axiosInstance.interceptors.request.use(
   function (config: InternalAxiosRequestConfig) {
     const token = Cookies.get("access_token");
@@ -38,7 +34,6 @@ axiosInstance.interceptors.response.use(
     }
 
     const token = Cookies.get("access_token");
-
     if (token) {
       if (
         error?.response?.data?.errorCode?.toLowerCase() ===

@@ -61,7 +61,7 @@ const Hero = () => {
   const handleMediaLoaded = () => {
     setLoading(false);
   };
- 
+
   return (
     <section className="relative z-10 h-full min-h-screen md:pt-44 pt-20 pb-10 md:mt-0">
       {loading && (
@@ -137,17 +137,17 @@ const Hero = () => {
         <Box className="font-anton w-full grid gap-4 grid-cols-1 md:grid-cols-4 justify-center ">
           <Performance
             count={details?.eventGroup?.count || 10}
-            title="Upcoming Events"
+            title="Events Hosted"
             images={details?.eventGroup?.images}
           />
           <Performance
-            count={details?.ArtistGroup?.count || 200}
-            title="ArtistS Performed"
+            count={details?.ArtistGroup?.count || 20}
+            title="Upcoming Events"
             images={details?.ArtistGroup?.images}
           />
           <Performance
             count={details?.ticketsGroup?.count || 1000}
-            title="TicketS Sold"
+            title="Tickets Sold"
             images={details?.ticketsGroup?.images}
           />
         </Box>

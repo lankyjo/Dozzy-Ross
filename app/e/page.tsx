@@ -58,21 +58,6 @@ export default function AllEvent() {
             countdown your next favorite event
           </h3>
         </div>
-        {/* <div className=" flex  max-w-[900px] mx-auto justify-end ">
-          <TextInput
-            mt="md"
-            rightSectionPointerEvents="none"
-            rightSection={<MdSearch />}
-            placeholder="Search event"
-            className=" justify-self-end w-full md:w-xs"
-            styles={{
-              input: {
-                borderColor: "white",
-                color: "white",
-              },
-            }}
-          />
-        </div> */}
 
         {isLoading ? (
           <div className=" w-full h-full  flex justify-center">
@@ -80,7 +65,7 @@ export default function AllEvent() {
           </div>
         ) : (
           <ul className="space-y-10  ">
-            {Tickets.map((ticket) => (
+            {Tickets?.map((ticket) => (
               <Ticket
                 key={ticket.id}
                 imageUrl={ticket.image}
@@ -96,17 +81,6 @@ export default function AllEvent() {
             ))}
           </ul>
         )}
-
-        {/* {Tickets?.length > 4 && (
-  <div className="w-full text-right max-w-[900px] mx-auto">
-    <Link
-      href="/"
-      className="cursor-pointer text-primary text-xl underline"
-    >
-      see more
-    </Link>
-  </div>
-)} */}
       </div>
 
       {eventData?.data?.meta?.total > 50 && (

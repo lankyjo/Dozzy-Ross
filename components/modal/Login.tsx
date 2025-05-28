@@ -87,7 +87,8 @@ export default function Login(props: Props) {
           title: classes.title,
           header: classes.body,
           body: classes.body,
-        }}>
+        }}
+      >
         <form onSubmit={login.onSubmit((values) => handleSubmit({ values }))}>
           <Stack gap="lg">
             <TextInput
@@ -123,7 +124,8 @@ export default function Login(props: Props) {
               loading={isLoading}
               loaderProps={{
                 color: "white",
-              }}>
+              }}
+            >
               Login
             </Button>
           </Stack>

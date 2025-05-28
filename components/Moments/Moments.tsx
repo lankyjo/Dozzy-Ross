@@ -30,50 +30,57 @@ const Moments = () => {
   }, []);
 
   return (
-    <section
-      className="padding py-36 text-white"
-      style={{
-        background: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/countdownbg.jpg)`,
-      }}
-    >
-      <div className="contain grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="space-y-5">
-          <h2 className="text-3xl font-anton font-bold">
-            Live the Moment Again and Again
-          </h2>
-          <p>
-            Missed the show? Or simply want to experience it all over again?
-            Dive into our exclusive collection of event videos.
-          </p>
-          {momentsData?.socialLink && (
-            <a
-              href={momentsData.socialLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary font-bold hover:underline"
-            >
-              See more
-            </a>
-          )}
-        </div>
-
-        {momentsData?.videos?.map((video) => (
-          <VideoCard
-            key={video.id}
-            video={{
-              id: video.videoTitle,
-              videoUrl: video.videoUrl,
-              img: video.VideoThumbnail,
-            }}
-            isPlaying={playingVideo === video.videoTitle}
-            onPlay={() => setPlayingVideo(video.videoTitle)}
-            onPause={() => setPlayingVideo(null)}
-            playingVideo={playingVideo}
-            setPlayingVideo={setPlayingVideo}
-          />
-        ))}
-      </div>
-    </section>
+    <>
+      {momentsData?.videos && momentsData.videos.length > 0 && (
+        <section
+          className="padding py-36 text-white"
+          style={{
+            background: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/countdownbg.jpg)`,
+          }}
+        >
+          <div className="contain grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="space-y-5">
+              <h2 className="text-3xl font-anton font-bold">
+                Live the Moment Again and Again
+              </h2>
+              <p>
+                Missed the show? Or simply want to experience it all over again?
+                Dive into our exclusive collection of event videos.
+              </p>
+              {momentsData?.socialLink && (
+                <a
+                  href={momentsData?.socialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary font-bold hover:underline"
+                >
+                  See more
+                </a>
+              )}
+            </div>
+            {momentsData?.videos && momentsData.videos.length > 0 && (
+              <>
+                {momentsData.videos.map((video) => (
+                  <VideoCard
+                    key={video.id}
+                    video={{
+                      id: video.videoTitle,
+                      videoUrl: video.videoUrl,
+                      img: video.VideoThumbnail,
+                    }}
+                    isPlaying={playingVideo === video.videoTitle}
+                    onPlay={() => setPlayingVideo(video.videoTitle)}
+                    onPause={() => setPlayingVideo(null)}
+                    playingVideo={playingVideo}
+                    setPlayingVideo={setPlayingVideo}
+                  />
+                ))}
+              </>
+            )}
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
@@ -87,8 +94,6 @@ type VideoProps = {
   playingVideo: string | null;
   setPlayingVideo: React.Dispatch<React.SetStateAction<string | null>>;
 };
-
-
 
 const VideoCard: React.FC<VideoProps> = ({
   video,
@@ -118,20 +123,20 @@ const VideoCard: React.FC<VideoProps> = ({
   }, [setPlayingVideo]);
 
   // Auto play/pause
-useEffect(() => {
-  if (videoPlayerRef.current) {
-    if (isPlaying) {
-      videoPlayerRef.current.play();
-    } else {
-      videoPlayerRef.current.pause();
+  useEffect(() => {
+    if (videoPlayerRef.current) {
+      if (isPlaying) {
+        videoPlayerRef.current.play();
+      } else {
+        videoPlayerRef.current.pause();
+      }
     }
-  }
-}, [isPlaying]);
+  }, [isPlaying]);
 
   return (
     <div
       ref={videoRef}
-      className="relative text-white p-4 overflow-hidden lg:aspect-video aspect-square rounded-3xl"
+      className="relative text-white p-4 overflow-hidden lg:aspect-video aspect-square rounded-3xl border-[0.5px] border-white"
     >
       {!isPlaying ? (
         <>

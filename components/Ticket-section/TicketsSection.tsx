@@ -51,7 +51,7 @@ const TicketsSection = () => {
           </div>
 
           <ul className="space-y-10 ">
-            {Tickets.map((ticket) => (
+            {Tickets?.map((ticket) => (
               <Ticket
                 key={ticket?.id}
                 imageUrl={ticket.image || imagePlaceholder}
