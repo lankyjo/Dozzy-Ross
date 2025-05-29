@@ -14,7 +14,6 @@ import Cookies from "js-cookie";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-
 import Logo from "../utils/Logo";
 
 const ProfileMenu = dynamic(() => import("../Menu/ProfileMenu"), {
@@ -63,7 +62,7 @@ const Nav = () => {
     if (query) {
       oLogin();
     }
-  }, [query, oLogin]);
+  }, [query, oLogin, close]);
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -115,7 +114,9 @@ const Nav = () => {
                   radius={100}
                   c="white"
                   size="md"
-                  onClick={oLogin}
+                  onClick={() => {
+                    oLogin();
+                  }}
                 >
                   Login
                 </Button>

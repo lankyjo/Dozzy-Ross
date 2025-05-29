@@ -3,6 +3,7 @@ import NavItem from "./NavItem";
 import Link from "next/link";
 import ConfirmLogout from "../modal/ConfirmLogout";
 import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
 
 export default function NavDraw({
   opened,
@@ -17,6 +18,7 @@ export default function NavDraw({
 }) {
   const [openedLogout, { open: openLogout, close: closed }] =
     useDisclosure(false);
+  const router = useRouter();
 
   return (
     <>
@@ -49,12 +51,14 @@ export default function NavDraw({
       >
         <div>
           {/* Drawer content */}
-          <NavItem />
+          <NavItem close={close} />
 
           {isAuthenticated && (
             <ul className="gap-4 mt-3 flex flex-col md:flex-row md:gap-10">
               <li className="font-semibold uppercase">
-                <Link href={"/profile"}>profile</Link>
+                <Link href={"/profile"} onClick={close}>
+                  profile
+                </Link>
               </li>
             </ul>
           )}
@@ -66,7 +70,10 @@ export default function NavDraw({
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogout}
+                onClick={() => {
+                  openLogout();
+                  close();
+                }}
               >
                 Logout
               </Button>
@@ -77,7 +84,10 @@ export default function NavDraw({
                 radius={100}
                 c="white"
                 size="md"
-                onClick={openLogin}
+                onClick={() => {
+                  openLogin();
+                  close();
+                }}
               >
                 Login
               </Button>
@@ -87,9 +97,17 @@ export default function NavDraw({
               bg="rgb(239 121 13)"
               radius={100}
               c="white"
-              component={Link}
-              href="/create"
-              size="md">
+              onClick={() => {
+                close();
+                if (!isAuthenticated) {
+                  localStorage.setItem("link", "/create");
+                  openLogin();
+                } else {
+                  router.push("/create");
+                }
+              }}
+              size="md"
+            >
               Create Event
             </Button>
           </Stack>

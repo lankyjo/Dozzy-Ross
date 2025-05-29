@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button, Modal, Text } from "@mantine/core";
-import UnauthorizedModal from "@/components/modal/UnauthorizedModal";
+
+// Remove the unused import since it doesn't exist
+// import UnauthorizedModal from "@/components/modal/UnauthorizedModal";
 
 export default function ModalTestPage() {
   const [showBasicModal, setShowBasicModal] = useState(false);
@@ -44,11 +46,26 @@ export default function ModalTestPage() {
         </Button>
       </Modal>
 
-      {/* Unauthorized modal component */}
-      <UnauthorizedModal
+      {/* Create simple unauthorized modal instead of using the missing component */}
+      <Modal
         opened={showUnauthorizedModal}
-        close={() => setShowUnauthorizedModal(false)}
-      />
+        onClose={() => setShowUnauthorizedModal(false)}
+        title="Unauthorized Access"
+        centered
+      >
+        <Text>You are not authorized to perform this action.</Text>
+        <Text size="sm" mt="xs" c="dimmed">
+          Please log in or contact an administrator for assistance.
+        </Text>
+        <Button
+          onClick={() => setShowUnauthorizedModal(false)}
+          mt="md"
+          fullWidth
+          color="red"
+        >
+          Close
+        </Button>
+      </Modal>
 
       {/* Debug info */}
       <div className="mt-8 p-4 border border-gray-300 rounded">
