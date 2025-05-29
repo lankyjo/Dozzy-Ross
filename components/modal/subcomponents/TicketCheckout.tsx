@@ -1,8 +1,7 @@
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import GoodCheckIcon from "@/components/icons/GoodCheckIcon";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import classes from "./TicketCheckout.module.css";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 import {
   BackgroundImage,
@@ -118,6 +117,19 @@ export default function TicketCheckout({
     error: couponError,
   } = useSWRMutation("coupon/get-single", sendRequest);
   const { data: paymentSettings } = useGetter("settings");
+
+  // Phone input handler
+  const handlePhoneChange = (phone: string) => {
+    const event = {
+      target: {
+        name: "phone",
+        value: phone,
+        type: "change",
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+
+    handleInput(event);
+  };
 
   let currencyId = "";
   let currencysymbol = "";
@@ -346,7 +358,8 @@ export default function TicketCheckout({
             <Text
               c={"white"}
               fw={"bold"}
-              className=" text-text_label mt-3 md:mt-0 font-normal font-poppins-medium text-base ">
+              className=" text-text_label mt-3 md:mt-0 font-normal font-poppins-medium text-base "
+            >
               Enter details below
             </Text>
             <div>
@@ -403,7 +416,8 @@ export default function TicketCheckout({
                 <span
                   className={`text-red-500 text-xs  ${
                     isEmailConfirmed && isEmpty(user) ? "flex" : "hidden"
-                  }`}>
+                  }`}
+                >
                   Email must match
                 </span>
               </>
@@ -463,37 +477,43 @@ export default function TicketCheckout({
                   <p className="block text-sm font-medium text-gray-700 mb-1 text-white">
                     Phone Number (optional)
                   </p>
-                  <div className="w-full rounded-lg">
+                  <div className="w-full rounded-lg" style={{ zIndex: 100 }}>
                     <PhoneInput
-                      inputProps={{
-                        required: true,
-                        style: { fontSize: "16px" },
-                      }}
-                      country={"us"}
-                      countryCodeEditable={false}
-                      enableSearch
-                      enableLongNumbers={false}
-                      enableAreaCodes={true}
-                      enableAreaCodeStretch
-                      prefix="+"
-                      autoFormat={false}
-                      containerClass={classes.phoneContainer}
-                      inputClass={classes.phoneInput}
-                      buttonClass="btnBgColor"
+                      defaultCountry="us"
                       value={checkoutDetails?.phone}
-                      onChange={(
-                        value: string,
-                        data: any,
-                        event: React.ChangeEvent<HTMLInputElement>,
-                        formattedValue: string
-                      ) => {
-                        event.target.name = "phone";
-                        event.target.value = formattedValue;
-                        if (event?.type?.toLowerCase() === "change") {
-                          handleInput(event);
-                        }
+                      onChange={handlePhoneChange}
+                      inputStyle={{
+                        width: "100%",
+                        height: "50px",
+                        fontSize: "16px",
+                        backgroundColor: "transparent",
+                        color: "white",
+                        border: "1px solid #eeeff0",
+                        borderRadius: "0 0.5rem 0.5rem 0",
+                      }}
+                      countrySelectorStyleProps={{
+                        buttonStyle: {
+                          backgroundColor: "#1f2937",
+                          border: "1px solid #374151",
+                          borderRight: "none",
+                          borderRadius: "0.5rem 0 0 0.5rem",
+                          height: "50px",
+                        },
+                        dropdownStyleProps: {
+                          style: {
+                            backgroundColor: "#1f2937",
+                            border: "1px solid #374151",
+                            zIndex: 999,
+                          },
+                          listItemStyle: {
+                            color: "white",
+                          },
+                        },
                       }}
                     />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Leave blank if you prefer not to provide a phone number
+                    </p>
                   </div>
                 </div>
               )}
@@ -534,7 +554,8 @@ export default function TicketCheckout({
                     color: "gray",
                     marginTop: 4,
                   },
-                })}>
+                })}
+              >
                 <div className="grid grid-cols-4 gap-3 mt-3">
                   {data?.data
                     ?.filter((gateway: { active: boolean }) => gateway.active)
@@ -560,9 +581,11 @@ export default function TicketCheckout({
                             checkoutDetails?.selectedImageId === image.id
                               ? "ring-2 ring-[#FF6B00] rounded-md"
                               : ""
-                          }`}>
+                          }`}
+                        >
                           <div
-                            className={`w-full relative transition-all duration-200 hover:scale-[1.02] overflow-hidden h-10 `}>
+                            className={`w-full relative transition-all duration-200 hover:scale-[1.02] overflow-hidden h-10 `}
+                          >
                             <Image
                               src={image.url}
                               alt={method.name}
@@ -641,7 +664,8 @@ export default function TicketCheckout({
                 fullWidth
                 variant="white"
                 fw={500}
-                className="bg-secondary_color font-poppins-regular text-base capitalize text-white rounded-lg">
+                className="bg-secondary_color font-poppins-regular text-base capitalize text-white rounded-lg"
+              >
                 Proceed
               </Button>
             </div>
@@ -670,7 +694,8 @@ export default function TicketCheckout({
               className="cursor-pointer"
               onClick={() =>
                 Boolean(finalTotalFee.total) && setOpenSummary(!openSummary)
-              }>
+              }
+            >
               <Text className="font-poppins-semibold text-[30px] text-primary_color ">
                 {currencysymbol || defaultCurrency}{" "}
                 {Math.ceil(finalTotalFee?.total)?.toLocaleString() ||
@@ -685,7 +710,8 @@ export default function TicketCheckout({
                     {ticketPayedFor?.map((ticket, index: number) => (
                       <Box
                         key={index}
-                        className="flex justify-between items-center py-1 border-b border-gray-100">
+                        className="flex justify-between items-center py-1 border-b border-gray-100"
+                      >
                         <div className="flex-1">
                           <Text className="text-sm font-medium text-gray-800 capitalize">
                             {ticket?.name} * {ticket?.units}
@@ -745,6 +771,39 @@ export default function TicketCheckout({
           </Box>
         )}
       </Box>
+
+      <style jsx global>{`
+        /* Override styles for new phone input */
+        .react-international-phone-country-selector-dropdown {
+          background-color: #1f2937 !important;
+          color: white !important;
+          border-color: #374151 !important;
+          z-index: 9999 !important;
+        }
+
+        .react-international-phone-country-selector-dropdown__list-item {
+          color: white !important;
+        }
+
+        .react-international-phone-country-selector-dropdown__list-item:hover {
+          background-color: #374151 !important;
+        }
+
+        .react-international-phone-country-selector-dropdown__search-input {
+          background-color: #2d3748 !important;
+          color: white !important;
+          border-color: #4a5568 !important;
+        }
+
+        /* Additional styling for better visibility */
+        .react-international-phone-input {
+          color: white !important;
+        }
+
+        .react-international-phone-country-selector-button {
+          background-color: #1f2937 !important;
+        }
+      `}</style>
     </div>
   );
 }
