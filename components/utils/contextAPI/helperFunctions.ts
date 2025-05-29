@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { showNotification } from "@mantine/notifications";
 import { mutate } from "swr";
@@ -149,6 +151,7 @@ export function customNotification(
     title,
     color,
     icon,
+    position: "top-left",
   });
 }
 

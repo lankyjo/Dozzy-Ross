@@ -2,7 +2,7 @@
 import { Button, Modal, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import classes from "./Login.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postFunc } from "../utils/request";
 import {
   customErrorFunc,
@@ -25,7 +25,18 @@ type FormProps = {
 export default function Login(props: Props) {
   const { opened, close } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [storedOrganizerId, setStoredOrganizerId] = useState<string | null>(
+    null
+  );
+  const [savedLink, setSavedLink] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    // Access localStorage only on the client side
+    setStoredOrganizerId(localStorage.getItem("organizer_id"));
+    setSavedLink(localStorage.getItem("link"));
+  }, []);
+
   const login = useForm<FormProps>({
     mode: "uncontrolled",
     initialValues: {
@@ -42,7 +53,6 @@ export default function Login(props: Props) {
   });
 
   async function handleSubmit({ values }: { values: FormProps }) {
-    const link = localStorage.getItem("link");
     try {
       setIsLoading(true);
       const data = await postFunc({
@@ -50,7 +60,28 @@ export default function Login(props: Props) {
         url: "auth/login",
       });
 
+      // Store the token in a cookie
       Cookies.set("access_token", data?.data?.data?.accessToken);
+
+      // Store the user ID in localStorage for authorization checks
+      // Log for debugging
+      if (data?.data?.data?._id) {
+        const userId = data.data.data._id;
+
+        // Compare with allowed user ID if available
+        if (storedOrganizerId && userId !== storedOrganizerId) {
+          Cookies.remove("access_token");
+          // Add this explicit check to immediately show the unauthorized moda
+          customNotification(
+            "Unauthorized",
+            "You are not authorized to access this site",
+            "red"
+          );
+          setIsLoading(false);
+
+          return;
+        }
+      }
 
       mutate("user");
 
@@ -62,9 +93,9 @@ export default function Login(props: Props) {
       );
 
       login.reset();
-      if (link) {
+      if (savedLink) {
         localStorage.removeItem("link");
-        router.push(link);
+        router.push(savedLink);
       }
       close();
     } catch (error) {

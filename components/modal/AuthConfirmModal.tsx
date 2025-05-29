@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Divider, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { IconExclamationMark } from "@tabler/icons-react";
@@ -16,7 +18,6 @@ export const ConfirmModal = ({
   return new Promise((resolve) => {
     modals.openConfirmModal({
       title,
-
       centered: true,
       children: <p>{message}</p>,
       labels: {
@@ -24,7 +25,8 @@ export const ConfirmModal = ({
           <Text
             maw={100}
             variant=""
-            className="capitalize text-white  font-poppins-medium font-medium rounded-md ">
+            className="capitalize text-white font-poppins-medium font-medium rounded-md"
+          >
             {action}
           </Text>
         ),
@@ -32,7 +34,8 @@ export const ConfirmModal = ({
           <Text
             maw={100}
             variant="outline"
-            className="capitalize text-secondary_color border-secondary_color font-poppins-medium font-medium rounded-md ">
+            className="capitalize text-secondary_color border-secondary_color font-poppins-medium font-medium rounded-md"
+          >
             No
           </Text>
         ),
@@ -50,11 +53,12 @@ const ConfirmModalContent = ({ onClose }: { onClose: () => void }) => {
   const handleYes = () => {
     setShowMessage(true);
   };
+
   return (
     <div style={{ zIndex: 999 }}>
       {showMessage ? (
-        <div className=" bg-[#4D5057] py-8 px-4  rounded-xl  ">
-          <Text className="text-white  font-semibold text-2xl text-center mb-3">
+        <div className="bg-[#4D5057] py-8 px-4 rounded-xl">
+          <Text className="text-white font-semibold text-2xl text-center mb-3">
             Caution!!
           </Text>
           <Text className="text-white text-base text-center">
@@ -71,29 +75,32 @@ const ConfirmModalContent = ({ onClose }: { onClose: () => void }) => {
             radius={100}
             c="dark.8"
             onClick={onClose}
-            className="font-medium font-poppins-medium mx-auto ">
+            className="font-medium font-poppins-medium mx-auto"
+          >
             Ok
           </Button>
         </div>
       ) : (
-        <div className=" bg-white p-4 rounded-xl ">
-          <div className=" flex flex-col justify-center items-center gap-2 my-4">
-            <span className=" text-center  rounded-full p-2 bg-slate-100">
+        <div className="bg-white p-4 rounded-xl">
+          <div className="flex flex-col justify-center items-center gap-2 my-4">
+            <span className="text-center rounded-full p-2 bg-slate-100">
               <IconExclamationMark
                 color="red"
-                className=" font-bold  "
+                className="font-bold"
                 size={50}
               />
             </span>
             <Text
               c={"#171717"}
               fw={"bold"}
-              className=" text-secondary_color font-semibold text-2xl text-center ">
+              className="text-secondary_color font-semibold text-2xl text-center"
+            >
               Notice
             </Text>
             <Text
               c={"#171717"}
-              className="text-[#4D5057] text-base text-center">
+              className="text-[#4D5057] text-base text-center"
+            >
               Your account has been logged-in on another device
             </Text>
           </div>
@@ -106,8 +113,9 @@ const ConfirmModalContent = ({ onClose }: { onClose: () => void }) => {
               c={"white"}
               fullWidth
               fz={12}
-              className="font-medium font-poppins-medium  bg-secondary_color text-white"
-              onClick={onClose}>
+              className="font-medium font-poppins-medium bg-secondary_color text-white"
+              onClick={onClose}
+            >
               Yes, that was me
             </Button>
             <Button
@@ -119,7 +127,8 @@ const ConfirmModalContent = ({ onClose }: { onClose: () => void }) => {
               radius={100}
               c={"#EF790D"}
               onClick={() => handleYes()}
-              className="font-medium font-poppins-medium     border-[#EF790D]">
+              className="font-medium font-poppins-medium border-[#EF790D]"
+            >
               That wasn&#39;t me
             </Button>
           </div>
@@ -143,7 +152,6 @@ export const AuthConfirmModal = (): Promise<boolean> => {
           zIndex: 999,
         },
       },
-
       transitionProps: {
         duration: 400,
         timingFunction: "ease",

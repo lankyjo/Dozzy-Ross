@@ -7,11 +7,15 @@ import useGetter from "@/components/utils/hooks/useGetter";
 import { Loader } from "@mantine/core";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+// import Cookies from "js-cookie";
+// import AuthChecker from "@/components/utils/AuthChecker";
 // import { MdSearch } from "react-icons/md";
 
 export default function AllEvent() {
   const [page, setPage] = useState<number>(1);
   const [userVariables, setUserVariables] = useState<any>(null);
+  // const token = Cookies.get("access_token");
+
   useEffect(() => {
     const getUserVariables = async () => {
       const res = await fetch("/api/details");
@@ -21,9 +25,13 @@ export default function AllEvent() {
 
     getUserVariables();
   }, []);
+
   const { data: eventData, isLoading } = useGetter(
-    `event/user-events/${userVariables?.variables?.userId}?size=50&page=${page}`
+    userVariables?.variables?.userId
+      ? `event/user-events/${userVariables.variables.userId}?size=50&page=${page}`
+      : null
   );
+
   const events = useFormatEventData(eventData?.data);
 
   const Tickets = events?.map((event) => ({
