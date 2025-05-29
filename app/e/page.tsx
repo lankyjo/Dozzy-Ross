@@ -7,9 +7,6 @@ import useGetter from "@/components/utils/hooks/useGetter";
 import { Loader } from "@mantine/core";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
-// import Cookies from "js-cookie";
-// import AuthChecker from "@/components/utils/AuthChecker";
-// import { MdSearch } from "react-icons/md";
 
 export default function AllEvent() {
   const [page, setPage] = useState<number>(1);
