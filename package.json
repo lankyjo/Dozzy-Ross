@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:prod": "npm run build && pm2 start npm --name 'afro-miami-frontend' -- start -- -p 3004"
+    "start:prod": "NEXT_PUBLIC_DIST_DIR=.next pm2 startOrReload ecosystem_prod.config.json"
   },
   "dependencies": {
     "@mantine/carousel": "^7.17.3",
