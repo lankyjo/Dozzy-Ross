@@ -65,7 +65,7 @@ export default function AllEvent() {
             countdown to your next event
           </h3>
         </div>
-        <div className=" flex  max-w-[900px] mx-auto justify-end ">
+        {/* <div className=" flex  max-w-[900px] mx-auto justify-end ">
           <TextInput
             mt="md"
             rightSectionPointerEvents="none"
@@ -80,7 +80,7 @@ export default function AllEvent() {
             }}
             onChange={(e) => setState({ query: e.target.value })}
           />
-        </div>
+        </div> */}
 
         {isLoading && (
           <div className=" w-full h-full  flex justify-center">

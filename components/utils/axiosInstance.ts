@@ -6,6 +6,7 @@ import { logUserOut } from "./contextAPI/helperFunctions";
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
   withCredentials: false,
+  timeout: 15000, // Add timeout to prevent long-hanging requests
 });
 
 axiosInstance.interceptors.request.use(
@@ -17,6 +18,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   function (error) {
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -24,8 +26,14 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const token = Cookies.get("access_token");
+    // Handle network errors specially
+    if (error.message === "Network Error") {
+      console.error("Network error detected. API may be unreachable.");
+      // You can add custom handling here, like showing a toast notification
+      return Promise.reject(error);
+    }
 
+    const token = Cookies.get("access_token");
     if (token) {
       if (
         error?.response?.data?.errorCode?.toLowerCase() ===

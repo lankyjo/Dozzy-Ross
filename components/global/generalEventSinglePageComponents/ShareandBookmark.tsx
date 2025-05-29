@@ -214,7 +214,7 @@ ${link}`;
     document.body.removeChild(link);
   }
 
-  const eventUrl = `${process.env.NEXT_PUBLIC_PAGE_BASE_URL}${shareLink}`;
+  const eventUrl = `${process.env.NEXT_PUBLIC_ORGANIZER_PLATFORM_FRONTEND_URL}/${shareLink}`;
 
   return (
     <Modal

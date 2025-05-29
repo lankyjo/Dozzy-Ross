@@ -1,5 +1,6 @@
 import { Box, Button, Modal, Text, Textarea } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import React from "react";
 
 export default function EmbededCode({
   embedModalOpen,

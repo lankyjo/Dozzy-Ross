@@ -51,22 +51,6 @@ export default function useFormatEventData(data: {
       return events.filter(
         (event: EventProps) => !event.isSoldOut && !event.isDeleted
       );
-
-      // will add this filet soon
-      // .filter((event: EventProp) => {
-      //   if (
-      //     event?.type?.toLowerCase() === "tour" &&
-      //     event?.toLocations?.length > 0
-      //   ) {
-      //     return event;
-      //   }
-      //   if (
-      //     event?.type?.toLowerCase() === "standard" ||
-      //     event?.type?.toLowerCase() === ""
-      //   ) {
-      //     return event;
-      //   }
-      // });
     } else {
       return [];
     }

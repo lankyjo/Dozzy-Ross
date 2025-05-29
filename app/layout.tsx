@@ -15,31 +15,70 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata: Metadata = {
-  title: "AFRO EVENTS MIAMI",
-  description: "AFRO EVENTS MIAMI",
-  icons: "/next.svg",
-  openGraph: {
-    title: "AFRO EVENTS MIAMI",
-    description: "AFRO EVENTS MIAMI",
-    images: [
-      {
-        url: "https://res.cloudinary.com/isreal/image/upload/v1745299617/Afrobeat%20miami/afro_events_miami_g56phy.jpg", // Update with your actual image URL
-        width: 1200,
-        height: 630,
-        alt: "AFRO EVENTS MIAMI",
+export async function generateMetadata(): Promise<Metadata> {
+  let title = "";
+  let description = "";
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_ORGANIZER_PLATFORM_FRONTEND_URL}/api/details`
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch metadata");
+    }
+
+    const data = await res.json();
+
+    title = data?.heroTitle;
+    description = data?.heroSubText;
+
+    const url = data?.backgroundImage?.url;
+
+    return {
+      title,
+      description,
+      icons: "/next.ico",
+      openGraph: {
+        title,
+        description,
+        images: url
+          ? [
+              {
+                url: url,
+                width: 1200,
+                height: 630,
+                alt: title,
+              },
+            ]
+          : [],
       },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AFRO EVENTS MIAMI",
-    description: "AFRO EVENTS MIAMI",
-    images: [
-      "https://res.cloudinary.com/isreal/image/upload/v1745299617/Afrobeat%20miami/afro_events_miami_g56phy.jpg",
-    ], // Same as Open Graph image
-  },
-};
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: url || undefined,
+      },
+    };
+  } catch (error) {
+    console.error("Metadata generation failed:", error);
+
+    // Return fallback metadata without crashing
+    return {
+      title,
+      description,
+      icons: "/next.ico",
+      openGraph: {
+        title,
+        description,
+        images: [], // No image fallback
+      },
+      twitter: {
+        card: "summary",
+        title,
+        description,
+      },
+    };
+  }
+}
 
 export default function RootLayout({
   children,
@@ -63,7 +102,6 @@ export default function RootLayout({
             </ModalsProvider>
           </MantineProvider>
         </TempValueProvider>
-
       </body>
     </html>
   );
