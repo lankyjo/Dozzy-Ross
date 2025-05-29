@@ -19,6 +19,7 @@
   position: relative !important;
   display: flex !important;
   align-items: center !important;
+  z-index: 100 !important;
 }
 
 .btnBgColor {
@@ -41,18 +42,72 @@
 }
 
 .dropdownHeight {
-  max-height: 250px !important;
+  max-height: 300px !important;
   overflow-y: auto !important;
   background-color: #1f2937 !important;
   color: white !important;
   border: 1px solid #374151 !important;
   z-index: 9999 !important;
   position: absolute !important;
+  width: 300px !important;
   top: 100% !important;
   left: 0 !important;
-  right: 0 !important;
+  right: auto !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dropdownHeight .search-box {
+  padding: 10px !important;
+  margin-bottom: 5px !important;
+  display: block !important;
+}
+
+.dropdownHeight .search-box input {
+  background-color: #2d3748 !important;
+  color: white !important;
+  border: 1px solid #4a5568 !important;
+  width: 100% !important;
+  padding: 5px 10px !important;
+  border-radius: 4px !important;
+}
+
+.dropdownHeight .country {
+  padding: 8px 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  cursor: pointer !important;
 }
 
 .dropdownHeight .country:hover {
   background-color: #374151 !important;
+}
+
+.dropdownHeight .country.highlight {
+  background-color: #4a5568 !important;
+}
+
+:global(.react-tel-input .country-list) {
+  z-index: 9999 !important;
+  display: block !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  background-color: #1f2937 !important;
+  color: white !important;
+  border: 1px solid #374151 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 300px !important;
+}
+
+:global(.react-tel-input .country-list.hide) {
+  display: none !important;
+}
+
+:global(.react-tel-input .flag-dropdown.open .country-list) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
