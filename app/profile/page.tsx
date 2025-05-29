@@ -4,15 +4,16 @@ import Ticket from "@/components/Ticket-section/Ticket";
 import { imagePlaceholder } from "@/components/utils/contextAPI/helperFunctions";
 import useFormatEventData from "@/components/utils/hooks/useFormatEvent";
 import useGetter from "@/components/utils/hooks/useGetter";
-import { Loader, TextInput } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { format } from "date-fns";
 import { useState } from "react";
-import { MdSearch } from "react-icons/md";
 // import { MdSearch } from "react-icons/md";
+// import { TextInput } from "@mantine/core";
 
 export default function AllEvent() {
   const [page, setPage] = useState<number>(1);
-  const [states, setState] = useState({ query: "" });
+  // Keeping the state definition but not using setState for now (search functionality commented out)
+  const [states] = useState({ query: "" });
   const { data: user } = useGetter("user");
 
   const {

@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function CustomUnauthorizedModal({ show, onClose }: Props) {
+export default function CustomUnauthorizedModal({ show }: Props) {
   // Handle escape key press
   useEffect(() => {
     if (!show) return;
@@ -55,7 +55,7 @@ export default function CustomUnauthorizedModal({ show, onClose }: Props) {
         <div className={styles.modalBody}>
           <p>
             You are not authorized to access this system. The user ID associated
-            with your account doesn't match the expected ID for this site.
+            with your account doesn&apos;t match the expected ID for this site.
             Please contact the administrator.
           </p>
         </div>
