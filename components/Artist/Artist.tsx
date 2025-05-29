@@ -42,7 +42,9 @@ const Artist = () => {
             </h2>
           </div>
           <p className="text-gray-400">
-            {upcoming?.description || unavailable}
+            {(upcoming?.description && upcoming.description.length > 300 
+              ? upcoming.description.slice(0, 200) + '...' 
+              : upcoming?.description) || unavailable}
           </p>
 
           <div className="space-y-5 text-gray-400">
